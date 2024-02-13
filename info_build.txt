@@ -1,0 +1,4 @@
+/home/shubham/WORK_DIR/w28_tzdata2023d_cgx31/yocto-poky_clones/master-poky/poky/build/	cmd: bitbake -s 
+ Start Time:    13:41:04 
+Finish Time:    13:41:06 
+Execution Time: 00:00:02  
