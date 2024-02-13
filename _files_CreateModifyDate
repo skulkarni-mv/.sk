@@ -1,0 +1,42 @@
+Thu Feb  8 19:45:18 IST 2024
+
+shubham@MVIN00032:~/.sk$ ls -alF
+
+total 184
+drwxrwxr-x 10 shubham shubham  4096 Feb  8 19:45 ./
+drwxr-xr-x 53 shubham shubham  4096 Feb  8 19:42 ../
+drwxrwxr-x  2 shubham shubham  4096 Mar 20  2023 01_work7_opensource_Aug18/
+drwxrwxr-x  2 shubham shubham  4096 Aug 25  2022 02_work4_CentOS_Aug25/
+drwxrwxr-x  3 shubham shubham  4096 Dec  6 12:20 03_work11_CGX2.2-hostapd_mirror/
+drwxrwxr-x  2 shubham shubham  4096 Jan 24 11:08 04_work4_CosKernel_WEBPAGE_Aug09/
+drwxrwxr-x  2 shubham shubham  4096 Dec 28  2022 05_alternateOld_CVE_patch_remove+/
+drwxrwxr-x  2 shubham shubham  4096 Dec  7 13:40 06_CVE_patch_remove+/
+drwxrwxr-x  2 shubham shubham  4096 Jan 24 11:04 07_parseCommitIDs2Revert_w27_Dec19/
+-rw-rw-r--  1 shubham shubham  7476 Nov 21  2022 bulk_cp2loc.c
+-rw-rw-r--  1 shubham shubham    17 Jan 24 17:39 bulkcp_dir_is.txt
+-rw-rw-r--  1 shubham shubham    30 Jan 24 17:38 bulkcp_ls_is.txt
+-rw-rw-r--  1 shubham shubham  1178 Sep 20  2022 copy2local.c
+-rw-rw-r--  1 shubham shubham  1483 Sep 29  2022 copy2vm.c
+-rw-rw-r--  1 shubham shubham    29 Feb  8 19:45 files
+-rwxrwxr-x  1 shubham shubham  1675 Feb  7 18:50 gcc_new_op.sh*
+-rw-rw-r--  1 shubham shubham   155 Feb  7 16:57 info_build.txt
+-rw-rw-r--  1 shubham shubham    14 Oct 12  2022 .ldappass.txt
+-rw-rw-r--  1 shubham shubham    10 Sep 20  2022 .localpass.txt
+-rw-rw-r--  1 shubham shubham  2795 Oct 13  2022 loop_cmd_sk.c
+-rw-rw-r--  1 shubham shubham    79 Jun 24  2022 newline.c
+-rw-rw-r--  1 shubham shubham   100 Feb  8 12:01 pwd_sk2.txt
+-rw-rw-r--  1 shubham shubham    97 Feb  8 12:01 pwd_sk.txt
+-rw-rw-r--  1 shubham shubham  1158 Feb  8 19:42 send_text_to_PC.c
+-rw-rw-r--  1 shubham shubham    88 Feb  8 19:43 send-THIS2PC.txt
+-rw-rw-r--  1 shubham shubham  5642 Oct 12  2022 sk.c
+-rwxrwxr-x  1 shubham shubham 13512 Nov 29  2022 SSHconTester*
+-rwxrwxr-x  1 shubham shubham  9096 Feb  2 12:27 SSHkill*
+-rw-rw-r--  1 shubham shubham  1354 Sep 14  2022 ssh_kill_if_connOK.c
+-rw-rw-r--  1 shubham shubham    57 Feb  2 12:28 ssh_kill.txt
+-rw-rw-r--  1 shubham shubham    56 Feb  2 12:32 ssh_ps.txt
+-rw-rw-r--  1 shubham shubham  1949 Feb  2 12:27 ssh_vm_trylogin.c
+-rw-rw-r--  1 shubham shubham    28 Oct  1 13:40 tmp_redir_op.txt
+-rw-rw-r--  1 shubham shubham  5630 Feb  3  2023 tsk_time_redirectOP.c
+-rw-rw-r--  1 shubham shubham  5512 Feb  3  2023 tsk_timetaken.c
+drwxrwxr-x  2 shubham shubham  4096 Jan 24 17:48 VM_.sk_dir/
+-rw-rw-r--  1 shubham shubham   742 Jun 25  2022 z_ReplaceEnterINfile.c
