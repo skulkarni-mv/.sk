@@ -1,0 +1,133 @@
+bug_severity,priority,product,version,op_sys,assigned_to,bug_status,resolution,short_desc
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2016-3709 libxml: Incorrect server side include parsing can lead to XSS
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-14304 kernel: ethtool when reading eeprom of device could lead to memory leak
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-20597 lemon: allows attackers to arbitrary web scripts or HTML
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-20598 lemon:
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-25741 QEMU: fdc: null pointer dereference during r/w data transfer
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-25742 QEMU: scsi: lsi: null pointer dereference during memory move
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-25743 QEMU: ide: null pointer dereference while cancelling i/o operation
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-26143 kernel: accepting fragmented plaintext frames in protected networks
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-35503 QEMU: NULL pointer dereference issue in megasas-gen2 host bus adapter
+serious,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-36516 kernel: an off-path attacker may inject data or terminate a victim's TCP session
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-36557 kernel: Use-after free in VT_DISALLOCATE ioctl and closing/opening
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2020-36558 kernel: Null point dereference with  VT_RESIZEX.
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-0920 kernel: Use After Free in unix_gc() which could result in a local privilege escalation
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-20196 QEMU: block: fdc: null pointer dereference may lead to guest crash
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-20264 containers/openjdk: /etc/passwd is given incorrect privileges
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-20317 kernel: timer tree corruption leads to missing wakeup and system freeze
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-2389 mysql: InnoDB unspecified vulnerability (CPU Jul 2021)
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-26341 hw: cpu: AMD CPUs May Transiently Execute Beyond Unconditional  Direct Branch
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-26401 hw: cpu: LFENCE/JMP Mitigation Update for CVE-2017-5715
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-31879 wget: authorization header disclosure on redirect
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-33194 golang: x/net/html: infinite loop in ParseFragment
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-3507 QEMU: fdc: heap buffer overflow in DMA read data transfers
+serious,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-3530 binutils: stack memory exhaustion in demangle_path() in rust-demangle.c
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2021-35550 OpenJDK: Weak ciphers preferred over stronger ones for TLS (JSSE, 8264210)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2021-35556 OpenJDK: Excessive memory allocation in RTFParser (Swing, 8265167)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2021-35559 OpenJDK: Excessive memory allocation in RTFReader (Swing, 8265580)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2021-35561 OpenJDK: Excessive memory allocation in HashMap and HashSet (Utility, 8266097)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2021-35564 OpenJDK: Certificates with end dates too far in the future can corrupt keystore (Keytool, 8266137)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2021-35567 OpenJDK: Incorrect principal selection when using Kerberos Constrained Delegation (Libraries, 8266689)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2021-35578 OpenJDK: Unexpected exception raised during TLS handshake (JSSE, 8267729)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2021-35586 OpenJDK: Excessive memory allocation in BMPImageReader (ImageIO, 8267735)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-35604 mysql: InnoDB unspecified vulnerability (CPU Oct 2021)
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-36086 libsepol: use-after-free in cil_reset_classpermission()
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-3638 QEMU: ati-vga: inconsistent check in ati_2d_blt() may lead to out-of-bounds write
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-3640 kernel: use-after-free vulnerability in function sco_sock_sendmsg()
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-3750 QEMU: hcd-ehci: DMA reentrancy issue leads to use-after-free
+critical,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-3752: Linux kernel: a uaf bug in bluetooth
+critical,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-3773 kernel: lack of port sanity checking in natd and netfilter leads to exploit of OpenVPN clients
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-3847 kernel: low-privileged user privileges escalation
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-4001 kernel: race condition when the EBPF map is frozen
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-4147 libvirt: deadlock and crash in libxl driver
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-4150 kernel: Block subsystem mishandles reference counts
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-42574 Developer environment: Unicode's bidirectional (BiDi) override characters can cause trojan source attacks
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-42574 Developer environment: Unicode's bidirectional (BiDi) override characters can cause trojan source attacks
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-44879 kernel: NULL pointer dereference in folio_mark_dirty() via a crafted f2fs image
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-45261 patch: Invalid Pointer via another_hunk function
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-45486 kernel: information leak in the IPv4 implementation
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-46195 gcc: stack overflow in cxxfilt in rust_demangler.
+serious,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-46669 mariadb: MariaDB through 10.5.9 allows attackers to trigger a convert_const_to_int use-after-free when the BIGINT data type is used.
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2021-46778 hw: cpu: AMD: Execution Unit Scheduler Contention Side-Channel vulnerability
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-0001 hw: cpu: intel: Branch History Injection (BHI)
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-0002 hw: cpu: intel: Intra-Mode BTI
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-0322 kernel: DoS in sctp_addto_chunk in net/sctp/sm_make_chunk.c
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-0500 kernel: Linux ebpf logic vulnerability leads to critical memory read and write gaining root privileges
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-0617 kernel: Null pointer dereference can be triggered when write to an ICB inode
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-0812 kernel: NFS over RDMA random memory leakage
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1116 kernel: Integer Overflow or Wraparound vulnerability in io_uring
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1195 kernel: A possible race condition (use-after-free) in drivers/net/hamradio/6pack ( mkiss.c) after unregister_netdev
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1280 kernel: concurrency use-after-free between drm_setmaster_ioctl and drm_mode_getresources
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1419: kernel: A concurrency use-after-free in vgem_gem_dumb_create
+normal,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1462 kernel: possible race condition in drivers/tty/tty_buffers.c
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1678 kernel: improper update of sock reference in TCP pacing can lead to memory/netns leak
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1679 kernel: Use-After-Free in ath9k_htc_probe_device() could cause an escalation of privileges
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1705 golang: net/http: improper sanitization of Transfer-Encoding header
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1852 kernel: NULL pointer dereference in x86_emulate_insn may lead to DoS
+serious,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1882 kernel: Use-After-Free in free_pipe_info() could cause an escalation of privileges
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1962 golang: go/parser: stack exhaustion in all Parse* functions
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-1973 kernel: a double-free in ntfs3 log_replay may lead to a crash
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-21123 hw: cpu: Incomplete cleanup of multi-core shared buffers (aka SBDR)
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-21125 hw: cpu: Incomplete cleanup of microarchitectural fill buffers (aka SBDS)
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-21166 hw: cpu: Incomplete cleanup in specific special register write operations (aka DRPW)
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-21271 openjdk:asily exploitable vulnerability allows unauthenticated attacker.
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21277 OpenJDK: Incorrect reading of TIFF files in TIFFNullDecompressor (ImageIO, 8270952)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21282 OpenJDK: Insufficient URI checks in the XSLT TransformerImpl (JAXP, 8270492)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21283 OpenJDK: Unexpected exception thrown in regex Pattern (Libraries, 8268813)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21291 OpenJDK: Incorrect marking of writeable fields (Hotspot, 8270386)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21293 OpenJDK: Incomplete checks of StringBuffer and StringBuilder during deserialization (Libraries, 8270392)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21294 OpenJDK: Incorrect IdentityHashMap size checks during deserialization (Libraries, 8270416)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21299 OpenJDK: Infinite loop related to incorrect handling of newlines in XMLEntityScanner (JAXP, 8270646)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21305 OpenJDK: Array indexing issues in LIRGenerator (Hotspot, 8272014)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21340 OpenJDK: Excessive resource use when reading JAR manifest attributes (Libraries, 8272026)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21341 OpenJDK: Insufficient checks when deserializing exceptions in ObjectInputStream (Serialization, 8272236)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21349 OpenJDK: Unaligned memory access in ContextualGlyphSubstProc2 (2D, 8273748)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21360 OpenJDK: Excessive memory allocation in BMPImageReader (ImageIO, 8273756)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21365 OpenJDK: Integer overflow in BMPImageReader (ImageIO, 8273838)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21366 OpenJDK: Excessive memory allocation in TIFF*Decompressor (ImageIO, 8274096)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21540 OpenJDK: class compilation issue (Hotspot, 8281859)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-21541 OpenJDK: improper restriction of MethodHandle.invokeBasic() (Hotspot, 8281866)"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-23816, CVE-2022-29900 - hw: cpu: AMD: RetBleed Arbitrary Speculative Code Execution with Return Instructions"
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-23825 - hw: cpu: AMD:  Branch Type Confusion (non-retbleed)
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-24448 kernel: nfs_atomic_open() returns uninitialized data instead of ENOTDIR
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-24765 git: On multi-user machines Git users might find themselves unexpectedly in a Git worktree
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-24959 kernel: memory leak in yam_siocdevprivate() in drivers/net/hamradio/yam.c
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-2522 vim: Buffer overflow in autocmd.
+serious,Backlog,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-25265 kernel: Executable Space Protection Bypass
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-2571 vim: Heap-based Buffer Overflow in vim
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-2580 vim: Out-of-bounds Read in  vim
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-2581 vim: Out-of-bounds Read in vim src/regexp.c
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-2598 vim: Undefined Behavior for Input to API in vim
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-26966 kernel: heap memory leak in drivers/net/usb/sr9700.c
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-27223 kernel: In drivers/usb/gadget/udc/udc-xilinx.c the endpoint index is not validated
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-27943 gcc:  rust demangler stack overflow
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-2816 vim: out-of-bounds read in check_vim9_unlet() at src/vim9cmds.c
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-2817 vim: heap use-after-free in string_quote() at src/strings.c
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-2819 vim: heap buffer overflow in compile_lock_unlock() at src/vim9cmds.c
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-28735 grub2: shim_lock verifier allows non-kernel files to be loaded
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-28737 shim: Buffer overflow when loading crafted EFI images
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-29154 rsync: remote arbitrary files write inside the directories of connecting peers
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-29901 - hw: cpu: Intel: RetBleed Arbitrary Speculative Code Execution with Return Instructions
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-30629 golang: crypto/tls: session tickets lack random ticket_age_add
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-30630 golang: io/fs: stack exhaustion in Glob
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-30631 golang: compress/gzip: stack exhaustion in Reader.Read
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-30632 golang: path/filepath: stack exhaustion in Glob
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-30633 golang: encoding/xml: stack exhaustion in Unmarshal
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-30635 golang: encoding/gob: stack exhaustion in Decoder.Decode
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32081 mysql: use-after-poison in Storage
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32082 mysql:  Buffer overflow.
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32083 mariadb: server crash at Item_subselect::init_expr_cache_tracker
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32084 mariadb: Server SEGV issue
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32085 mariadb: server crash in Item_func_in::cleanup/Item::cleanup_processor
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32086 mariadb: server crash in Item_field::fix_outer_field for INSERT SELECT
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32087 mariadb: server crash in Item_args::walk_args
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32088 mariadb:  segmentation fault via the component Exec_time_tracker
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32089 mariadb: segmentation fault via the component st_select_lex_unit
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32091 mariadb: use-after-poison in in __interceptor_memset.
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32148 golang: net/http/httputil: NewSingleHostReverseProxy - omit X-Forwarded-For not working
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,"CVE-2022-32189 golang: math/big: decoding big.Float and big.Rat types can panic if the encoded message is too short, potentially allowing a denial of service"
+critical,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32292 connman:  heap buffer overflow in gweb/gweb.c
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-32293 connman:  man-in-the-middle attack against a WISPR HTTP.
+normal,P3,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-33981 kernel: use-after-free in floppy driver may lead to a DoS
+serious,P2,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-34918 kernel: heap overflow in nft_set_elem_init()
+normal,P5,CGX 3.1,unspecified,---,secbugz@mvista.com,NEW,,CVE-2022-35737 sqlite: assertion failure via query when compiled with -DSQLITE_ENABLE_STAT4
