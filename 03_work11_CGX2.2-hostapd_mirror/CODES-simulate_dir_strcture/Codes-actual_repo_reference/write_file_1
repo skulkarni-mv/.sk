@@ -1,0 +1,12 @@
+
+ src/utils/Makefile                                 |   1 +
+ src/utils/config.c                                 |  97 ++++++++++++++++++++
+ src/utils/config.h                                 |  29 ++++++
+ tests/fuzzing/wnm/wnm.c                            |   2 +-
+ wpa_supplicant/Android.mk                          |   1 +
+ wpa_supplicant/Makefile                            |   1 +
+ wpa_supplicant/config_file.c                       | 100 +--------------------
+ wpa_supplicant/vs2005/eapol_test/eapol_test.vcproj |   4 +
+ .../vs2005/wpa_supplicant/wpa_supplicant.vcproj    |   4 +
+ wpa_supplicant/vs2005/wpasvc/wpasvc.vcproj         |   4 +
+ 10 files changed, 

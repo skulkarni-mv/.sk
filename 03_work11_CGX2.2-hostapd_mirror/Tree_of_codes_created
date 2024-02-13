@@ -1,0 +1,86 @@
+Tree of Files ->
+
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant$ ls
+hostap  openembedded-core  push_multiple.out  push_script.c  tmp_hostap  zsk_all_patches-18333_main_branch  z_sk_gitlogOneline.txt
+
+
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant$ ls hostap/
+Android.mk     CONTRIBUTIONS  doc          hostapd  radius_example  src    wlantest  wpaspy
+build_release  COPYING        eap_example  hs20     README          tests  wpadebug  wpa_supplicant
+
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant$ ls tmp_hostap/
+hostap
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant$ ls tmp_hostap/hostap/
+1read.out   build_release  doc          hs20                   README               sk_replace.c  wlantest  wpa_supplicant  write_file_3
+2bulk.out   CONTRIBUTIONS  eap_example  radius_example         replace.out          src           wpadebug  write_file_1
+Android.mk  COPYING        hostapd      read_file_replace_1.c  sk_bulk_replace_2.c  tests         wpaspy    write_file_2
+
+
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant$ ls zsk_all_patches-18333_main_branch/000*
+
+<Total 18333 patch files>
+
+zsk_all_patches-18333_main_branch/0001-Re-initialize-hostapd-wpa_supplicant-git-repository-.patch
+zsk_all_patches-18333_main_branch/0002-Added-files-that-cg-init-excluded.patch
+zsk_all_patches-18333_main_branch/0003-Added-listen-interval-to-hostapd-sta_add-driver-func.patch
+zsk_all_patches-18333_main_branch/0004-Silence-SIOCSIWAUTH-ioctl-failure-message.patch
+zsk_all_patches-18333_main_branch/0005-Enhance-manpage-with-use-of-emphasis-instead-of-stro.patch
+zsk_all_patches-18333_main_branch/0006-Enforce-non-zero-MPPE-key-length.patch
+zsk_all_patches-18333_main_branch/0007-Fixed-base64_decode-reject-empty-input-buffers.patch
+zsk_all_patches-18333_main_branch/0008-Verify-that-os_get_time-does-not-fail-before-using-t.patch
+zsk_all_patches-18333_main_branch/0009-driver_ralink-Fixed-couple-of-memory-leaks-on-error-.patch
+
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant$ cd zsk_all_patches-18333_main_branch/
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant/zsk_all_patches-18333_main_branch$ cnt
+18333
+
+--------------------------------------
+
+OUTPUT ->
+
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant/hostap$ ../push_multiple.out 18331 18333
+ Usage: ./a.out <start_patch_no> <end_patch_no> 
+18331 start, 18333 end 
+
+Applying: Set OCV capability based on Association Request frame RSNE
+Counting objects: 4, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 807 bytes | 0 bytes/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/skulkarni-mv/hostapd_mirror.git
+   eda277d..7fd4d9f  master -> master
+Branch master set up to track remote branch master from origin.
+
+_ <- applied number 18331 (loop number 1/3)_
+
+Applying: P2P: Fix handling Service Discovery Response received by GO device
+Counting objects: 5, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 747 bytes | 0 bytes/s, done.
+Total 5 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/skulkarni-mv/hostapd_mirror.git
+   7fd4d9f..58711d3  master -> master
+Branch master set up to track remote branch master from origin.
+
+_ <- applied number 18332 (loop number 2/3)_
+
+Applying: tests: P2P Service Discovery initiated from Go device.
+Counting objects: 5, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 726 bytes | 0 bytes/s, done.
+Total 5 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/skulkarni-mv/hostapd_mirror.git
+   58711d3..d674ef7  master -> master
+Branch master set up to track remote branch master from origin.
+
+_ <- applied number 18333 (loop number 3/3)_
+
+
+	 i_patch_in_progress (not applied) = 18334 
+shubham@MVIN00032:~/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/_CGX22-CVES/sk_created_dir/CVE-2022-23303_4-wpa_supplicant/hostap$
