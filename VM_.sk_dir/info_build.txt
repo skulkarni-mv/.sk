@@ -1,0 +1,4 @@
+/home/qauser/WORK_DIR/w11_CGX2.0_OpenBugs-Armin_mail/cgx2.6_push/poky/	cmd: bitbake curl 
+ Start Time:       for VM: 16:54:46 	 for Docker: 22:24:46 
+Finish Time:       for VM: 16:56:59 	 for Docker: 22:26:59 
+Execution Time: 00:02:13  
