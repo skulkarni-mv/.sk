@@ -1,0 +1,41 @@
+4946ecf dhcp: CVE-2016-2774
+bb40b5e dhcp: Enable update-rc.d service
+07515b0 dhcpd: create dhcpd user for dhcp dameon
+4653fdd dhcp: enable gentle shutdown
+89140b0 dhcp: CVE-2015-8605
+44e9c3b meta: fix capitalisation in Upstream-Status
+38901a7 dhcp: 4.3.2 -> 4.3.3
+5d2f783 dhcp: search libxml2 for bind
+976f0e3 package_regex.inc: split the rest of the entries to their recipes
+52328c2 dhcp: fix installed not shipped warning for lib32
+44f0c01 dhcp: modify dhcpd.service to make it start successfully and add systemd service files dhcpd6.service
+86e6a37 dhcp: 4.3.1 -> 4.3.2
+2c2b003 dhcp-client: Ignore partial checksums
+3948336 dhcp: not override site.h
+bee37d4 dhcp: upgrade to 4.3.1
+c15ed36 dhcp: use ${PN} for SYSTEMD_SERVICES
+9b5bc94 dhcp: add systemd service files
+87c748c dhcp: do not use ifconfig/route in dhclient-script
+64e2bad meta: fix no newline at end of file
+f7557a1 dhcp: Update to 4.3.0
+45bbd21 dhcp-client: fix invoke dhclient-script failed on Read-only file system
+a01af02 recipes: bump PRs
+5119975 meta/*: remove unnecessary patches
+d807f7a dhcp: drop noattrmode.patch
+cb16810 dhcp: drop fixincludes.patch
+75de611 dhcp: Update to 4.2.5-P1
+dacf40d dhcp: Fix case where ${B} != ${S}
+973e85c dhcp: Fix unshipped WARNINGS
+98a5433 dhcp: Update to 4.2.5
+3f42e20 dhcp: Update to 4.2.4-P2
+c33cfc6 dhcp : upgrade to 4.2.4-P1
+349c6e7 dhcp: remove dependency of dev/staticdev packages on main package
+adbe094 dhcp: Update to 4.2.3-P2
+b9ff968 dhcp: move dhcp leases files handling to postinst/postrm
+18fe75d dhcp: package /var/lib/dhcp with dhcp-client rather than dhcp-server
+022c358 dhcp: generate initial leases files for server
+6dfac91 dhcp: move server configuration to dhcp-server-config
+27d84fa dhcp: rename dhcp4.inc to dhcp.inc
+09fd35f dhcp: drop unused dhcp3.inc file
+40b4ac7 dhcp: Fix libdir issue for multilib
+
