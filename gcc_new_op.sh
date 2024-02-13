@@ -17,7 +17,7 @@ then
 	echo "Compiling DesktopPC specific codes"
 	gcc ~/.sk/send_text_to_Lap.c -o ~/.sk/sendtoLAP; sudo mv ~/.sk/sendtoLAP /bin/
 
-elif [ "$$( hostname )" = "MVIN00032" ]
+elif [[ $( hostname ) = "MVIN00032" ]]
 then
 	echo "Compiling Laptop specific codes"
 	gcc ~/.sk/send_text_to_PC.c -o ~/.sk/sendtoPC; 	 sudo mv ~/.sk/sendtoPC /bin/
