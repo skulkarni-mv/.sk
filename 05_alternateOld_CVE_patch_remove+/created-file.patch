@@ -1,0 +1,364 @@
+From d4247fa7baf0859729fff2fe5cf0bfab8322d1a5 Mon Sep 17 00:00:00 2001
+From: Daniel Stenberg <daniel@haxx.se>
+Date: Mon, 9 May 2022 23:13:53 +0200
+Subject: [PATCH 1/2] tls: check more TLS details for connection reuse
+
+CVE-2022-27782
+
+Reported-by: Harry Sintonen
+Bug: https://curl.se/docs/CVE-2022-27782.html
+Closes #8825
+
+Upstream-commit: f18af4f874cecab82a9797e8c7541e0990c7a64c
+Signed-off-by: Kamil Dudka <kdudka@redhat.com>
+---
+ lib/setopt.c       | 29 +++++++++++++++++------------
+ lib/url.c          | 19 ++++++++++++-------
+ lib/urldata.h      | 14 +++++++-------
+ lib/vtls/openssl.c | 10 +++++-----
+ lib/vtls/vtls.c    | 21 +++++++++++++++++++++
+ 5 files changed, 62 insertions(+), 31 deletions(-)
+
+diff --git a/lib/setopt.c b/lib/setopt.c
+index b07ccfe..319a010 100644
+--- a/lib/setopt.c
++++ b/lib/setopt.c
+@@ -2044,6 +2044,7 @@ CURLcode Curl_vsetopt(struct Curl_easy *data, CURLoption option,
+ 
+   case CURLOPT_SSL_OPTIONS:
+     arg = va_arg(param, long);
++    data->set.ssl.primary.ssl_options = (unsigned char)(arg & 0xff);
+     data->set.ssl.enable_beast = arg&CURLSSLOPT_ALLOW_BEAST?TRUE:FALSE;
+     data->set.ssl.no_revoke = !!(arg & CURLSSLOPT_NO_REVOKE);
+     data->set.ssl.no_partialchain = !!(arg & CURLSSLOPT_NO_PARTIALCHAIN);
+@@ -2051,6 +2052,7 @@ CURLcode Curl_vsetopt(struct Curl_easy *data, CURLoption option,
+ 
+   case CURLOPT_PROXY_SSL_OPTIONS:
+     arg = va_arg(param, long);
++    data->set.proxy_ssl.primary.ssl_options = (unsigned char)(arg & 0xff);
+     data->set.proxy_ssl.enable_beast = arg&CURLSSLOPT_ALLOW_BEAST?TRUE:FALSE;
+     data->set.proxy_ssl.no_revoke = !!(arg & CURLSSLOPT_NO_REVOKE);
+     break;
+@@ -2451,44 +2453,47 @@ CURLcode Curl_vsetopt(struct Curl_easy *data, CURLoption option,
+   case CURLOPT_TLSAUTH_USERNAME:
+     result = Curl_setstropt(&data->set.str[STRING_TLSAUTH_USERNAME],
+                             va_arg(param, char *));
+-    if(data->set.str[STRING_TLSAUTH_USERNAME] && !data->set.ssl.authtype)
+-      data->set.ssl.authtype = CURL_TLSAUTH_SRP; /* default to SRP */
++    if(data->set.str[STRING_TLSAUTH_USERNAME] &&
++       !data->set.ssl.primary.authtype)
++      data->set.ssl.primary.authtype = CURL_TLSAUTH_SRP; /* default to SRP */
+     break;
+   case CURLOPT_PROXY_TLSAUTH_USERNAME:
+     result = Curl_setstropt(&data->set.str[STRING_TLSAUTH_USERNAME_PROXY],
+                             va_arg(param, char *));
+     if(data->set.str[STRING_TLSAUTH_USERNAME_PROXY] &&
+-       !data->set.proxy_ssl.authtype)
+-      data->set.proxy_ssl.authtype = CURL_TLSAUTH_SRP; /* default to SRP */
++       !data->set.proxy_ssl.primary.authtype)
++      data->set.proxy_ssl.primary.authtype = CURL_TLSAUTH_SRP; /* default to
++                                                                  SRP */
+     break;
+   case CURLOPT_TLSAUTH_PASSWORD:
+     result = Curl_setstropt(&data->set.str[STRING_TLSAUTH_PASSWORD],
+                             va_arg(param, char *));
+-    if(data->set.str[STRING_TLSAUTH_USERNAME] && !data->set.ssl.authtype)
+-      data->set.ssl.authtype = CURL_TLSAUTH_SRP; /* default to SRP */
++    if(data->set.str[STRING_TLSAUTH_USERNAME] &&
++       !data->set.ssl.primary.authtype)
++      data->set.ssl.primary.authtype = CURL_TLSAUTH_SRP; /* default */
+     break;
+   case CURLOPT_PROXY_TLSAUTH_PASSWORD:
+     result = Curl_setstropt(&data->set.str[STRING_TLSAUTH_PASSWORD_PROXY],
+                             va_arg(param, char *));
+     if(data->set.str[STRING_TLSAUTH_USERNAME_PROXY] &&
+-       !data->set.proxy_ssl.authtype)
+-      data->set.proxy_ssl.authtype = CURL_TLSAUTH_SRP; /* default to SRP */
++       !data->set.proxy_ssl.primary.authtype)
++      data->set.proxy_ssl.primary.authtype = CURL_TLSAUTH_SRP; /* default */
+     break;
+   case CURLOPT_TLSAUTH_TYPE:
+     argptr = va_arg(param, char *);
+     if(!argptr ||
+        strncasecompare(argptr, "SRP", strlen("SRP")))
+-      data->set.ssl.authtype = CURL_TLSAUTH_SRP;
++      data->set.ssl.primary.authtype = CURL_TLSAUTH_SRP;
+     else
+-      data->set.ssl.authtype = CURL_TLSAUTH_NONE;
++      data->set.ssl.primary.authtype = CURL_TLSAUTH_NONE;
+     break;
+   case CURLOPT_PROXY_TLSAUTH_TYPE:
+     argptr = va_arg(param, char *);
+     if(!argptr ||
+        strncasecompare(argptr, "SRP", strlen("SRP")))
+-      data->set.proxy_ssl.authtype = CURL_TLSAUTH_SRP;
++      data->set.proxy_ssl.primary.authtype = CURL_TLSAUTH_SRP;
+     else
+-      data->set.proxy_ssl.authtype = CURL_TLSAUTH_NONE;
++      data->set.proxy_ssl.primary.authtype = CURL_TLSAUTH_NONE;
+     break;
+ #endif
+   case CURLOPT_DNS_SERVERS:
+diff --git a/lib/url.c b/lib/url.c
+index 7dd5267..30fc5ad 100644
+--- a/lib/url.c
++++ b/lib/url.c
+@@ -461,7 +461,7 @@ CURLcode Curl_init_userdefined(struct Curl_easy *data)
+   set->ssl.primary.verifypeer = TRUE;
+   set->ssl.primary.verifyhost = TRUE;
+ #ifdef USE_TLS_SRP
+-  set->ssl.authtype = CURL_TLSAUTH_NONE;
++  set->ssl.primary.authtype = CURL_TLSAUTH_NONE;
+ #endif
+   set->ssh_auth_types = CURLSSH_AUTH_DEFAULT; /* defaults to any auth
+                                                       type */
+@@ -1881,10 +1881,12 @@ static struct connectdata *allocate_conn(struct Curl_easy *data)
+   conn->ssl_config.verifystatus = data->set.ssl.primary.verifystatus;
+   conn->ssl_config.verifypeer = data->set.ssl.primary.verifypeer;
+   conn->ssl_config.verifyhost = data->set.ssl.primary.verifyhost;
++  conn->ssl_config.ssl_options = data->set.ssl.primary.ssl_options;
+   conn->proxy_ssl_config.verifystatus =
+     data->set.proxy_ssl.primary.verifystatus;
+   conn->proxy_ssl_config.verifypeer = data->set.proxy_ssl.primary.verifypeer;
+   conn->proxy_ssl_config.verifyhost = data->set.proxy_ssl.primary.verifyhost;
++  conn->proxy_ssl_config.ssl_options = data->set.proxy_ssl.primary.ssl_options;
+ 
+   conn->ip_version = data->set.ipver;
+ 
+@@ -4362,8 +4364,9 @@ static CURLcode create_conn(struct Curl_easy *data,
+   data->set.proxy_ssl.primary.cipher_list13 =
+     data->set.str[STRING_SSL_CIPHER13_LIST_PROXY];
+ 
+-  data->set.ssl.CRLfile = data->set.str[STRING_SSL_CRLFILE];
+-  data->set.proxy_ssl.CRLfile = data->set.str[STRING_SSL_CRLFILE_PROXY];
++  data->set.ssl.primary.CRLfile = data->set.str[STRING_SSL_CRLFILE];
++  data->set.proxy_ssl.primary.CRLfile =
++    data->set.str[STRING_SSL_CRLFILE_PROXY];
+   data->set.ssl.cert = data->set.str[STRING_CERT];
+   data->set.proxy_ssl.cert = data->set.str[STRING_CERT_PROXY];
+   data->set.ssl.cert_type = data->set.str[STRING_CERT_TYPE];
+@@ -4377,10 +4380,12 @@ static CURLcode create_conn(struct Curl_easy *data,
+   data->set.ssl.primary.clientcert = data->set.str[STRING_CERT];
+   data->set.proxy_ssl.primary.clientcert = data->set.str[STRING_CERT_PROXY];
+ #ifdef USE_TLS_SRP
+-  data->set.ssl.username = data->set.str[STRING_TLSAUTH_USERNAME];
+-  data->set.proxy_ssl.username = data->set.str[STRING_TLSAUTH_USERNAME_PROXY];
+-  data->set.ssl.password = data->set.str[STRING_TLSAUTH_PASSWORD];
+-  data->set.proxy_ssl.password = data->set.str[STRING_TLSAUTH_PASSWORD_PROXY];
++  data->set.ssl.primary.username = data->set.str[STRING_TLSAUTH_USERNAME];
++  data->set.ssl.primary.password = data->set.str[STRING_TLSAUTH_PASSWORD];
++  data->set.proxy_ssl.primary.username =
++    data->set.str[STRING_TLSAUTH_USERNAME_PROXY];
++  data->set.proxy_ssl.primary.password =
++    data->set.str[STRING_TLSAUTH_PASSWORD_PROXY];
+ #endif
+ 
+   if(!Curl_clone_primary_ssl_config(&data->set.ssl.primary,
+diff --git a/lib/urldata.h b/lib/urldata.h
+index 026684b..0e48841 100644
+--- a/lib/urldata.h
++++ b/lib/urldata.h
+@@ -229,6 +229,13 @@ struct ssl_primary_config {
+   char *egdsocket;       /* path to file containing the EGD daemon socket */
+   char *cipher_list;     /* list of ciphers to use */
+   char *cipher_list13;   /* list of TLS 1.3 cipher suites to use */
++  char *CRLfile;         /* CRL to check certificate revocation */
++#ifdef USE_TLS_SRP
++  char *username; /* TLS username (for, e.g., SRP) */
++  char *password; /* TLS password (for, e.g., SRP) */
++  enum CURL_TLSAUTH authtype; /* TLS authentication type (default SRP) */
++#endif
++  unsigned char ssl_options;  /* the CURLOPT_SSL_OPTIONS bitmask */
+ };
+ 
+ struct ssl_config_data {
+@@ -238,7 +245,6 @@ struct ssl_config_data {
+   bool no_revoke;    /* disable SSL certificate revocation checks */
+   bool no_partialchain;  /* don't accept partial certificate chains */
+   long certverifyresult; /* result from the certificate verification */
+-  char *CRLfile;   /* CRL to check certificate revocation */
+   curl_ssl_ctx_callback fsslctx; /* function to initialize ssl ctx */
+   void *fsslctxp;        /* parameter for call back */
+   bool certinfo;         /* gather lots of certificate info */
+@@ -249,12 +255,6 @@ struct ssl_config_data {
+   char *key; /* private key file name */
+   char *key_type; /* format for private key (default: PEM) */
+   char *key_passwd; /* plain text private key password */
+-
+-#ifdef USE_TLS_SRP
+-  char *username; /* TLS username (for, e.g., SRP) */
+-  char *password; /* TLS password (for, e.g., SRP) */
+-  enum CURL_TLSAUTH authtype; /* TLS authentication type (default SRP) */
+-#endif
+ };
+ 
+ struct ssl_general_config {
+diff --git a/lib/vtls/openssl.c b/lib/vtls/openssl.c
+index 6c8faa2..75ff8d8 100644
+--- a/lib/vtls/openssl.c
++++ b/lib/vtls/openssl.c
+@@ -2232,14 +2232,14 @@ static CURLcode ossl_connect_step1(struct connectdata *conn, int sockindex)
+     &data->set.proxy_ssl.certverifyresult : &data->set.ssl.certverifyresult;
+   const long int ssl_version = SSL_CONN_CONFIG(version);
+ #ifdef USE_TLS_SRP
+-  const enum CURL_TLSAUTH ssl_authtype = SSL_SET_OPTION(authtype);
++  const enum CURL_TLSAUTH ssl_authtype = SSL_SET_OPTION(primary.authtype);
+ #endif
+   char * const ssl_cert = SSL_SET_OPTION(cert);
+   const char * const ssl_cert_type = SSL_SET_OPTION(cert_type);
+   const char * const ssl_cafile = SSL_CONN_CONFIG(CAfile);
+   const char * const ssl_capath = SSL_CONN_CONFIG(CApath);
+   const bool verifypeer = SSL_CONN_CONFIG(verifypeer);
+-  const char * const ssl_crlfile = SSL_SET_OPTION(CRLfile);
++  const char * const ssl_crlfile = SSL_SET_OPTION(primary.CRLfile);
+   char error_buffer[256];
+ 
+   DEBUGASSERT(ssl_connect_1 == connssl->connecting_state);
+@@ -2501,15 +2501,15 @@ static CURLcode ossl_connect_step1(struct connectdata *conn, int sockindex)
+ #ifdef USE_TLS_SRP
+   if((ssl_authtype == CURL_TLSAUTH_SRP) &&
+      Curl_allow_auth_to_host(conn)) {
+-    char * const ssl_username = SSL_SET_OPTION(username);
+-
++    char * const ssl_username = SSL_SET_OPTION(primary.username);
++    char * const ssl_password = SSL_SET_OPTION(primary.password);
+     infof(data, "Using TLS-SRP username: %s\n", ssl_username);
+ 
+     if(!SSL_CTX_set_srp_username(BACKEND->ctx, ssl_username)) {
+       failf(data, "Unable to set SRP user name");
+       return CURLE_BAD_FUNCTION_ARGUMENT;
+     }
+-    if(!SSL_CTX_set_srp_password(BACKEND->ctx, SSL_SET_OPTION(password))) {
++    if(!SSL_CTX_set_srp_password(BACKEND->ctx, ssl_password)) {
+       failf(data, "failed setting SRP password");
+       return CURLE_BAD_FUNCTION_ARGUMENT;
+     }
+diff --git a/lib/vtls/vtls.c b/lib/vtls/vtls.c
+index bdff93f..2b14fa6 100644
+--- a/lib/vtls/vtls.c
++++ b/lib/vtls/vtls.c
+@@ -88,6 +88,7 @@ Curl_ssl_config_matches(struct ssl_primary_config* data,
+ {
+   if((data->version == needle->version) &&
+      (data->version_max == needle->version_max) &&
++     (data->ssl_options == needle->ssl_options) &&
+      (data->verifypeer == needle->verifypeer) &&
+      (data->verifyhost == needle->verifyhost) &&
+      (data->verifystatus == needle->verifystatus) &&
+@@ -96,6 +97,12 @@ Curl_ssl_config_matches(struct ssl_primary_config* data,
+      Curl_safecmp(data->clientcert, needle->clientcert) &&
+      Curl_safecmp(data->random_file, needle->random_file) &&
+      Curl_safecmp(data->egdsocket, needle->egdsocket) &&
++#ifdef USE_TLS_SRP
++     Curl_safecmp(data->username, needle->username) &&
++     Curl_safecmp(data->password, needle->password) &&
++     (data->authtype == needle->authtype) &&
++#endif
++     Curl_safe_strcasecompare(data->CRLfile, needle->CRLfile) &&
+      Curl_safe_strcasecompare(data->cipher_list, needle->cipher_list) &&
+      Curl_safe_strcasecompare(data->cipher_list13, needle->cipher_list13))
+     return TRUE;
+@@ -113,6 +120,10 @@ Curl_clone_primary_ssl_config(struct ssl_primary_config *source,
+   dest->verifyhost = source->verifyhost;
+   dest->verifystatus = source->verifystatus;
+   dest->sessionid = source->sessionid;
++  dest->ssl_options = source->ssl_options;
++#ifdef USE_TLS_SRP
++  dest->authtype = source->authtype;
++#endif
+ 
+   CLONE_STRING(CApath);
+   CLONE_STRING(CAfile);
+@@ -122,6 +133,11 @@ Curl_clone_primary_ssl_config(struct ssl_primary_config *source,
+   CLONE_STRING(egdsocket);
+   CLONE_STRING(cipher_list);
+   CLONE_STRING(cipher_list13);
++  CLONE_STRING(CRLfile);
++#ifdef USE_TLS_SRP
++  CLONE_STRING(username);
++  CLONE_STRING(password);
++#endif
+ 
+   return TRUE;
+ }
+@@ -136,6 +152,11 @@ void Curl_free_primary_ssl_config(struct ssl_primary_config* sslc)
+   Curl_safefree(sslc->egdsocket);
+   Curl_safefree(sslc->cipher_list);
+   Curl_safefree(sslc->cipher_list13);
++  Curl_safefree(sslc->CRLfile);
++#ifdef USE_TLS_SRP
++  Curl_safefree(sslc->username);
++  Curl_safefree(sslc->password);
++#endif
+ }
+ 
+ #ifdef USE_SSL
+-- 
+2.34.1
+
+
+From a9cf46e6c6c9a4261f3ea8500dfef87c1436908b Mon Sep 17 00:00:00 2001
+From: Daniel Stenberg <daniel@haxx.se>
+Date: Mon, 9 May 2022 23:13:53 +0200
+Subject: [PATCH 2/2] url: check SSH config match on connection reuse
+
+CVE-2022-27782
+
+Reported-by: Harry Sintonen
+Bug: https://curl.se/docs/CVE-2022-27782.html
+Closes #8825
+
+Upstream-commit: 1645e9b44505abd5cbaf65da5282c3f33b5924a5
+Signed-off-by: Kamil Dudka <kdudka@redhat.com>
+---
+ lib/ssh.h |  4 ++--
+ lib/url.c | 11 +++++++++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/lib/ssh.h b/lib/ssh.h
+index 0620aac..1114f8a 100644
+--- a/lib/ssh.h
++++ b/lib/ssh.h
+@@ -117,8 +117,8 @@ struct ssh_conn {
+ 
+   /* common */
+   const char *passphrase;     /* pass-phrase to use */
+-  char *rsa_pub;              /* path name */
+-  char *rsa;                  /* path name */
++  char *rsa_pub;              /* strdup'ed public key file */
++  char *rsa;                  /* strdup'ed private key file */
+   bool authed;                /* the connection has been authenticated fine */
+   sshstate state;             /* always use ssh.c:state() to change state! */
+   sshstate nextstate;         /* the state to goto after stopping */
+diff --git a/lib/url.c b/lib/url.c
+index 30fc5ad..8653ebb 100644
+--- a/lib/url.c
++++ b/lib/url.c
+@@ -1030,6 +1030,12 @@ static size_t max_pipeline_length(struct Curl_multi *multi)
+ }
+ 
+ 
++static bool ssh_config_matches(struct connectdata *one,
++                               struct connectdata *two)
++{
++  return (Curl_safecmp(one->proto.sshc.rsa, two->proto.sshc.rsa) &&
++          Curl_safecmp(one->proto.sshc.rsa_pub, two->proto.sshc.rsa_pub));
++}
+ /*
+  * Given one filled in connection struct (named needle), this function should
+  * detect if there already is one that has all the significant details
+@@ -1299,6 +1305,11 @@ ConnectionExists(struct Curl_easy *data,
+         }
+       }
+ 
++      if(needle->handler->protocol & (CURLPROTO_SCP|CURLPROTO_SFTP)) {
++        if(!ssh_config_matches(needle, check))
++          continue;
++      }
++
+       if(!needle->bits.httpproxy || (needle->handler->flags&PROTOPT_SSL) ||
+          needle->bits.tunnel_proxy) {
+         /* The requested connection does not use a HTTP proxy or it uses SSL or
+-- 
+2.34.1
+
