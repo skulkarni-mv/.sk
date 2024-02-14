@@ -3,14 +3,18 @@
 #include <unistd.h>
 #include <string.h>
 
+
+// Output cmd: ~/.sk/SSHkill
+// gcc ~/.sk/ssh_kill_if_connOK.c -o ~/.sk/SSHkill
+
 void main()
 {
 	char buffer[20]={0}, str_pid[10]={0};
 
-	system("rm ~/.sk/ssh_kill.txt");
-	system("ps -e | grep SSHconTester > ~/.sk/ssh_kill.txt");
+	system("rm ~/.sk/.sk_gitignore/ssh_kill.txt");
+	system("ps -e | grep SSHconTester > ~/.sk/.sk_gitignore/ssh_kill.txt");
 
-	FILE *fp=fopen("/home/shubham/.sk/ssh_kill.txt", "r");			// Main program ID will be at TOP, so killing that will STOP all
+	FILE *fp=fopen("/home/shubham/.sk/.sk_gitignore/ssh_kill.txt", "r");			// Main program ID will be at TOP, so killing that will STOP all
 	if(fp != NULL)
 	{
 		fscanf(fp,"%s", str_pid);	
@@ -23,9 +27,9 @@ void main()
 			printf("\n\n NO PID Found to be Killed. Exiting ... \n");
 
 			// -> Added extra by sk on Sep 14 2022
-			system("ps -e | grep -w ssh");
-			system("ps -e | grep -w ssh > ~/.sk/ssh_kill.txt");
-			fp=fopen("/home/shubham/.sk/ssh_kill.txt", "r");
+			system("ps -e | grep -w ssh$");
+			system("ps -e | grep -w ssh$ > ~/.sk/.sk_gitignore/ssh_kill.txt");
+			fp=fopen("/home/shubham/.sk/.sk_gitignore/ssh_kill.txt", "r");
 			
 			if(fp)
 			{
