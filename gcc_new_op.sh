@@ -1,4 +1,4 @@
-
+# OUTPUT cmd: skgcc   (~/.bashrc file alias -> alias skgcc='~/.sk/gcc_new_op.sh')
 
 gcc ~/.sk/sk.c 			-o ~/.sk/sk; 	sudo mv ~/.sk/sk   /bin/
 gcc ~/.sk/tsk_timetaken.c	-o ~/.sk/tsk;	sudo mv ~/.sk/tsk  /bin/
