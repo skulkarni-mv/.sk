@@ -4,12 +4,12 @@
 #include <string.h>
 
 // cmd from code: /bin/sk
-/* alias sk1='cat ~/.sk/pwd_sk.txt; newl'
-   alias sk2='cat ~/.sk/pwd_sk2.txt; newl' - ~/.bashrc	*/
+/* alias sk1='cat ~/.sk/.sk_gitignore/pwd_sk.txt; newl'
+   alias sk2='cat ~/.sk/.sk_gitignore/pwd_sk2.txt; newl' - ~/.bashrc	*/
 
 void main(int argc, char *argv[])
 {
-	char buffer[200] = {0}, file_name[]="/.sk/pwd_sk.txt", file_name2[]="/.sk/pwd_sk2.txt";
+	char buffer[200] = {0}, file_name[]="/.sk/.sk_gitignore/pwd_sk.txt", file_name2[]="/.sk/.sk_gitignore/pwd_sk2.txt";
 	FILE *fp, *file_chk;
 	char typeOfCopy = 0;
 
