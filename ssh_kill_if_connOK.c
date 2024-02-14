@@ -23,8 +23,8 @@ void main()
 			printf("\n\n NO PID Found to be Killed. Exiting ... \n");
 
 			// -> Added extra by sk on Sep 14 2022
-			system("ps -e | grep ssh");
-			system("ps -e | grep ssh > ~/.sk/ssh_kill.txt");
+			system("ps -e | grep -w ssh");
+			system("ps -e | grep -w ssh > ~/.sk/ssh_kill.txt");
 			fp=fopen("/home/shubham/.sk/ssh_kill.txt", "r");
 			
 			if(fp)

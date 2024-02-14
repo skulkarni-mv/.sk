@@ -27,7 +27,7 @@ void main()
 			sleep(1);
 		}
 
-		system("ps -e | grep ssh > ssh_ps.txt");	// grep 'ssh' as vm strats session in ssh process
+		system("ps -e | grep -w ssh > ssh_ps.txt");	// grep 'ssh' as vm strats session in ssh process
 
 		//sleep(1);
 		
