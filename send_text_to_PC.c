@@ -20,16 +20,16 @@ void main(int argc, char *argv[])
 	if(strcmp(argv[0], argv[1]) != 0)	// check if used cmd is $ sendtoPC sendtoPC , if yes means file to be sent is edited manually
 						// in this case, that edit file directly should be sent, not content passed on CLI
 	{
-		FILE *fw = fopen("/home/shubham/.sk/send-THIS2PC.txt", "w");
+		FILE *fw = fopen("/home/shubham/.sk/.sk_gitignore/send-THIS2PC.txt", "w");
 		fprintf(fw, "%s\n", argv[1]);
 		fclose(fw);
 	}
 	else
 	{
-		printf("\n Received cmd: $ sendtoPC sendtoPC. Sending manually edited file ~/.sk/send-THIS2PC.txt \n");
+		printf("\n Received cmd: $ sendtoPC sendtoPC. Sending manually edited file ~/.sk/.sk_gitignore/send-THIS2PC.txt \n");
 	}
 
-	strcpy(buffer, "scp /home/shubham/.sk/send-THIS2PC.txt shubham@10.80.244.104:/home/shubham/.sk/send-ReceivedFromLaptop.txt");
+	strcpy(buffer, "scp /home/shubham/.sk/.sk_gitignore/send-THIS2PC.txt shubham@10.80.244.104:/home/shubham/.sk/.sk_gitignore/send-ReceivedFromLap.txt");
 
 	system(buffer);
 	printf("\n Use: send-cat / send-view (GEDIT)  to view the content sent from Laptop");
