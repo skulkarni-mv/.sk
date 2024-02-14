@@ -102,10 +102,10 @@ void main(int argc, char *argv[])
 		start_timer_sk(argv[1]);	//******************************  For Timer ****************************//
 
 	printf(" Initiating... Checking number of files to be copied... \n");
-	system("rm /home/shubham/.sk/bulkcp_ls_is.txt");						     // Remove prev file to avoid conflict
-	issue_copy_cmd("/home/qauser/.sk", "bulkcp_ls_is.txt",  "/home/shubham/.sk", "Calculating ETA", 1);	//"Calculating ETA" "01:25"
+	system("rm /home/shubham/.sk/.sk_gitignore/bulkcp_ls_is.txt");					     // Remove prev file to avoid conflict
+	issue_copy_cmd("/home/qauser/.sk","bulkcp_ls_is.txt", "/home/shubham/.sk/.sk_gitignore", "Calculating ETA", 1);//"Calculating ETA" "01:25"
 
-	fp_ls=fopen("/home/shubham/.sk/bulkcp_ls_is.txt", "r");
+	fp_ls=fopen("/home/shubham/.sk/.sk_gitignore/bulkcp_ls_is.txt", "r");
 	if(fp_ls)
 	{
 		while(fgets(buffer, 100, fp_ls) != NULL)
@@ -113,7 +113,7 @@ void main(int argc, char *argv[])
 	}
 	else
 	{
-		printf("\n\t Not Found. File \"/home/shubham/.sk/bulkcp_ls_is.txt\" Unavailable / Copying from VM failed.\t ERROR:2\n");
+	    printf("\n\t Not Found. File \"/home/shubham/.sk/.sk_gitignore/bulkcp_ls_is.txt\" Unavailable / Copying from VM failed.\t ERROR:2\n");
 
 		stop_timer_sk();	//*** For Timer ***//
 		return;
@@ -121,22 +121,22 @@ void main(int argc, char *argv[])
 
 	if(no_of_files_ls == 0)		// No files to copy
 	{
-		printf("\n\t No files found to copy in \"/home/shubham/.sk/bulkcp_ls_is.txt\". no_of_files_ls = 0. \t");
+		printf("\n\t No files found to copy in \"/home/shubham/.sk/.sk_gitignore/bulkcp_ls_is.txt\". no_of_files_ls = 0. \t");
 		printf(" Copying \"bulkcp_dir_is.txt\" from \"/home/qauser/.sk\" \n");
 
-		system("rm /home/shubham/.sk/bulkcp_dir_is.txt");					     // Remove prev file to avoid conflict
-		issue_copy_cmd("/home/qauser/.sk", "bulkcp_dir_is.txt", "/home/shubham/.sk", "", 0);
+		system("rm /home/shubham/.sk/.sk_gitignore/bulkcp_dir_is.txt");				     // Remove prev file to avoid conflict
+		issue_copy_cmd("/home/qauser/.sk", "bulkcp_dir_is.txt", "/home/shubham/.sk/.sk_gitignore", "", 0);
 
-		fp_dir=fopen("/home/shubham/.sk/bulkcp_dir_is.txt", "r");
+		fp_dir=fopen("/home/shubham/.sk/.sk_gitignore/bulkcp_dir_is.txt", "r");
 		if(fp_dir)
 		{
-			printf("\t No Copyable files available in VM directory: ");	fflush(stdout);
-			system("cat /home/shubham/.sk/bulkcp_dir_is.txt");
+			printf("\t No Copiable files available in VM directory: ");	fflush(stdout);
+			system("cat /home/shubham/.sk/.sk_gitignore/bulkcp_dir_is.txt");
 
 			fclose(fp_dir);
 		}
 		else
-		     printf("\n\t Not Found. File \"/home/shubham/.sk/bulkcp_dir_is.txt\" Unavailable / Copying from VM failed.\t ERROR:3\n");
+		printf("\n\t Not Found. File \"/home/shubham/.sk/.sk_gitignore/bulkcp_dir_is.txt\" Unavailable / Copying from VM failed.\t ERROR:3\n");
 		
 		fclose(fp_ls);
 
@@ -154,10 +154,10 @@ void main(int argc, char *argv[])
 	sprintf(copying_files, "Copying %d more files     ", no_of_files_ls);
 	strcat(copying_files, ETA_str);
 
-	system("rm /home/shubham/.sk/bulkcp_dir_is.txt");						     // Remove prev file to avoid conflict
-	issue_copy_cmd("/home/qauser/.sk", "bulkcp_dir_is.txt", "/home/shubham/.sk", copying_files, 1);
+	system("rm /home/shubham/.sk/.sk_gitignore/bulkcp_dir_is.txt");					     // Remove prev file to avoid conflict
+	issue_copy_cmd("/home/qauser/.sk", "bulkcp_dir_is.txt", "/home/shubham/.sk/.sk_gitignore", copying_files, 1);
 
-	fp_dir=fopen("/home/shubham/.sk/bulkcp_dir_is.txt", "r");
+	fp_dir=fopen("/home/shubham/.sk/.sk_gitignore/bulkcp_dir_is.txt", "r");
 	if(fp_dir)
 	{
 		printf("\n Creating New Directory : %s \n", argv[1]);
@@ -187,7 +187,7 @@ void main(int argc, char *argv[])
 		fclose(fp_ls);
 	}
 	else
-		printf("\n	Not Found. File \"/home/shubham/.sk/bulkcp_dir_is.txt\" Unavailable / Copying from VM failed.\t ERROR:4\n");
+	     printf("\n	Not Found. File \"/home/shubham/.sk/.sk_gitignore/bulkcp_dir_is.txt\" Unavailable / Copying from VM failed.\t ERROR:4\n");
 		
 	
 	stop_timer_sk();	//******************************  For Timer ****************************//
