@@ -11,8 +11,11 @@ gcc ~/.sk/copy2vm.c 		-o ~/.sk/c2v;	sudo mv ~/.sk/c2v  /bin/
 
 gcc ~/.sk/bulk_cp2loc.c         -o ~/.sk/bulkcp2;       sudo mv ~/.sk/bulkcp2 /bin/
 
+if [ 1 = 2 ]
+then
 gcc ~/.sk/ssh_vm_trylogin.c	-o ~/.sk/SSHconTester
 gcc ~/.sk/ssh_kill_if_connOK.c	-o ~/.sk/SSHkill
+fi
 
 #DOMAIN=$( hostname ) 			## if [ "$DOMAIN" = "shubhamPC" ]	## https://askubuntu.com/questions/295306/environmental-variable-for-current-domain
 if [[ $( hostname ) = "shubhamPC" ]] 						## https://superuser.com/questions/543793/how-can-i-compare-a-variable-to-a-text-string-rather-than-integer-in-an-if-els
