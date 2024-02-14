@@ -60,7 +60,7 @@ void issue_copy_cmd(char *file_path, char *file_name, char *argv1, char *ETA_tim
 	else
 	{
 		strcpy(redir_op, buffer);
-		strcat(redir_op, " > ~/.sk/tmp_redir_op.txt");
+		strcat(redir_op, " > ~/.sk/.sk_gitignore/tmp_redir_op.txt");
 		system(redir_op);      //system("scp qauser@10.80.200.8:/home/qauser/.sk/example.txt .../example_dir/ > ~/.sk/tmp_redir_op.txt");
 	}
 }
@@ -198,9 +198,9 @@ void main(int argc, char *argv[])
 
 void start_timer_sk(char *argv_ptr)
 {
-	system("pwd > /home/shubham/.sk/info_build.txt");		// Newly written Everytime
+	system("pwd > /home/shubham/.sk/.sk_gitignore/info_build.txt");		// Newly written Everytime
 
-	fp_time=fopen("/home/shubham/.sk/info_build.txt","r+");
+	fp_time=fopen("/home/shubham/.sk/.sk_gitignore/info_build.txt","r+");
 
 	fseek(fp_time, -1, SEEK_END);					// Replace \n at the end
 	fprintf(fp_time, "/	cmd: bulkcp2  + mkdir:%s \n", argv_ptr);
@@ -236,7 +236,7 @@ void stop_timer_sk(void)
 	fclose(fp_time);
 
 	printf("\n");
-	system("cat /home/shubham/.sk/info_build.txt");
+	system("cat /home/shubham/.sk/.sk_gitignore/info_build.txt");
 }
 
 void format_time_string(time_t t_sec, int add_sec, char * t_str)

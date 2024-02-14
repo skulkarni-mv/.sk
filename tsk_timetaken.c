@@ -24,9 +24,9 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	system("pwd > /home/shubham/.sk/info_build.txt");		// Newly written Everytime
+	system("pwd > /home/shubham/.sk/.sk_gitignore/info_build.txt");		// Newly written Everytime
 
-	FILE* fp=fopen("/home/shubham/.sk/info_build.txt","r+");
+	FILE* fp=fopen("/home/shubham/.sk/.sk_gitignore/info_build.txt","r+");
 
 	fseek(fp, -1, SEEK_END);				// Replace \n at the end
 	fprintf(fp, "/	cmd: %s \n", argv[1]);			// Add \n Manually
@@ -85,13 +85,13 @@ int main(int argc, char *argv[])
 	
 ///	printf("\n%s\n", fp_cmd_op);				/// Print Data from file, Comment the String Printing
 	
-	fp=fopen("/home/shubham/.sk/info_build.txt","w");	/// Reopen the file in Write Mode to erase previous contents and load New Data
+	fp=fopen("/home/shubham/.sk/.sk_gitignore/info_build.txt","w");	/// Reopen file in Write Mode to erase previous contents and load New Data
 	fputs(fp_cmd_op, fp);					/// Write Data in the String into the file for retaining the build time in File
 	fclose(fp);						/// Close the file to save the content in the Disk
 
 
 	printf("\n");   fflush(stdout);
-	system("cat /home/shubham/.sk/info_build.txt");		// Print the contents of the File
+	system("cat /home/shubham/.sk/.sk_gitignore/info_build.txt");		// Print the contents of the File
 
 	//return return_val;	
 }								///->represents Changes on 07/09/2022 to avoid info overwrite due to another "tsk"
