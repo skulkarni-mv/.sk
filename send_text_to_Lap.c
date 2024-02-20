@@ -12,7 +12,7 @@
 
 void main(int argc, char *argv[])
 {
-	char buffer[500]={0};
+	char buffer_scp_cmd[500]={0};
 
 	if(argc!=2)
 	{
@@ -32,87 +32,62 @@ void main(int argc, char *argv[])
 		printf("\n Received cmd: $ sendtoLap sendtoLap. Sending manually edited file ~/.sk/.sk_gitignore/send-THIS2Lap.txt \n");
 	}
 
-#ifdef debug
-	int mainpid = getpid();	printf(" main proc pid = %d \n\n", mainpid);
-#endif
-
 /////////////
 
+	const char ips_cnt=3;
 
-	int n, i=0;
-	int p[5]={0};
+	int pid_arr[4]={0};	//  [4] == [ ips_cnt+1 ]  used as mainproc_pid stored at arr[0] 
+	static int chproc_num;  // OR int chproc_num=0;  -> initialise to 0 is important
 	int first_ret=0;
-	char kill_this_pid[6]={0};
-	char buffer_pid[100]={0};
+	char pid_str[8]={0};
+	char buffer_pid_killer[100]={0};
 
-	if( (i++, p[0]=fork()) && (i++, p[1]=fork()) && (i++, p[2]=fork()) )
+
+	pid_arr[0] = getpid();
+
+	if( (chproc_num++, pid_arr[1]=fork()) && (chproc_num++, pid_arr[2]=fork()) && (chproc_num++, pid_arr[3]=fork()) )
 	{
-		i=0;		// Parent
+		chproc_num=0;		// Parent
 
-		printf("in parent, p[0]=%d, p[1]=%d, p[2]=%d \n", p[0], p[1], p[2]);
-#ifdef debug
-		printf("inside parent at start, pid=%d \n", getpid());
-#endif
+//#ifdef debug
+		printf("in pid=%d parent, childproc_num=%d\n", pid_arr[0], chproc_num);
+		for(int j=1; j<=ips_cnt; j++)
+		{
+			printf("\t\t pid_arr[%d]=%d \n", j, pid_arr[j]);
+		}
+		printf("\n");
+//#endif
 		first_ret=wait(0);
 
-		for(int j=0; j<3; j++)
+		for(int j=1; j<=ips_cnt; j++)
 		{
-			if(p[j]==first_ret)
+			if(pid_arr[j]==first_ret)	// Keep this PID
 			{
-				printf("\t\t\t wait returned -> first return pid p[%d]=%d OR first_ret=%d \n", j, p[j], first_ret);
+			printf("\t\t\t wait returned -> first_ret=%d pid OR pid_arr[%d]=%d \n", first_ret, j, pid_arr[j]);
 			}
-			else
+			else				// Kill other PIDs
 			{
-#ifdef debug
-				printf(" should be killed pid is p[%d]=%d \n", j, p[j]);
-#endif
-				sprintf(kill_this_pid, "%d", p[j]);
-				strcpy(buffer_pid, "kill -9 ");
-				strcat(buffer_pid, kill_this_pid);
+				sprintf(pid_str, "%d", pid_arr[j]);
+				strcpy(buffer_pid_killer, "kill -9 ");	strcat(buffer_pid_killer, pid_str);
 
-				printf(" \t\t buffer = %s \n", buffer_pid);
-				system(buffer_pid);
-
+				printf(" \t\t buffer = %s \n", buffer_pid_killer);
+				system(buffer_pid_killer);
 			}
 		}
 
-		printf("\t\t\t wait returned -> %d \n", wait(0) );
-		printf("\t\t\t wait returned -> %d \n", wait(0) );	// -> -1
+		for(int j=1; j<=ips_cnt-1; j++)		// '-1' was done as already once wait(0) used to capture first_ret
+		{
+			printf("\t\t\t wait returned -> %d \n", wait(0) );
+		}
 		printf("inside parent at end.. \n");
 	}
 	else
 	{
-		sleep(1);
-		printf("\n");
-		if(i==1)
+		switch (chproc_num)
 		{
-#ifdef debug
-			printf("inside child1 at start, pid=%d, ppid=%d \n", getpid(), getppid() );
-#endif
-			system("ping -c 1 172.31.84.172 > /dev/null");
-#ifdef debug
-			printf("inside child1 at end.. \n");
-#endif
-		}
-		else if(i==2)
-		{
-#ifdef debug
-			printf("inside child2 at start, pid=%d, ppid=%d \n", getpid(), getppid() );
-#endif
-			system("ping -c 1 192.168.50.134 > /dev/null");
-#ifdef debug
-			printf("inside child2 at end.. \n");
-#endif
-		}
-		else if(i==3)
-		{
-#ifdef debug
-			printf("inside child3 at start, pid=%d, ppid=%d \n", getpid(), getppid() );
-#endif
-			system("ping -c 1 10.80.10.3 > /dev/null");
-#ifdef debug
-			printf("inside child3 at end.. \n");
-#endif
+			case 1: system("ping -c 1 172.31.84.172   > /dev/null"); break;
+			case 2: system("ping -c 1 192.168.50.134  > /dev/null"); break;
+			case 3: system("ping -c 1 10.80.10.3 	  > /dev/null"); break;
 		}
 	}
 
