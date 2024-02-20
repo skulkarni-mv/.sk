@@ -8,10 +8,17 @@
 // Output cmd: /bin/sendtoLap
 // gcc ~/.sk/send_text_to_Lap.c -o ~/.sk/sendtoLAP; sudo mv ~/.sk/sendtoLAP /bin/
 
-//#define debug
+#define debug
 
 void main(int argc, char *argv[])
 {
+	const int ips_cnt=3;			// Number of IP addresses to be checked
+
+	int pid_arr[4]={0};			//  [4] == [ ips_cnt+1 ]  used as mainproc_pid stored at arr[0] 
+	int chproc_num=0, first_ret=0;
+
+	char pid_str[9]={0};			// to convert INT(pid) into STRING(pid)
+	char buffer_pid_killer[100]={0};
 	char buffer_scp_cmd[500]={0};
 
 	if(argc!=2)
@@ -34,38 +41,26 @@ void main(int argc, char *argv[])
 
 /////////////
 
-	const char ips_cnt=3;
-
-	int pid_arr[4]={0};	//  [4] == [ ips_cnt+1 ]  used as mainproc_pid stored at arr[0] 
-	static int chproc_num;  // OR int chproc_num=0;  -> initialise to 0 is important
-	int first_ret=0;
-	char pid_str[8]={0};
-	char buffer_pid_killer[100]={0};
-
-
 	pid_arr[0] = getpid();
 
 	if( (chproc_num++, pid_arr[1]=fork()) && (chproc_num++, pid_arr[2]=fork()) && (chproc_num++, pid_arr[3]=fork()) )
 	{
-		chproc_num=0;		// Parent
+		chproc_num=0;		// for Parent, set chproc_num i.e. child_process_number = 0
 
-//#ifdef debug
 		printf("in pid=%d parent, childproc_num=%d\n", pid_arr[0], chproc_num);
+#ifdef debug
 		for(int j=1; j<=ips_cnt; j++)
 		{
 			printf("\t\t pid_arr[%d]=%d \n", j, pid_arr[j]);
 		}
 		printf("\n");
-//#endif
+#endif
 		first_ret=wait(0);
 
+		printf(" \t\t KEEP this pid=%d \n", first_ret);
 		for(int j=1; j<=ips_cnt; j++)
 		{
-			if(pid_arr[j]==first_ret)	// Keep this PID
-			{
-			printf("\t\t\t wait returned -> first_ret=%d pid OR pid_arr[%d]=%d \n", first_ret, j, pid_arr[j]);
-			}
-			else				// Kill other PIDs
+			if(pid_arr[j] != first_ret)	// KILL these PID
 			{
 				sprintf(pid_str, "%d", pid_arr[j]);
 				strcpy(buffer_pid_killer, "kill -9 ");	strcat(buffer_pid_killer, pid_str);
@@ -77,9 +72,15 @@ void main(int argc, char *argv[])
 
 		for(int j=1; j<=ips_cnt-1; j++)		// '-1' was done as already once wait(0) used to capture first_ret
 		{
-			printf("\t\t\t wait returned -> %d \n", wait(0) );
+#ifdef debug
+			printf("\t\t\t wait returned after killing process pid %d. \n", wait(0) );
+#else
+			wait(0);
+#endif
 		}
+#ifdef debug
 		printf("inside parent at end.. \n");
+#endif
 	}
 	else
 	{
