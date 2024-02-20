@@ -8,7 +8,7 @@
 // Output cmd: /bin/sendtoLap
 // gcc ~/.sk/send_text_to_Lap.c -o ~/.sk/sendtoLAP; sudo mv ~/.sk/sendtoLAP /bin/
 
-#define debug
+//#define debug
 
 #define NUMBER_OF_IPs 4	// ALSO CHANGE MATRIX DATA & FORK CREATIONS
 
@@ -35,7 +35,7 @@ void main(int argc, char *argv[])
 
 	//printf("size = %ld \n\n", sizeof(ip_matrix));
 
-	ip_matrix[1].matx_chproc_num = 1;  strcpy(ip_matrix[1].matx_ip,"172.31.84.172");   strcpy(ip_matrix[1].matx_nameof_ip,"Laptop-WiFi");
+	ip_matrix[1].matx_chproc_num = 1;  strcpy(ip_matrix[1].matx_ip,"8.8.8.4");   	   strcpy(ip_matrix[1].matx_nameof_ip,"Laptop-WiFi");
 	ip_matrix[2].matx_chproc_num = 2;  strcpy(ip_matrix[2].matx_ip,"192.168.50.134");  strcpy(ip_matrix[2].matx_nameof_ip,"Cisco_VPN");
 	ip_matrix[3].matx_chproc_num = 3;  strcpy(ip_matrix[3].matx_ip,"10.80.10.3");	   strcpy(ip_matrix[3].matx_nameof_ip,"NetExtender_VPN");
 	ip_matrix[4].matx_chproc_num = 4;  strcpy(ip_matrix[4].matx_ip,"111.111.111.111"); strcpy(ip_matrix[4].matx_nameof_ip,"Laptop_Ethernet");
@@ -102,15 +102,17 @@ void main(int argc, char *argv[])
 			wait(0);
 #endif
 		}
+#ifdef debug
+		printf("\n KEEP child process number %d\n", ret_chproc_num);
+#endif
 
-		printf(" keep child process number %d\n", ret_chproc_num);
-		printf(" access the IP address available for ret_chproc_num=%d",ret_chproc_num);
-
-		strcpy(buffer_scp_cmd, "sshpass -f /home/shubham/.sk/.localpass.txt scp /home/shubham/.sk/send-THIS2Lap.txt shubham@");
-		strcat(buffer_scp_cmd, "<IP_adds>");
-		strcat(buffer_scp_cmd, ":/home/shubham/.sk/send-ReceivedFromPC.txt");
+		strcpy(buffer_scp_cmd, "sshpass -f /home/shubham/.sk/.sk_gitignore/.localpass.txt ");
+		strcat(buffer_scp_cmd, "scp /home/shubham/.sk/.sk_gitignore/send-THIS2Lap.txt shubham@");
+		strcat(buffer_scp_cmd, ip_matrix[ret_chproc_num].matx_ip);
+		strcat(buffer_scp_cmd, ":/home/shubham/.sk/.sk_gitignore/send-ReceivedFromPC.txt");
 
 		printf("\n %s \n", buffer_scp_cmd);
+		system(buffer_scp_cmd);
 
 			printf("\n Use: send-cat / send-view (GEDIT)  to view the content sent from Laptop");
 			printf("\n Use: rec-cat  / rec-view  (GEDIT)  to view the content received from PC");
@@ -128,20 +130,39 @@ void main(int argc, char *argv[])
 		//strcpy(buffer_scp_cmd+10, "xyz.xyz.xyz.xyz");
 		strcpy(buffer_scp_cmd+25, " > /dev/null");
 		//strncpy(buffer_scp_cmd+10, "011.113.114.117        ", 15);
+/*
+		char tmp1[24]="8.8.8.4                ";
+		char tmp2[24]="192.168.50.134         ";
+		char tmp3[24]="10.80.10.3             ";
+		char tmp4[24]="111.111.111.111        ";*/
 
+/*	char tmp1[24];char tmp2[24];char tmp3[24];char tmp4[24];
 
+		strcpy(tmp1, "8.8.8.4                ");
+		strcpy(tmp2, "192.168.50.134         ");
+		strcpy(tmp3, "10.80.10.3             ");
+		strcpy(tmp4, "111.111.111.111        ");	*/
 
-	switch (chproc_num)
-	{//-----------------------------------------------------// |
-	case 1: strncpy(buffer_scp_cmd+10, "0.0.0.2                ", 15);  printf("_%s_\n", buffer_scp_cmd); system(buffer_scp_cmd);break;
+	char tmp_cp_buff[24]={0};
 
-	case 3: strncpy(buffer_scp_cmd+10, "192.168.50.134         ", 15);  printf("_%s_\n", buffer_scp_cmd); system(buffer_scp_cmd);break;
+		switch (chproc_num)
+		{
+		case 1: strcpy(tmp_cp_buff, ip_matrix[1].matx_ip);	for(int j=strlen(tmp_cp_buff); j<23; j++){tmp_cp_buff[j]=' ';}
+			strncpy(buffer_scp_cmd+10, tmp_cp_buff, 15);	//printf("_%s_\n", buffer_scp_cmd);
+			system(buffer_scp_cmd);				break;
 
-	case 2: strncpy(buffer_scp_cmd+10, "10.80.10.3             ", 15);  printf("_%s_\n", buffer_scp_cmd); system(buffer_scp_cmd);break;
+		case 2: strcpy(tmp_cp_buff, ip_matrix[2].matx_ip);	for(int j=strlen(tmp_cp_buff); j<23; j++){tmp_cp_buff[j]=' ';}
+			strncpy(buffer_scp_cmd+10, tmp_cp_buff, 15);  	//printf("_%s_\n", buffer_scp_cmd);
+			system(buffer_scp_cmd);				break;
 
-	case 4: strncpy(buffer_scp_cmd+10, "111.111.111.111        ", 15);  printf("_%s_\n", buffer_scp_cmd); system(buffer_scp_cmd);break;
+		case 3: strcpy(tmp_cp_buff, ip_matrix[3].matx_ip);	for(int j=strlen(tmp_cp_buff); j<23; j++){tmp_cp_buff[j]=' ';}
+			strncpy(buffer_scp_cmd+10, tmp_cp_buff, 15);  	//printf("_%s_\n", buffer_scp_cmd);
+			system(buffer_scp_cmd);				break;
 
-	}
+		case 4: strcpy(tmp_cp_buff, ip_matrix[4].matx_ip);	for(int j=strlen(tmp_cp_buff); j<23; j++){tmp_cp_buff[j]=' ';}
+			strncpy(buffer_scp_cmd+10, tmp_cp_buff, 15);  	//printf("_%s_\n", buffer_scp_cmd);
+			system(buffer_scp_cmd);				break;
+		}
 	}
 
 
