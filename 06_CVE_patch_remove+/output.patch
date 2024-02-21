@@ -29,7 +29,7 @@ Reviewed-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
 Reviewed-by: Tomas Mraz <tomas@openssl.org>
 (Merged from https://github.com/openssl/openssl/pull/21452)
 
-Upstream-Status: Backport [import from suse ftp.pbone.net/mirror/ftp.opensuse.org/update/leap/15.5/sle/src/openssl-1_0_0-1.0.2p-150000.3.82.1.src.rpm
+Upstream-Status: Backport [import from suse ftp.pbone.net/mirror/ftp.opensuse.og/update/leap/15.5/sle/src/openssl-1_0_0-1.0.2pp-150000.3.82.1.src.rpm
 Upstream commit https://github.com/openssl/openssl/commit/8780a896543a654e757db1b9396383f9d8095528]
 CVE: CVE-2023-3446
 Signed-off-by: Vijay Anusuri <vanusuri@mvista.com>

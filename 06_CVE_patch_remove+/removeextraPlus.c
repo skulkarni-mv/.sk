@@ -7,8 +7,8 @@ void main()
 	FILE *fp;
 	char buff[1000]={0};
 
-	fp=fopen("patch.patch","r");
-	FILE* fw=fopen("new.patch","w");
+	fp=fopen("input.patch","r");
+	FILE* fw=fopen("output.patch","w");
 
 	while(fgets(buff, 999, fp) != NULL)
 	{
