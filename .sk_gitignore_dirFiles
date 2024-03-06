@@ -1,0 +1,37 @@
+LAPTOP SPECIFIC FILES
+
+bulkcp_dir_is.txt
+bulkcp_ls_is.txt
+info_build.txt
+.ldappass.txt
+.ldappass_woEnter.txt
+.localpass.txt
+pwd_sk2.txt
+pwd_sk.txt
+replaceEnter_sk
+send-ReceivedFromPC.txt
+send-THIS2PC.txt
+.skgithubpass
+ssh_kill.txt
+ssh_ps.txt
+tmp_redir_op.txt
+
+-----------------------------------------
+
+PC SPECIFIC FILES
+
+bulkcp_dir_is.txt
+bulkcp_ls_is.txt
+info_build.txt
+.ldappass.txt
+.ldappass_woEnter.txt
+.localpass.txt
+pwd_sk2.txt
+pwd_sk.txt
+replaceEnter_sk
+send-ReceivedFromLap.txt
+send-THIS2Lap.txt
+.skgithubpass
+ssh_kill.txt
+ssh_ps.txt
+tmp_redir_op.txt
