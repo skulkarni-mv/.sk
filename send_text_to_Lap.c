@@ -4,20 +4,22 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-
 // Output cmd: /bin/sendtoLap
 // gcc ~/.sk/send_text_to_Lap.c -o ~/.sk/sendtoLAP; sudo mv ~/.sk/sendtoLAP /bin/
+
 
 //#define debug
 
 #define NUMBER_OF_IPs 4	// ALSO CHANGE MATRIX DATA & FORK CREATIONS
 
+
 typedef struct ip_matrix_struct
 {
-	 int matx_chproc_num;
+	int matx_chproc_num;
 	char matx_ip[16];
 	char matx_nameof_ip[20];
 }struct_sk;
+
 
 	const int ips_cnt = NUMBER_OF_IPs;			// Number of IP addresses to be checked = 4
 	int         pid_arr[NUMBER_OF_IPs+1]={0};		//  [5] == [ ips_cnt+1 ]  used as mainproc_pid stored at arr[0] 
@@ -126,23 +128,9 @@ void main(int argc, char *argv[])
 	}
 	else			      //		 10	   20   25   30     37
 	{			      //		 10	   20   25   30     37
-	//sleep(1);		      //0123456789        0123456789012345678901234567
+				      //0123456789        0123456789012345678901234567
 		strcpy(buffer_scp_cmd, "ping -c 1 ");	//xyz.xyz.xyz.xyz > /dev/null
-		//strcpy(buffer_scp_cmd+10, "xyz.xyz.xyz.xyz");
 		strcpy(buffer_scp_cmd+25, " > /dev/null");
-		//strncpy(buffer_scp_cmd+10, "011.113.114.117        ", 15);
-/*
-		char tmp1[24]="8.8.8.4                ";
-		char tmp2[24]="192.168.50.134         ";
-		char tmp3[24]="10.80.10.3             ";
-		char tmp4[24]="111.111.111.111        ";*/
-
-/*	char tmp1[24];char tmp2[24];char tmp3[24];char tmp4[24];
-
-		strcpy(tmp1, "8.8.8.4                ");
-		strcpy(tmp2, "192.168.50.134         ");
-		strcpy(tmp3, "10.80.10.3             ");
-		strcpy(tmp4, "111.111.111.111        ");	*/
 
 	char tmp_cp_buff[24]={0};
 
@@ -154,30 +142,16 @@ void main(int argc, char *argv[])
 
 		case 2: strcpy(tmp_cp_buff, ip_matrix[2].matx_ip);	for(int j=strlen(tmp_cp_buff); j<23; j++){tmp_cp_buff[j]=' ';}
 			strncpy(buffer_scp_cmd+10, tmp_cp_buff, 15);  	//printf("_%s_\n", buffer_scp_cmd);
-//			printf("%d\n",system(buffer_scp_cmd) );		break;
 			if( system(buffer_scp_cmd) != 0) {printf("\n\t Please check the IP Matrix.\t FAILED \t to connect any IP \n\n\n");} break;
 
 		case 3: strcpy(tmp_cp_buff, ip_matrix[3].matx_ip);	for(int j=strlen(tmp_cp_buff); j<23; j++){tmp_cp_buff[j]=' ';}
 			strncpy(buffer_scp_cmd+10, tmp_cp_buff, 15);  	//printf("_%s_\n", buffer_scp_cmd);
-//			printf("%d\n",system(buffer_scp_cmd) );		break;
 			if( system(buffer_scp_cmd) != 0) {printf("\n\t Please check the IP Matrix.\t FAILED \t to connect any IP \n\n\n");} break;
 
 		case 4: strcpy(tmp_cp_buff, ip_matrix[4].matx_ip);	for(int j=strlen(tmp_cp_buff); j<23; j++){tmp_cp_buff[j]=' ';}
 			strncpy(buffer_scp_cmd+10, tmp_cp_buff, 15);  	//printf("_%s_\n", buffer_scp_cmd);
-//			printf("%d\n",system(buffer_scp_cmd) );		break;
 			if( system(buffer_scp_cmd) != 0) {printf("\n\t Please check the IP Matrix.\t FAILED \t to connect any IP \n\n\n");} break;
 		}
 	}
 
-
-
-/////////////
-
-/*
-"sshpass -f /home/shubham/.sk/.localpass.txt scp /home/shubham/.sk/send-THIS2Lap.txt shubham@xyz:/home/shubham/.sk/send-ReceivedFromPC.txt"
-	
-	printf("\n Use: send-cat / send-view (GEDIT)  to view the content sent from Laptop");
-	printf("\n Use: rec-cat  / rec-view  (GEDIT)  to view the content received from PC");
-
-	printf("\n"); */
 }
