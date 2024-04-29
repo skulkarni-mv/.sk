@@ -19,7 +19,7 @@ void main(int argc, char *argv[])
 	FILE *fp_read_patch_dets = NULL;
 
 
-	printf("\n\t Usage: ./cgx_kernel_automate/automate_run.out <bugz_num> <stable_commit_id> \n");
+	printf("\n\t Usage: ./cgx_kernel_automate/automate_run <bugz_num> <stable_commit_id> \n");
 
 	if (argc == 1)		// Passed only program_binary
 	{
@@ -186,11 +186,11 @@ void main(int argc, char *argv[])
 	strcpy(buffer_temp_tag, buffer_fp_read);		// store back to 'buffer_temp_tag' for further use
 
 
-	printf(" ---- Fetching CVE summary from bugzilla using bugz_num (automate_cve_summary.py) --- \n\n");
+	printf(" ---- Fetching CVE summary from bugzilla using bugz_num (fetch_cve_summary.py) --- \n\n");
 
 	system("rm cgx_kernel_automate/generated_details.txt");
 	
-	strcpy(buffer, "python3 cgx_kernel_automate/automate_cve_summary.py ");
+	strcpy(buffer, "python3 cgx_kernel_automate/fetch_cve_summary.py ");
 	strcat(buffer, bugz_num);
 	strcat(buffer, " 1> cgx_kernel_automate/generated_details.txt");
 	system(buffer);
@@ -291,7 +291,7 @@ void main(int argc, char *argv[])
 	
 	printf("\n");
 
-	strcpy(buffer, "python3 cgx_kernel_automate/automate_send_pull_req.py -b ");
+	strcpy(buffer, "python3 cgx_kernel_automate/send_pull_req_automate.py -b ");
 	strcat(buffer, bugz_num);
 	strcat(buffer, " -r ");
 	strcat(buffer, script_ip_revision_r);
@@ -302,8 +302,8 @@ void main(int argc, char *argv[])
 	printf(" Confirm if the generated COMMAND is as expected : \"%s\" \n\n\n", buffer);
 
 
-	printf(" --------- Create & PUSH the Merge Request Tag (automate_send_pull_req.py) ---------- \n\n");
-	printf("\t\t Using automate_send_pull_req.py to create & Push the tag \n\n");
+	printf(" --------- Create & PUSH the Merge Request Tag (send_pull_req_automate.py) ---------- \n\n");
+	printf("\t\t Using send_pull_req_automate.py to create & Push the tag \n\n");
 	printf(" ------------------ Press Enter to continue / Ctrl^C to Terminate ------------------- \n");
 
 	getchar();	// Uncomment once dev_done - Fix me

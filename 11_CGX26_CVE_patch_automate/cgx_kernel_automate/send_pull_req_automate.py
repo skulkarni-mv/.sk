@@ -347,7 +347,7 @@ dbg_print("Bugzilla-ID: %s" % (mvista_id))
 dbg_print("----------------------------------------")
 
 #bugz_pword = getpass.getpass('Please enter bugzilla password for %s:' % (mvista_id))	# Changed by Shubham
-fp = open('cgx_kernel_automate/automate_bugzpass.txt', 'r')
+fp = open('cgx_kernel_automate/bugzpass.txt', 'r')
 bugz_pword=fp.read()
 fp.close()
 
