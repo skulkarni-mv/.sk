@@ -186,7 +186,7 @@ void main(int argc, char *argv[])
 	strcpy(buffer_temp_tag, buffer_fp_read);		// store back to 'buffer_temp_tag' for further use
 
 
-	printf(" ---- Fetching CVE summary from bugzilla using bugz_num (fetch_cve_summary.py) --- \n\n");
+	printf(" ----- Fetching CVE summary from bugzilla using bugz_num (fetch_cve_summary.py) ----- \n\n");
 
 	system("rm cgx_kernel_automate/generated_details.txt");
 	
@@ -240,7 +240,7 @@ void main(int argc, char *argv[])
 	system("sleep 3 && git show");
 	printf("\n\n");
 
-	printf(" ------------- Do you want to proceed to create Tag & push Upstream ? --------------- \n\n");
+	printf(" ------------- Do you want to proceed to Create Tag & PUSH Upstream ? --------------- \n\n");
 	printf("\t\t Provide Input '-b Bug number', '-r Patch revision', '-n No of patches to push'  \n\n");
 	printf(" ------------------ Press Enter to continue / Ctrl^C to Terminate ------------------- \n");
 	getchar();
@@ -310,9 +310,62 @@ void main(int argc, char *argv[])
 	getchar();	// Used 2x times as scanf() is used before, thus getchar() won't stop if used only once
 	
 	printf("\n\"\"\"\n");
-	system(buffer);
-	
+	if(system(buffer) != 0) {
+		printf("\n ERROR. Unable to finish the 'send_pull_req_automate.py' script. Exiting...\n\n");
+		exit(1);
+	}
 	printf("\n\"\"\"\n");
+
+
+	printf("\n");
+	printf(" ----------------- Updating bugz with contrib repo link of PUSHED Tag --------------- \n\n");
+	printf("\t\t Tag pushed to contrib repo is:  ");	fflush(stdout);
+	system("cat cgx_kernel_automate/generated_details.txt");
+
+	fp_read_patch_dets = fopen("cgx_kernel_automate/generated_details.txt", "r");
+	if(fp_read_patch_dets == NULL) {
+                perror("fopen");
+		printf("\t ERROR: Unable to open 'cgx_kernel_automate/generated_details.txt'. Exiting... \n\n");
+		exit(1);
+	}
+
+	if( fscanf(fp_read_patch_dets, "%s", buffer_fp_read) == EOF) {
+		printf("\t ERROR: File 'cgx_kernel_automate/generated_details.txt' looks EMPTY. Exiting... \n\n");
+		exit(1);
+	}
+	fclose(fp_read_patch_dets);
+
+	if( strstr(buffer_fp_read, "mvl") == 0) {	// 'CVE' word not found in the 'buffer_fp_read'
+		printf("\t ERROR: Correct 'tag id' NOT found in 'buffer_fp_read'. Exiting... \n\n");
+		exit(1);
+	}
+
+	printf("\t\t Contrib  repo link of the tag: \"%s%s\" \n", "https://gitcgx.mvista.com/cgit/contrib/kernel.git/tag/?h=", buffer_fp_read);
+	printf("\n");
+
+	strcpy(buffer, "echo \"");
+	strcat(buffer, "Please merge the changes from the tag pushed at:\n");
+	strcat(buffer, "https://gitcgx.mvista.com/cgit/contrib/kernel.git/tag/?h=");
+	strcat(buffer, buffer_fp_read);
+	strcat(buffer, "\"");
+	strcat(buffer, " > cgx_kernel_automate/generated_details.txt");
+	system(buffer);
+
+	
+	printf("\n");
+	printf(" ----- Do you want to add following comment on bugz ? (update_bugz_tag_link.py) ----- \n");
+	printf("\"\n");
+	system("cat cgx_kernel_automate/generated_details.txt");
+	printf("\"\n");
+	printf(" ------------------ Press Enter to continue / Ctrl^C to Terminate ------------------- \n");
+
+	getchar();
+
+	strcpy(buffer, "python3 cgx_kernel_automate/update_bugz_tag_link.py ");
+	strcat(buffer, bugz_num);
+	system(buffer);
+
+	printf("\n");
 }
 
 void print_bug_num_stable_commit_id(char *bugz_num, char *stable_commit_id)

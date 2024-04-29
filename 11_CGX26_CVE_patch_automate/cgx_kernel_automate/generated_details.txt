@@ -1,1 +1,2 @@
-CVE-2024-1086 kernel: nf_tables: use-after-free vulnerability in the nft_verdict_init() function
+Please merge the changes from the tag pushed at:
+https://gitcgx.mvista.com/cgit/contrib/kernel.git/tag/?h=mvl-4.19/common-127996-V1
