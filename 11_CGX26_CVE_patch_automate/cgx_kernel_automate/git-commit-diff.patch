@@ -1,0 +1,17 @@
+diff --git a/git-commit-mvauto b/git-commit-mvauto
+index f8d8676..6dbdf6d 100755
+--- a/git-commit-mvauto
++++ b/git-commit-mvauto
+@@ -372,6 +372,12 @@ Disposition: %s
+     if not body.startswith("Description:\n"):
+         header += "Description:\n\n"
+ 
++        fp = open('cgx_kernel_automate/generated_details.txt', 'r')       ## -> Added by Shubham
++        cve_summary=fp.read()
++        fp.close()
++        header += cve_summary
++        header += "\n\n"                                                  ## <- Added by Shubham
++
+     return header + body
+ 
+ 

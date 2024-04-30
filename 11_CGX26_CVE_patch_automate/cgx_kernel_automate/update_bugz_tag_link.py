@@ -94,7 +94,7 @@ except:
 bugz_num = sys.argv[1]
 
 
-fp = open('cgx_kernel_automate/bugzpass.txt', 'r')
+fp = open('cgx_kernel_automate/.bugzpass.txt', 'r')
 bugz_pword=fp.read()
 fp.close()
 
