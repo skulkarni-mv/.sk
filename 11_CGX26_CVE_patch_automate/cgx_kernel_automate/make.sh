@@ -17,4 +17,8 @@ then
 	sudo pip install lxml;
 	echo ""
 
+
+	echo " ********** Make sure you have updated file '.bugzpass.txt' with your LDAP/bugz Password ********** "
+	echo ""
+
 fi
