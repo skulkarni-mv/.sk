@@ -162,11 +162,6 @@ def form_repo_data(idx, remote_branch):
     rev = auto_find_rev_from_contrib(repo_details[idx]['web_url_tag'], remote_branch)
     msg = 'Merge to %s bug %s' % (remote_branch, bug_no)
     tag = '%s-%s-V%s' % (remote_branch, bug_no, rev)
-									# -> Shubham Test
-    fp = open("cgx_kernel_automate/generated_details.txt", "w")
-    fp.write(tag+'\n')
-    fp.close()
-									# <- Shubham Test
 
 def identify_user():
     global username, mvista_id
@@ -342,7 +337,6 @@ def bugz_add_review_req_attachment(uname, pword, cmnt):
 
 parse_args()
 identify_repo()
-sys.exit(0)		##Shubham Test
 mark_start_commit()
 
 dbg_print("Generating pull request with the details")

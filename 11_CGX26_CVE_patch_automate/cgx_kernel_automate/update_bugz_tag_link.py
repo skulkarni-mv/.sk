@@ -41,6 +41,15 @@ def update_bugz_with_tag_link(uname, pword, bug_no):
         'Bugzilla_password': pword,
     }
 
+    upd_d = {
+           'id': bug_no,
+        'newcc': uname,
+    }
+
+    fp = open('cgx_kernel_automate/generated_details.txt', 'r')
+    cmnt_tag_link=fp.read()
+    fp.close()
+
     with requests.session() as s:
         try:
             r = s.post(bugz_login_url, data=acc_details)
@@ -50,14 +59,13 @@ def update_bugz_with_tag_link(uname, pword, bug_no):
                 print("Exiting..")
                 sys.exit(1)
 
-            fp = open('cgx_kernel_automate/generated_details.txt', 'r')
-            cmnt_tag_link=fp.read()
-            fp.close()
+            r = s.get(bugz_login_url)
+            soup = bs(r.text, 'lxml')
+            upd_d['delta_ts'] = soup.find('input', {'name': 'delta_ts'}).get('value')
+            upd_d['token'] = soup.find('input', {'name': 'token'}).get('value')
+            upd_d['comment'] = cmnt_tag_link
 
-            print("Python reads file as:")
-            print(cmnt_tag_link)
-
-            return
+            r = s.post(bugz_post_url, data=upd_d)
 
         except requests.exceptions.Timeout:
             print("Connection timed out")
@@ -93,3 +101,4 @@ fp.close()
 identify_user()
 update_bugz_with_tag_link(mvista_id, bugz_pword, bugz_num)
 
+print("\t\t Updated the comment on the bugz: \"http://bugz.mvista.com/show_bug.cgi?id="+bugz_num+"\"")
