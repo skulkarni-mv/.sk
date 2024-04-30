@@ -21,24 +21,7 @@ void main(int argc, char *argv[])
 
 	printf("\n\t Usage: ./cgx_kernel_automate/automate_run <bugz_num> <stable_commit_id> \n");
 
-	if (argc == 1)		// Passed only program_binary
-	{
-		printf("\n");
-		printf(" Enter bugz_number : ");
-		scanf("%s", bugz_num);
-
-		if( check_input_length(bugz_num, 6, "bugz_num") != true)
-			exit(1);
-
-		printf(" Enter upstream commit from STABLE to fix CVE : ");
-		scanf("%s", stable_commit_id);
-
-		if(check_input_length(stable_commit_id, 40, "stable_commit_id") != true)
-			exit(1);
-
-		print_bug_num_stable_commit_id(bugz_num, stable_commit_id);
-	}
-	else if(argc == 3)	// Passed program_binary , bug_num , commit_id
+	if(argc == 3)	// Passed program_binary , bug_num , commit_id
 	{
 		strcpy(bugz_num, argv[1]);
 		if( check_input_length(bugz_num, 6, "bugz_num") != true)
