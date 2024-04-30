@@ -39,6 +39,11 @@ void main(int argc, char *argv[])
 		exit(1);	
 	}
 
+	if( system("ls cgx_kernel_automate/ 1> /dev/null 2>&1") != 0) {                // check if inside Correct Directory
+		printf("\n Directory 'cgx_kernel_automate/' NOT FOUND in the PWD. Make sure you are in correct PWD. Exiting... \n\n");
+		exit(1);
+	}
+
 
 	printf(" ------------------------------------------------------------------------------------ \n");
 	printf("  Checking if gregkh/linux is cloned at : \" ../gregkh-linux/linux/ \"  \n\n");
