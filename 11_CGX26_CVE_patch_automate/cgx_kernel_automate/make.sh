@@ -3,6 +3,8 @@ gcc code_for_automation.c -o automate_run
 if [ -f "git-commit-diff.patch" ];
 then
 
+	chmod a+x fetch_cve_summary.py send_pull_req_automate.py update_bugz_tag_link.py;
+
 	sudo cp /usr/local/bin/git-commit-mv /usr/local/bin/git-commit-mvauto;
 	sudo mv git-commit-diff.patch /usr/local/bin/git-commit-diff.patch;
 	cd /usr/local/bin/;

@@ -44,6 +44,15 @@ Directory 'cgx_kernel_automate' contains following automation files:
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
+Compilation and Usage:
+
+user@group:WorkDirectory/cgx_kernel_automate$ gcc code_for_automation.c -o automate_run		OR
+user@group:WorkDirectory/cgx_kernel_automate$ chmod a+x make.sh && ./make.sh
+
+		Usage: ./cgx_kernel_automate/automate_run <bugz_num> <stable_commit_id>
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
 Dependencies:	file '/usr/local/bin/git-commit-mvauto'
 
 user@group:WorkDirectory/cgx_kernel_automate$ sudo cp /usr/local/bin/git-commit-mv /usr/local/bin/git-commit-mvauto
@@ -61,13 +70,4 @@ user@group:WorkDirectory/cgx_kernel_automate$ sudo pip install lxml
 
 
 *** NOTE: These Dependencies will be address once you run './make.sh'
-
----------------------------------------------------------------------------------------------------------------------------------------------
-
-Compilation and Usage:
-
-user@group:WorkDirectory/cgx_kernel_automate$ gcc code_for_automation.c -o automate_run		OR
-user@group:WorkDirectory/cgx_kernel_automate$ ./make.sh
-
-		Usage: ./cgx_kernel_automate/automate_run <bugz_num> <stable_commit_id>
 
