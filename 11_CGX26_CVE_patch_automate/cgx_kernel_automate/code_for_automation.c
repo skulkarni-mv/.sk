@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 
+//#define ManualPatching
 
 bool check_input_length(char *input, int correct_length, char *input_name_label);
 void print_bug_num_stable_commit_id(char *bugz_num, char *stable_commit_id);
@@ -100,6 +101,11 @@ void main(int argc, char *argv[])
 	fclose(fp_read_patch_dets);
 	
 	printf(" ---------- MOVING & APPLYING generated patch into this working directory ----------- \n\n");
+
+#ifdef ManualPatching
+	printf(" -- [Program PAUSED for Manual changes. Check ../gregkh/linux. Replace with Yours] -- \n\n");
+	getchar();
+#endif
 
 	strcpy(buffer, "mv ../gregkh-linux/linux/");
 	strcat(buffer, buffer_fp_read);
@@ -216,7 +222,10 @@ void main(int argc, char *argv[])
 	strcat(buffer, " --type ");		strcat(buffer, "\"Security Fix\"");
 	strcat(buffer, " --disposition ");	strcat(buffer, "\"Backport from \"");		strcat(buffer, buffer_temp_tag);
 	strcat(buffer, " --changeid ");		strcat(buffer, stable_commit_id);
+
+#ifndef ManualPatching				// if ManualPatching -> Edit, ifNO ManualPatching -> NoEdit
 	strcat(buffer, " --no-edit");		// Keep EDIT OPTION to check manually if the log is correct
+#endif
 
 	if( system(buffer) != 0) {	// Not sure when it might return failure
 		printf("\n ERROR: cmd '%s' FAILED. Exiting...\n\n", buffer);
