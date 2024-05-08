@@ -6,14 +6,12 @@ rm -rf ./cgx_kernel_automate/ && \
 ./code_web.py && \
 sleep 1 &&
 
-unzip ~/Downloads/skulkarni-mv*.zip -d ~/Downloads/skulkarni-mv_dir && \
-echo "" && \
-ls ~/Downloads/skulkarni-mv_dir && \
-echo "" && \
+unzip ~/Downloads/skulkarni-mv*.zip -d ~/Downloads/cgx_kernel_automate/ && \
 
-mv ~/Downloads/skulkarni-mv_dir/* . && \
+mv ~/Downloads/cgx_kernel_automate/ . && \
+
 echo "" && \
-ls ./cgx_kernel_automate/ && \
+ls -A ./cgx_kernel_automate/ && \
 echo "" && \
 
 rm ~/Downloads/skulkarni-mv*.zip && \
