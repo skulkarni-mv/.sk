@@ -9,6 +9,7 @@
 bool check_input_length(char *input, int correct_length, char *input_name_label);
 void print_bug_num_stable_commit_id(char *bugz_num, char *stable_commit_id);
 int clone_gregkh_linux(bool create_gregkh_dir_yes_no);
+bool str_compare_if_invalid_ip(char *script_ip);
 
 void main(int argc, char *argv[])
 {
@@ -33,8 +34,7 @@ void main(int argc, char *argv[])
 			if( strcmp(argv[3] ,"-d") != 0) {
 				printf("\n");   exit(1);
 			}
-			                      // returned NULL Pointer || Input filter as strstr has "1'02'34...". "02" will be accepted
-			else if( strstr("1023456789", argv[4]) == NULL || strcmp(argv[4], "02") == 0 ) {
+			else if( strstr("1023456789", argv[4]) == NULL || (strlen(argv[4]) > 1 && strcmp(argv[4],"10")!=0)  ) {
 				printf("\n\n UNRECOGNISED INPUT. Expected Integer value after '-d' (Max 10 Allowed). Exiting... \n\n");
 				exit(1);
 			}
@@ -295,8 +295,8 @@ void main(int argc, char *argv[])
 		else {
 			printf("\t Enter the Revision of Tag {1,2,3..10}: ");
 			scanf("%s", script_ip_revision_r);
-			                             // returned NULL Pointer || Input filter as strstr has "1'02'34...". "02" will be accepted
-			if(strstr("1023456789", script_ip_revision_r) == NULL || strcmp(script_ip_revision_r, "02") == 0 ) {
+
+			if(strstr("1023456789", script_ip_revision_r) == NULL || str_compare_if_invalid_ip(script_ip_revision_r) ) {
 				printf("\n\n UNRECOGNISED INPUT. Expected {1,2,3,etc} (Max 10 Allowed). Exiting... \n\n");
 				exit(1);
 			}
@@ -316,8 +316,8 @@ void main(int argc, char *argv[])
 		else {
 			printf("\t Enter the Number of Patches {1,2..10}: ");
 			scanf("%s", script_ip_patches_n);
-			                            // returned NULL Pointer || Input filter as strstr has "1'02'34...". "02" will be accepted
-			if(strstr("1023456789", script_ip_patches_n) == NULL || strcmp(script_ip_patches_n, "02") == 0 ) {
+
+			if(strstr("1023456789", script_ip_patches_n) == NULL || str_compare_if_invalid_ip(script_ip_patches_n) ) {
 				printf("\n\n UNRECOGNISED INPUT. Expected {1,2,etc} (Max 10 Allowed). Exiting... \n\n");
 				exit(1);
 			}
@@ -438,4 +438,18 @@ int clone_gregkh_linux(bool create_gregkh_dir_yes_no)
 	}
 
 	return system("cd ../gregkh-linux/ && git clone https://github.com/gregkh/linux.git");
+}
+
+bool str_compare_if_invalid_ip(char *script_ip)
+{
+	bool invalid=true, valid=false;		// Return according to the if() conditions. invalid=>true=>if(true)->"Unrecognised Input"
+
+	if( strlen(script_ip) == 1 && strcmp(script_ip,"0")==0 ) {	//	For strlen=1, ip "0" is Invalid.
+		return invalid;
+	}
+	if( strlen(script_ip) > 1 && strcmp(script_ip,"10")!=0 ) {	//	For strlen>1, ip "10" is Valid.
+		return invalid;
+	}
+
+	return valid;
 }
