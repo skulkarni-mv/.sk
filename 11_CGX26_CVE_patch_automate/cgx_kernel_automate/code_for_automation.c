@@ -14,16 +14,39 @@ void main(int argc, char *argv[])
 {
 
 	char bugz_num[10]={0},  stable_commit_id[50]={0}, i = 0, choice_y_n;
-	char buffer[500]={0}, buffer_fp_read[200]={0}, buffer_temp_tag[100]={0};
+	char buffer[500]={0}, buffer_fp_read[200]={0}, buffer_temp_tag[100]={0}, buffer_depen_patch[50]={0};
 	char script_ip_revision_r[5]={0}, script_ip_patches_n[5]={0};
 
 	FILE *fp_read_patch_dets = NULL;
 
 
-	printf("\n\t Usage: ./cgx_kernel_automate/automate_run <bugz_num> <stable_commit_id> \n");
+	printf("\n\t Usage: ./cgx_kernel_automate/automate_run <bugz_num> <stable_commit_id> [OPT: {-d}(DependencyPatchNumber) {1/2/3/..10} ]\n");
 
-	if(argc == 3)	// Passed program_binary , bug_num , commit_id
+	if(argc >= 3 && argc <=5)	// Passed program_binary , bug_num , commit_id [OPT: , -d , 1] {OPT:OPTIONAL}
 	{
+		// Logic for -> If '-d' OPTIONAL parameter is passed
+		if(argc == 4) {
+			printf("\n");	exit(1);
+		}
+		else if(argc == 5) {
+
+			if( strcmp(argv[3] ,"-d") != 0) {
+				printf("\n");   exit(1);
+			}
+			                      // returned NULL Pointer || Input filter as strstr has "1'02'34...". "02" will be accepted
+			else if( strstr("1023456789", argv[4]) == NULL || strcmp(argv[4], "02") == 0 ) {
+				printf("\n\n UNRECOGNISED INPUT. Expected Integer value after '-d' (Max 10 Allowed). Exiting... \n\n");
+				exit(1);
+			}
+
+			strcpy(buffer_depen_patch, "Dependency Patch");
+			if(argv[4][0] != '0') {
+				strcat(buffer_depen_patch, " #");
+				strcat(buffer_depen_patch, argv[4]);
+			}
+		}
+		// Logic for <- If '-d' OPTIONAL parameter is passed
+
 		strcpy(bugz_num, argv[1]);
 		if( check_input_length(bugz_num, 6, "bugz_num") != true)
 		        exit(1);
@@ -36,9 +59,14 @@ void main(int argc, char *argv[])
 	}
 	else
 	{
-		printf("\n");
-		exit(1);	
+		printf("\n");	exit(1);
 	}
+
+	if( strlen(buffer_depen_patch) != 0 ) {
+		printf(" Dependency details will be added in the git-header: \"%s\" \n\n", buffer_depen_patch);
+	}
+	sleep(1);
+
 
 	if( system("ls cgx_kernel_automate/ 1> /dev/null 2>&1") != 0) {                // check if inside Correct Directory
 		printf("\n Directory 'cgx_kernel_automate/' NOT FOUND in the PWD. Make sure you are in correct PWD. Exiting... \n\n");
@@ -213,6 +241,16 @@ void main(int argc, char *argv[])
 		exit(1);
 	}
 	
+	// Logic for -> If '-d' OPTIONAL parameter is passed
+	if( strlen(buffer_depen_patch) != 0 ) {
+		strcpy(buffer, "echo \"\" >> cgx_kernel_automate/generated_details.txt");
+		system(buffer);
+		strcpy(buffer, "echo \"");
+		strcat(buffer, buffer_depen_patch);
+		strcat(buffer, "\" >> cgx_kernel_automate/generated_details.txt");
+		system(buffer);
+	}
+	// Logic for <- If '-d' OPTIONAL parameter is passed
 
         printf(" --------------------- Adding mvista header in the git commit ----------------------- \n\n");
 
@@ -255,10 +293,10 @@ void main(int argc, char *argv[])
 		if(choice_y_n == 'y' || choice_y_n == 'Y')
 			strcpy(script_ip_revision_r, "1");
 		else {
-			printf("\t Enter the Revision of Tag {1,2,3,etc}: ");
+			printf("\t Enter the Revision of Tag {1,2,3..10}: ");
 			scanf("%s", script_ip_revision_r);
-			
-			if(strstr("1023456789", script_ip_revision_r) == 0) {
+			                             // returned NULL Pointer || Input filter as strstr has "1'02'34...". "02" will be accepted
+			if(strstr("1023456789", script_ip_revision_r) == NULL || strcmp(script_ip_revision_r, "02") == 0 ) {
 				printf("\n\n UNRECOGNISED INPUT. Expected {1,2,3,etc} (Max 10 Allowed). Exiting... \n\n");
 				exit(1);
 			}
@@ -276,10 +314,10 @@ void main(int argc, char *argv[])
 		if(choice_y_n == 'y' || choice_y_n == 'Y')
 			strcpy(script_ip_patches_n, "1");
 		else {
-			printf("\t Enter the Number of Patches {1,2,etc}: ");
+			printf("\t Enter the Number of Patches {1,2..10}: ");
 			scanf("%s", script_ip_patches_n);
-			
-			if(strstr("1023456789", script_ip_patches_n) == 0) {
+			                            // returned NULL Pointer || Input filter as strstr has "1'02'34...". "02" will be accepted
+			if(strstr("1023456789", script_ip_patches_n) == NULL || strcmp(script_ip_patches_n, "02") == 0 ) {
 				printf("\n\n UNRECOGNISED INPUT. Expected {1,2,etc} (Max 10 Allowed). Exiting... \n\n");
 				exit(1);
 			}
