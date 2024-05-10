@@ -338,7 +338,7 @@ void main(int argc, char *argv[])
 
 
 	printf(" --------- Create & PUSH the Merge Request Tag (send_pull_req_automate.py) ---------- \n\n");
-	printf("\t\t Using send_pull_req_automate.py to create & Push the tag \n\n");
+	printf("\t\t Using send_pull_req_automate.py to Create & Push the tag \n\n");
 	printf(" ------------------ Press Enter to continue / Ctrl^C to Terminate ------------------- \n");
 
 	getchar();	// Uncomment once dev_done - Fix me
