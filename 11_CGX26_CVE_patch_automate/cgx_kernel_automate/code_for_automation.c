@@ -89,7 +89,7 @@ void main(int argc, char *argv[])
 	}
 	else {
 		if (clone_gregkh_linux(true) != 0) {
-			printf("\n\n Clone Failed, Removing created 'gregkh-linux' dir. Exiting... \n\n");
+			printf("\n\n Clone Failed, Removing created '../gregkh-linux/' dir. Exiting... \n\n");
 			system("rmdir ../gregkh-linux/");
 			exit(1);
 		}
@@ -131,7 +131,7 @@ void main(int argc, char *argv[])
 	printf(" ---------- MOVING & APPLYING generated patch into this working directory ----------- \n\n");
 
 #ifdef ManualPatching
-	printf(" -- [Program PAUSED for Manual changes. Check ../gregkh/linux. Replace with Yours] -- \n\n");
+	printf(" -- [PAUSED for Manual changes. Check ../gregkh-linux/linux/ & Replace with Yours] -- \n\n");
 	getchar();
 #endif
 
@@ -157,7 +157,7 @@ void main(int argc, char *argv[])
 	system(buffer);
 
 	printf("\n");
-	printf(" ----------- Generating 'git describe --tag' from gregkh/linux directory ------------ \n\n");
+	printf(" ------- Generating 'git describe --tag' from ../gregkh-linux/linux directory ------- \n\n");
 
         system("rm cgx_kernel_automate/generated_details.txt");
 
@@ -434,7 +434,7 @@ int clone_gregkh_linux(bool create_gregkh_dir_yes_no)
 
 	if(create_gregkh_dir_yes_no) {
 		system("mkdir ../gregkh-linux/");
-		printf("Created DIR: ../gregkh-linux/ \n");
+		printf("Created dir: ../gregkh-linux/ \n");
 	}
 
 	return system("cd ../gregkh-linux/ && git clone https://github.com/gregkh/linux.git");
