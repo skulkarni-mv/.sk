@@ -77,6 +77,13 @@ repo_details = [
         'url': 'git://gitcgx.mvista.com/cgx/contrib/kernel.git',
         'web_url_tag': 'http://gitcgx.mvista.com/cgit/contrib/kernel.git/refs/tags',
         },
+    {
+        'repo': 'CGX4.0',
+        'origin': 'gitcgx.mvista.com:/mvista/git/cgx/CGX4.0/kernel/linux-mvista-4.0.git',
+        'pushto': 'gitcgx.mvista.com:/mvista/git/cgx/contrib/kernel.git',
+        'url': 'git://gitcgx.mvista.com/cgx/contrib/kernel.git',
+        'web_url_tag': 'http://gitcgx.mvista.com/cgit/contrib/kernel.git/refs/tags',
+        },
 ]
 
 

@@ -379,9 +379,10 @@ void main(int argc, char *argv[])
 	printf("\n");
 
 	strcpy(buffer, "echo \"");
-	strcat(buffer, "Please merge the changes from the tag pushed at:\n");
+	strcat(buffer, "Tag pushed at:\n");
 	strcat(buffer, "https://gitcgx.mvista.com/cgit/contrib/kernel.git/tag/?h=");
 	strcat(buffer, buffer_fp_read);
+	strcat(buffer, "\n\ngit pull-request details updated in the comment above. Please merge the changes.\nThanks!");
 	strcat(buffer, "\"");
 	strcat(buffer, " > cgx_kernel_automate/generated_details.txt");
 	system(buffer);
