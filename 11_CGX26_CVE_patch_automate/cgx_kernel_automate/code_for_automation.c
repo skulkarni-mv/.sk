@@ -127,7 +127,7 @@ void main(int argc, char *argv[])
 		exit(1);
 	}
 	fclose(fp_read_patch_dets);
-	
+
 	printf(" ---------- MOVING & APPLYING generated patch into this working directory ----------- \n\n");
 
 #ifdef ManualPatching
@@ -159,33 +159,33 @@ void main(int argc, char *argv[])
 	printf("\n");
 	printf(" ------- Generating 'git describe --tag' from ../gregkh-linux/linux directory ------- \n\n");
 
-        system("rm cgx_kernel_automate/generated_details.txt");
+	system("rm cgx_kernel_automate/generated_details.txt");
 
-        strcpy(buffer, "cd ../gregkh-linux/linux/ && ");
-        strcat(buffer, "git describe --tag ");
-        strcat(buffer, stable_commit_id);
+	strcpy(buffer, "cd ../gregkh-linux/linux/ && ");
+	strcat(buffer, "git describe --tag ");
+	strcat(buffer, stable_commit_id);
 	strcat(buffer, " 1> generated_details.txt");	// 1> - redirect if no error, stdout only
 	system(buffer);					// creating file in gregkh as linux-mvista-x.y can't be predicted as 'cd gregkh' is done
 
 	strcpy(buffer, "mv ../gregkh-linux/linux/generated_details.txt cgx_kernel_automate/generated_details.txt");	// move in automate dir
 	system(buffer);
 
-        printf("\n Generated git describe tag : <if blank means unable to generate> \n");
+	printf("\n Generated git describe tag : <if blank means unable to generate> \n");
 	printf("\t\t\t\t");	fflush(stdout);
-        system("cat cgx_kernel_automate/generated_details.txt");
-        printf("\n");
+	system("cat cgx_kernel_automate/generated_details.txt");
+	printf("\n");
 
-        fp_read_patch_dets = fopen("cgx_kernel_automate/generated_details.txt", "r");
-        if(fp_read_patch_dets == NULL) {
-                perror("fopen");
-                printf("\t ERROR: Unable to open 'cgx_kernel_automate/generated_details.txt'. Exiting... \n\n");
-                exit(1);
-        }   
+	fp_read_patch_dets = fopen("cgx_kernel_automate/generated_details.txt", "r");
+	if(fp_read_patch_dets == NULL) {
+		perror("fopen");
+		printf("\t ERROR: Unable to open 'cgx_kernel_automate/generated_details.txt'. Exiting... \n\n");
+		exit(1);
+	}
 
-        if( fscanf(fp_read_patch_dets, "%s", buffer_fp_read) == EOF) {
-                printf("\t ERROR: Unable to read 'generated git describe tag' from 'cgx_kernel_automate/generated_details.txt'. Exiting... \n\n");
-                exit(1);
-        }   
+	if( fscanf(fp_read_patch_dets, "%s", buffer_fp_read) == EOF) {
+		printf("\t ERROR: Unable to read 'generated git describe tag' from 'cgx_kernel_automate/generated_details.txt'. Exiting... \n\n");
+		exit(1);
+	}
 	fclose(fp_read_patch_dets);
 
 	strcpy(buffer_temp_tag, buffer_fp_read);		// eg- buffer_temp_tag = v4.19.292-58-g44f69c9
@@ -211,7 +211,7 @@ void main(int argc, char *argv[])
 	printf(" ----- Fetching CVE summary from bugzilla using bugz_num (fetch_cve_summary.py) ----- \n\n");
 
 	system("rm cgx_kernel_automate/generated_details.txt");
-	
+
 	strcpy(buffer, "python3 cgx_kernel_automate/fetch_cve_summary.py ");
 	strcat(buffer, bugz_num);
 	strcat(buffer, " 1> cgx_kernel_automate/generated_details.txt");
@@ -222,25 +222,25 @@ void main(int argc, char *argv[])
 	printf("\t\t\t\t");	fflush(stdout);
 	system("cat cgx_kernel_automate/generated_details.txt");
 	printf("\n");
-	
-        fp_read_patch_dets = fopen("cgx_kernel_automate/generated_details.txt", "r");
-        if(fp_read_patch_dets == NULL) {
-                perror("fopen");
-                printf("\t ERROR: Unable to open 'cgx_kernel_automate/generated_details.txt'. Exiting... \n\n");
-                exit(1);
-        }   
 
-        if( fgets(buffer_fp_read, 199, fp_read_patch_dets) == NULL) {
-                printf("\t ERROR: File 'cgx_kernel_automate/generated_details.txt' looks EMPTY. Exiting... \n\n");
-                exit(1);
-        }   
+	fp_read_patch_dets = fopen("cgx_kernel_automate/generated_details.txt", "r");
+	if(fp_read_patch_dets == NULL) {
+		perror("fopen");
+		printf("\t ERROR: Unable to open 'cgx_kernel_automate/generated_details.txt'. Exiting... \n\n");
+		exit(1);
+	}
+
+	if( fgets(buffer_fp_read, 199, fp_read_patch_dets) == NULL) {
+		printf("\t ERROR: File 'cgx_kernel_automate/generated_details.txt' looks EMPTY. Exiting... \n\n");
+		exit(1);
+	}
 	fclose(fp_read_patch_dets);
 
 	if( strstr(buffer_fp_read, "CVE") == 0) {	// 'CVE' word not found in the 'buffer_fp_read'
-                printf("\t ERROR: 'CVE' id NOT found in 'buffer_fp_read'. Exiting... \n\n");
+		printf("\t ERROR: 'CVE' id NOT found in 'buffer_fp_read'. Exiting... \n\n");
 		exit(1);
 	}
-	
+
 	// Logic for -> If '-d' OPTIONAL parameter is passed
 	if( strlen(buffer_depen_patch) != 0 ) {
 		strcpy(buffer, "echo \"\" >> cgx_kernel_automate/generated_details.txt");
@@ -284,11 +284,11 @@ void main(int argc, char *argv[])
 	printf("\t Bugz number is: %s \n", bugz_num);
 	printf("\t Assume Revision of Tag is '1'? [y/n] : ");
 	scanf(" %c", &choice_y_n);
-	
+
 	if(choice_y_n != 'y' && choice_y_n != 'Y' && choice_y_n != 'n' && choice_y_n != 'N') {
 		printf("\n\n UNRECOGNISED INPUT. Expected [y/n]. Exiting... \n\n");
 		exit(1);
-	}		
+	}
 	else {
 		if(choice_y_n == 'y' || choice_y_n == 'Y')
 			strcpy(script_ip_revision_r, "1");
@@ -305,11 +305,11 @@ void main(int argc, char *argv[])
 
 	printf("\t Assume Number of Patches  '1'? [y/n] : ");
 	scanf(" %c", &choice_y_n);
-	
+
 	if(choice_y_n != 'y' && choice_y_n != 'Y' && choice_y_n != 'n' && choice_y_n != 'N') {
 		printf("\n\n UNRECOGNISED INPUT. Expected [y/n]. Exiting... \n\n");
 		exit(1);
-	}		
+	}
 	else {
 		if(choice_y_n == 'y' || choice_y_n == 'Y')
 			strcpy(script_ip_patches_n, "1");
@@ -323,7 +323,7 @@ void main(int argc, char *argv[])
 			}
 		}
 	}
-	
+
 	printf("\n");
 
 	strcpy(buffer, "python3 cgx_kernel_automate/send_pull_req_automate.py -b ");
@@ -333,7 +333,7 @@ void main(int argc, char *argv[])
 	strcat(buffer, " -n ");
 	strcat(buffer, script_ip_patches_n);
 	strcat(buffer, " -v");
-	
+
 	printf(" Confirm if the generated COMMAND is as expected : \"%s\" \n\n\n", buffer);
 
 
@@ -343,7 +343,7 @@ void main(int argc, char *argv[])
 
 	getchar();	// Uncomment once dev_done - Fix me
 	getchar();	// Used 2x times as scanf() is used before, thus getchar() won't stop if used only once
-	
+
 	printf("\n\"\"\"\n");
 	if(system(buffer) != 0) {
 		printf("\n ERROR. Unable to finish the 'send_pull_req_automate.py' script. Exiting...\n\n");
@@ -387,7 +387,7 @@ void main(int argc, char *argv[])
 	strcat(buffer, " > cgx_kernel_automate/generated_details.txt");
 	system(buffer);
 
-	
+
 	printf("\n");
 	printf(" ----- Do you want to add following comment on bugz ? (update_bugz_tag_link.py) ----- \n");
 	printf("\"\n");
