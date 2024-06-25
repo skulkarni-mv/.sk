@@ -16,7 +16,7 @@ void main(int argc, char *argv[])
 	FILE *fp_read_patch_dets = NULL;
 
 	printf("\n--------------------------------------------------------------------------------------\n");
-	printf("\n\t Usage: ./a.out <bugz_num> \n\n");
+	printf("\n\t Usage: ./run_stable_finder.out <bugz_num> \n\n");
 
 	if(argc != 2)
 	{
@@ -64,7 +64,9 @@ void main(int argc, char *argv[])
 	strcat(buffer, cve_id);
 
 	if( system(buffer) != 0) {
+		sleep(1);
 		if( system(buffer) != 0) {
+			sleep(2);
 			if( system(buffer) != 0) {		// Check 3 times, sometimes not able to fetch
 				exit(1);
 			}

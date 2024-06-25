@@ -41,7 +41,7 @@ def check_stable_fix(kern_vers, url):
                 git_link = git_link_all[1]				# At least 2 expected as max>0. Take 1st cmit if many available
 
                 if git_link:
-                  print(Fore.GREEN + " https://git.kernel.org/"+f"{git_link['href']}" + Fore.RESET)
+                  print(Fore.GREEN + " https://git.kernel.org"+f"{git_link['href']}" + Fore.RESET)
 
                 else:
                   print(Fore.RED + f"\t Fix not found" + Fore.RESET)
