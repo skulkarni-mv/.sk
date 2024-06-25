@@ -17,17 +17,34 @@ def check_stable_fix(kern_vers, url):
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        print(kern_vers, '-> Found total :', len(soup.find_all('span', {'class': 'insertions'} )) , 'Latest commit out of them:')
+        count_insertions = len( soup.find_all('span', {'class': 'insertions'} ) )	# insertions in commit
+        count_deletions  = len( soup.find_all('span', {'class': 'deletions'} ) )	# deletions in commit
 
-        link_text = soup.find('span', { 'class': 'age-days'})
+        maximum = max(count_insertions, count_deletions)	# Possibly some commits might have only instns/deltns. Get max(0,1) OR max(1,0)
 
-        if link_text:
-            git_link = link_text.find_next('a')
-            if git_link:
-              print(Fore.GREEN + " https://git.kernel.org/"+f"{git_link['href']}" + Fore.RESET)
+        if maximum > 1:
+            print(kern_vers, '-> Found total :'+Fore.GREEN, maximum , Fore.RESET+'. Latest commit out of them:') # Multiple(in case of Revert)
+        elif maximum == 1:
+            print(kern_vers, '-> Found total :'+Fore.GREEN, maximum , Fore.RESET)	# Single commit
+        else:
+            print(kern_vers, '-> Found total :'  +Fore.RED, maximum , Fore.RESET+'.')	# No git commit available for the requested MasterCmitID
 
-            else:
-              print(Fore.RED + f"\t Fix not found" + Fore.RESET)
+
+        if maximum > 0:
+
+            link_text = soup.find('div', { 'class': 'content'})		# Will have 2 or more. 1st-> request data  2nd+ -> required cmit link/s
+
+
+            if link_text:
+                git_link_all = link_text.find_all('a')
+
+                git_link = git_link_all[1]				# At least 2 expected as max>0. Take 1st cmit if many available
+
+                if git_link:
+                  print(Fore.GREEN + " https://git.kernel.org/"+f"{git_link['href']}" + Fore.RESET)
+
+                else:
+                  print(Fore.RED + f"\t Fix not found" + Fore.RESET)
 
         else:
             print(Fore.RED + f"\t No fix found." + Fore.RESET)
@@ -95,6 +112,8 @@ time.sleep(0.1)
 time.sleep(0.1)
 
 
-
-
+## Test data: 25 Jun 2024 [class="age-days" availability might change acc to the date on which prog is ran]
+# one link: nogui_find_stable_commit.py 2f945a792f67815abca26fa8a5e863ccf3fa1181 (1+/1-) [class="age-days" NotAvailable]
+# one link: nogui_find_stable_commit.py 9fe2816816a3c765dff3b88af5b5c3d9bbb911ce (1+/2-) [class="age-days" Available]
+#  no fix : nogui_find_stable_commit.py e9edc188fc76499b0b9bd60364084037f6d03773
 
