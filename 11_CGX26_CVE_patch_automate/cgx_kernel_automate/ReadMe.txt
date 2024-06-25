@@ -31,8 +31,8 @@ user@group:gregkh-linux $ ls							// you are running the 'automate_run' program
 Directory 'cgx_kernel_automate' needs to be present in 'linux-mvista-2.6' dir.
 Directory 'cgx_kernel_automate' contains following automation files:
 
-	automate_run
-	.bugzpass.txt			-> Add your bugz password in this file
+	automate_run			-> generated once you run make.sh script
+	.bugzpass.txt			-> add your bugz password in this file
 	code_for_automation.c
 	fetch_cve_summary.py
 	generated_details.txt
@@ -47,7 +47,7 @@ Directory 'cgx_kernel_automate' contains following automation files:
 Compilation and Usage:
 
 user@group:WorkDirectory/cgx_kernel_automate$ gcc code_for_automation.c -o automate_run		OR
-user@group:WorkDirectory/cgx_kernel_automate$ chmod a+x make.sh && ./make.sh
+user@group:WorkDirectory/cgx_kernel_automate$ chmod u+x make.sh && ./make.sh
 
 		Usage: ./cgx_kernel_automate/automate_run <bugz_num> <stable_commit_id>
 

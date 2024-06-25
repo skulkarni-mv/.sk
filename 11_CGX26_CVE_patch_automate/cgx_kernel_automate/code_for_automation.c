@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 //#define ManualPatching
 
@@ -10,6 +11,7 @@ bool check_input_length(char *input, int correct_length, char *input_name_label)
 void print_bug_num_stable_commit_id(char *bugz_num, char *stable_commit_id);
 int clone_gregkh_linux(bool create_gregkh_dir_yes_no);
 bool str_compare_if_invalid_ip(char *script_ip);
+void format_time_string(time_t t_sec, int add_sec, char * t_str);
 
 void main(int argc, char *argv[])
 {
@@ -17,6 +19,8 @@ void main(int argc, char *argv[])
 	char bugz_num[10]={0},  stable_commit_id[50]={0}, i = 0, choice_y_n;
 	char buffer[500]={0}, buffer_fp_read[200]={0}, buffer_temp_tag[100]={0}, buffer_depen_patch[50]={0};
 	char script_ip_revision_r[5]={0}, script_ip_patches_n[5]={0};
+	char t_orig[10]={0}, t_diff[10]={0};
+	time_t t_start, t_end;
 
 	FILE *fp_read_patch_dets = NULL;
 
@@ -344,12 +348,38 @@ void main(int argc, char *argv[])
 	getchar();	// Uncomment once dev_done - Fix me
 	getchar();	// Used 2x times as scanf() is used before, thus getchar() won't stop if used only once
 
+	    t_start = time(NULL);					// -> Added Logic for measuring "git push" time
+
+	format_time_string(t_start,     0, t_orig);
+	printf("****** Measuring time taken for execution of 'send_pull_req_automate.py' script ***** \n");
+	printf(" Start Time:    %s \n", t_orig);
+
 	printf("\n\"\"\"\n");
 	if(system(buffer) != 0) {
 		printf("\n ERROR. Unable to finish the 'send_pull_req_automate.py' script. Exiting...\n\n");
 		exit(1);
 	}
 	printf("\n\"\"\"\n");
+
+            t_end = time(NULL);
+
+	format_time_string(t_end,     0, t_orig);
+	printf("\n");
+	printf("Finish Time:    %s \n", t_orig);
+
+	int sec = t_end-t_start;
+	int hh = sec/3600;
+	int mm = (sec - hh*3600)/60;
+	int ss = sec - hh*3600 - mm*60;
+
+	sprintf(t_diff,"%2d:%2d:%2d", hh, mm, ss);
+
+	char * space_found=NULL;
+	while((space_found=strchr(t_diff,' ')))	// space found is NOT NULL
+		*space_found = '0';		// replace space with '0'
+
+	printf("Execution Time: %s  (time taken for execution of 'send_pull_req_automate.py' script)\n\n", t_diff);
+									// <- Added Logic for measuring "git push" time
 
 
 	printf("\n");
@@ -453,4 +483,19 @@ bool str_compare_if_invalid_ip(char *script_ip)
 	}
 
 	return valid;
+}
+
+void format_time_string(time_t t_sec, int add_sec, char * t_str)
+{
+	char *space_found = NULL;
+	struct tm tm;
+
+	t_sec = t_sec + add_sec;
+
+	tm = *localtime(&t_sec);
+
+	sprintf(t_str, "%2d:%2d:%2d", tm.tm_hour, tm.tm_min, tm.tm_sec);
+
+	while((space_found=strchr(t_str,' ')))	// space found is NOT NULL
+		*space_found = '0';		// replace space with '0'
 }

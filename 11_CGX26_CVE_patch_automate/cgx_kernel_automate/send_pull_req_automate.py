@@ -373,7 +373,7 @@ else:
     child.close()
     error_exit("Unable to read from the remote git repo")
 
-index = child.expect([pexpect.TIMEOUT, exp_str3, exp_str2, pexpect.EOF], timeout=180)
+index = child.expect([pexpect.TIMEOUT, exp_str3, exp_str2, pexpect.EOF], timeout=1800)	# Changed from 180 to 1800 (30 mins)
 if index == 3:
     dbg_print('tag pushed to %s\n' % (contrib))
 elif index == 0:

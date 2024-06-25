@@ -17,11 +17,8 @@ def identify_user():
 		repo_details = subprocess.check_output('git config --get remote.origin.url', shell=True, universal_newlines=True).splitlines()[0]
 	except subprocess.CalledProcessError as e:
 		print("Please run from a valid git repository")
-##		print(e)				## outputs:"Command 'git config --get remote.origin.url' returned non-zero exit status 1."
 		print("Exiting...")
 		sys.exit(1)
-
-#	print("repo details:", repo_details)
 
 	if not (re.match(r'.*.+@gitcgx.mvista.com+.*.', repo_details)):
 		print("Unable to retrieve UserId from the cloned repo. Have you cloned from username@gitcgx.mvista.com ?")
@@ -29,7 +26,6 @@ def identify_user():
 		sys.exit(1)
 
 	mvista_id = repo_details.split('@')[0]
-#	print("mvista id is:", mvista_id)
 
 
 def update_bugz_with_tag_link(uname, pword, bug_no):
@@ -77,13 +73,12 @@ def update_bugz_with_tag_link(uname, pword, bug_no):
             sys.exit(1)
 
 
-### Main 
+### Main
 
 try:
 	parser = argparse.ArgumentParser()
 	parser.add_argument("bugz_num", type=str)
 	args = parser.parse_args()
-##	print(sys.argv[1])			#print the second argument i.e. 'bugz_num' passed from cmd line; Note it starts from ZERO
 
 except:
 	e = sys.exc_info()[0]
