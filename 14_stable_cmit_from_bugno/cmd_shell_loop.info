@@ -1,0 +1,3 @@
+list=`cat <file_name>`
+echo $list
+for i in $list; do ./run_stable_finder.out $i; done
