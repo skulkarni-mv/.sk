@@ -19,24 +19,36 @@ def check_cve_fix(cve):
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        fixed_by_text = soup.find(string=lambda text: text and "Fixed by" in text)
+        fixed_by_text_all = soup.find_all(string=lambda text: text and "Fixed by" in text)
 
-        if fixed_by_text:
-            fix_link = fixed_by_text.find_next('a')
-            if fix_link:
-              print(Fore.GREEN + f"\t\t\t\t\t {fix_link['href']}" + Fore.RESET)
+        count_fixes = len(fixed_by_text_all)
 
-              fp = open("generated_details.txt", "w")
-              fp.write(f"{fix_link['href']}");
-              fp.close()
+        if count_fixes > 1:
+            print(Fore.RED+ f"\t\t\t\t\t Multiple ({count_fixes}) Fixes available for {cve}. Please check Manually." +Fore.RESET)
 
-              sys.exit(0)
+        fp = open("generated_details.txt", "w")			# open in "w" to clear the data in the file
+        fp.close()
+
+#        fixed_by_text=fixed_by_text_all[0]
+        for fixed_by_text in fixed_by_text_all:
+
+            if fixed_by_text:
+                fix_link = fixed_by_text.find_next('a')
+                if fix_link:
+                    print(Fore.GREEN + f"\t\t\t\t\t {fix_link['href']}" + Fore.RESET)
+
+                    fp = open("generated_details.txt", "a+")
+                    fp.write(f"{fix_link['href']}"+" ");
+                    fp.close()
+
+#                    sys.exit(0)
+                else:
+                    print(Fore.RED + f"\t Fix for CVE {cve} not found" + Fore.RESET)
+                    sys.exit(1)
             else:
-              print(Fore.RED + f"\t Fix for CVE {cve} not found" + Fore.RESET)
-              sys.exit(1)
-        else:
-            print(Fore.RED + f"\t No fix found for CVE {cve} on the Ubuntu security page." + Fore.RESET)
-            sys.exit(1)
+                print(Fore.RED + f"\t No fix found for CVE {cve} on the Ubuntu security page." + Fore.RESET)
+                sys.exit(1)
+
     else:
         print(f"\t Failed to retrieve webpage. Status code: {response.status_code}")
         sys.exit(1)
