@@ -23,8 +23,13 @@ def check_cve_fix(cve):
 
         count_fixes = len(fixed_by_text_all)
 
-        if count_fixes > 1:
+        if count_fixes == 0:
+            print(Fore.RED + f"\t Fix for {cve} not found" + Fore.RESET)
+            sys.exit(1)
+
+        elif count_fixes > 1:
             print(Fore.RED+ f"\t\t\t\t\t Multiple ({count_fixes}) Fixes available for {cve}. Please check Manually." +Fore.RESET)
+
 
         fp = open("generated_details.txt", "w")			# open in "w" to clear the data in the file
         fp.close()
@@ -43,7 +48,7 @@ def check_cve_fix(cve):
 
 #                    sys.exit(0)
                 else:
-                    print(Fore.RED + f"\t Fix for CVE {cve} not found" + Fore.RESET)
+                    print(Fore.RED + f"\t Fix for CVE {cve} not found on the Ubuntu security page." + Fore.RESET)
                     sys.exit(1)
             else:
                 print(Fore.RED + f"\t No fix found for CVE {cve} on the Ubuntu security page." + Fore.RESET)
