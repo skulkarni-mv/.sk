@@ -28,7 +28,7 @@ def check_cve_fix(cve):
             sys.exit(1)
 
         elif count_fixes > 1:
-            print(Fore.RED+ f"\t\t\t\t\t Multiple ({count_fixes}) Fixes available for {cve}. Please check Manually." +Fore.RESET)
+            print(Fore.RED+ f"\t\t\t\t\t Multiple ({count_fixes}) Fixes available for {cve}. Please CHECK MANUALLY." +Fore.RESET)
 
 
         fp = open("generated_details.txt", "w")			# open in "w" to clear the data in the file

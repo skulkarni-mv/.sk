@@ -5,12 +5,12 @@
 #include <stdbool.h>
 
 
-// $ gcc code2_bugz_updater.c -o run2_bugz_updater.out
-// $ Usage: ./run2_bugz_updater.out <dumped_data_file_generated_from_code1>
+// $ gcc code2_bugz_updater_batch.c -o run2_bugz_updater_batch.out
+// $ Usage: ./run2_bugz_updater_batch.out <dumped_data_file_generated_from_code1>
 
 
 #define update_bugz 1
-//#define update_bugz_confirm 1
+#define update_bugz_confirm 1
 //#define debug_print 1
 
 
@@ -33,6 +33,15 @@ void main(int argc, char *argv[])
 		printf("\n\t Usage: ./run2_bugz_updater.out <'dumped_data'_file_path> \n\n");
 		exit(1);
 	}
+
+
+#ifdef update_bugz_confirm
+	printf("\n ----------- Current settings in the code says, UPDATE the BUGs on bugz site. Are you sure ?? ---------- \n");
+
+	printf("\n --------------------------- Press Enter to continue / Ctrl^C to Terminate ----------------------------- \n");
+	getchar();
+
+#endif
 
 
 	fp_read=fopen(argv[1], "r");
@@ -200,8 +209,11 @@ int format_comment(char *bugz_num, char *stable_cgit_link, char* stable_version,
 
 #ifdef update_bugz_confirm
 	system(cmd_buf);
+//	printf("\n\n\t\t\t DONE. \n\n");
 #endif
 
+
+	/* Create a Python script to open bugz & gitcgx link side by side */
 
 	fp_write=fopen("web_bugz_gitcgx_links.py", "a+");
 	if(fp_write != NULL)

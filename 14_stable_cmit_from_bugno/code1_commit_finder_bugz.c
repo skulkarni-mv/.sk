@@ -5,8 +5,8 @@
 #include <stdbool.h>
 
 
-// $ gcc code1_commit_finder.c -o run1_stable_finder.out
-// $ Usage: ./run1_stable_finder.out <bugz_num>
+// $ gcc code1_commit_finder_bugz.c -o run1_stable_finder_bugz.out
+// $ Usage: ./run1_stable_finder_bugz.out <bugz_num>
 
 
 //#define debug_print 1
@@ -14,7 +14,7 @@
 void main(int argc, char *argv[])
 {
 	char bugz_num[10]={0}, cve_id[15]={0}, master_cmit_id[45]={0}, stable_cmit_hash[45]={0}, buffer[500]={0}, buffer_fp_read[200]={0};
-	char *ptr_pos=NULL, char_tmp_read=EOF;
+	char *ptr_pos=NULL, char_tmp_read=EOF, stable_branch_vers[60]={0};
 	int i=0;
 
 	FILE *fp_read_patch_dets = NULL;
@@ -91,14 +91,7 @@ void main(int argc, char *argv[])
 		printf("\t ERROR: Unable to open 'generated_details.txt'. Exiting... \n\n");
 		exit(1);
 	}
-/*
-	if( fscanf(fp_read_patch_dets, "%s", buffer_fp_read ) == EOF) {
-		printf("\t ERROR: File 'generated_details.txt' looks EMPTY. Exiting... \n\n");
-		exit(1);
-	}
-	fclose(fp_read_patch_dets);
 
-	fp_read_patch_dets = fopen("generated_details.txt", "r");	*/
 
 	while(fscanf(fp_read_patch_dets, "%s", buffer_fp_read ) != EOF)	// contains Master commit/s from Ubuntu 'https://git.kernel.org/linus/'
 	{
@@ -108,16 +101,23 @@ void main(int argc, char *argv[])
 			exit(1);
 		}
 
-		if(*(ptr_pos+6)=='-' || *(ptr_pos+7)=='\0') {		// No Fix, only 'Fixed By' - ubuntu.com/security/CVE-2024-0564
+		if(*(ptr_pos+6)=='-' || *(ptr_pos+7)=='\0') {		// No Fix, only 'Fixed By' - Eg: /ubuntu.com/security/CVE-2024-0564
 			printf("No fix found from Ubuntu Security Page. \n\n");
 			exit(1);
 		}
 
-		strcpy(master_cmit_id, ptr_pos+6);
+		strncpy(master_cmit_id, ptr_pos+6, 44);
 
 #ifdef debug_print
 		printf("Fetched master commit id as : %s \n\n", master_cmit_id);
 #endif
+
+		if(strlen(master_cmit_id) != 40)			// Not in Appropriate Format - Eg: /ubuntu.com/security/CVE-2023-52604
+		{
+			printf("xxxxxxxxxxxxxx Commit ID found on Ubuntu Security Page is NOT Appropriate. CHECK MANUALLY. xxxxxxxxxxxxxxx\n\n");
+			exit(1);
+		}
+
 
 		strcpy(buffer, "python3 nogui_find_stable_commit.py ");	// writes into 'dumped_data.txt' if successful
 		strcat(buffer, master_cmit_id);
@@ -142,10 +142,30 @@ void main(int argc, char *argv[])
 			if(char_tmp_read != EOF) {
 				if(char_tmp_read != '-') {	// '-' means no fix found. '-' written into file by nogui_find_stable_commit.py
 
-					fseek(fp, -40, SEEK_END);
-					fscanf(fp,"%s", stable_cmit_hash);
+					fseek(fp, -40, SEEK_END);					// as commit length is 40 and its at
+					fscanf(fp,"%s", stable_cmit_hash);				// at the end of line. Hence SEEK_END-40
+
+					fseek(fp, -60, SEEK_END);					// thus 60 is size for stable_branch_vers
+					fscanf(fp, "%s", stable_branch_vers);				// -> _/?h=linux-5.10.y&id=3..._
+
+					if(strlen(stable_branch_vers) != 0) {
+						if( strstr(stable_branch_vers, "linux-") != 0) {	// means found the string
+							strcpy(stable_branch_vers, strstr(stable_branch_vers, "linux-") );  // -> _linux-5.10.y&_
+							strcpy(stable_branch_vers, stable_branch_vers + strlen("linux-") ); // -> _5.10.y&id=3._
+
+							for(i=0; i<10; i++) {
+								if(stable_branch_vers[i] == '&')
+									break;
+							}
+
+							for(; i<59; i++)			// 59, as 60 is allotted size in declaration
+								stable_branch_vers[i]='\0';
+						}
+					}
+
 #ifdef debug_print
-					printf("_%s=>%ld_\n\n", stable_cmit_hash,strlen(stable_cmit_hash));
+					printf("_%s=>%ld_\n"  , stable_cmit_hash, strlen(stable_cmit_hash) );
+					printf("_%s=>%ld_\n\n", stable_branch_vers, strlen(stable_branch_vers) );
 #endif
 				}
 			}
@@ -155,7 +175,11 @@ void main(int argc, char *argv[])
 
 			if(strlen(stable_cmit_hash) == 40) {
 								// 4.19-> 2 extra scpaces / 5.4-> 3 spaces / 5.10-> 2 spaces / adjust accordingly
-				fprintf(fp, "   ");		// 1extra space, as '.py' do not add any after cmit link, 1 more-> visual in file
+				if(strlen(stable_branch_vers) %2)		// ODD Length [Eg. 5.4.y => 5] -> 1extra space for Visuals
+					fprintf(fp, "   ");			// as '.py' file do not add any after cmit link
+				else
+					fprintf(fp, "  ");			// 2 spaces for EVEN Length [Eg. 5.10.y => 6]
+
 				fprintf(fp, " https://github.com/gregkh/linux/commit/%s ", stable_cmit_hash);
 				fprintf(fp, "\t\t\t https://ubuntu.com/security/%s", cve_id);
 				fprintf(fp, " https://github.com/torvalds/linux/commit/%s", master_cmit_id);
