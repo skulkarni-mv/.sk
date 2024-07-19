@@ -209,7 +209,8 @@ int format_comment(char *bugz_num, char *stable_cgit_link, char* stable_version,
 
 #ifdef update_bugz_confirm
 	system(cmd_buf);
-//	printf("\n\n\t\t\t DONE. \n\n");
+#else
+	printf("\n\n\t\t\t NOT UPDATING ON THE BUGZ AS PER THE SETTINGS IN THE CODE. \n\n");
 #endif
 
 

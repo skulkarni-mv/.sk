@@ -28,10 +28,48 @@ def fetch_cve_summary_from_bugz_number(uname, pword, bug_no):
                 print("Exiting..")
                 sys.exit(1)
 
-            result = soup.find('span', {'id': 'short_desc_nonedit_display'})
-            if result:
-                result_str = ' '.join(result.get_text().split())
-                print(result_str)
+            cve_summ = soup.find('span', {'id': 'short_desc_nonedit_display'})
+            if cve_summ:
+                cve_summ_str = ' '.join(cve_summ.get_text().split())
+                print(cve_summ_str)
+
+
+            prod_list = soup.find('select', {'id': 'product'})
+            if prod_list:
+                prod_selected = prod_list.find('option', selected=True)['value']
+                print(prod_selected)
+
+            prio_list = soup.find('select', {'id': 'priority'})
+            if prio_list:
+                prio_selected = prio_list.find('option', selected=True)['value']
+                print(prio_selected)
+
+            status_list = soup.find('select', {'id': 'bug_status'})
+            if status_list:
+                status_selected = status_list.find('option', selected=True)['value']
+                print(status_selected)
+
+            assignee = soup.find('input', {'name': 'assigned_to'})
+            if assignee:
+                assignee_str = assignee.get('value').split('@mvista')[0]
+                print(assignee_str+'\t')
+
+
+            reported_extra = soup.find('td', {'id': 'bz_show_bug_column_2'})
+            if reported_extra:
+                part1_reportedLabel = reported_extra.find_next('td')
+                reportedLabel = part1_reportedLabel.find('b')
+
+                if reportedLabel:
+                    reportedLabel_str = reportedLabel.get_text(strip=True)
+#                    print(reportedLabel_str +':')
+
+                part2_reportedValue = part1_reportedLabel.find_next('td')
+                reportedValue_str = part2_reportedValue.get_text(strip=True).split('by')[0]
+#                print(reportedValue_str)
+
+                reported_str = reportedLabel_str +': '+ reportedValue_str
+                print(reported_str)
 
             return
 

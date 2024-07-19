@@ -93,9 +93,10 @@ def check_fix_mvista_gitcgx(cgx_vers_num, msd_branch, mast_cmit):
 try:
     parser = argparse.ArgumentParser()
     parser.add_argument("MasterCommit_ID", type=str)
+    parser.add_argument("Bugz_Product/'-'", type=str)
     args = parser.parse_args()
 
-    print("\n"+"Argument passed: ", sys.argv[1])
+    print("\n"+"Argument passed: ", sys.argv[1], sys.argv[2])
 
 except:
     e = sys.exc_info()[0]
@@ -105,10 +106,8 @@ except:
 
 
 commit = sys.argv[1]
+product = sys.argv[2]
 
-
-#webbrowser.open('https://www.google.com/')
-#time.sleep(0.5)
 
 url4_14 = f"https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/?h=linux-4.14.y&qt=grep&q={commit}"
 url4_19 = f"https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/?h=linux-4.19.y&qt=grep&q={commit}"
@@ -118,30 +117,28 @@ url5_15 = f"https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log
 url6_6  = f"https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/?h=linux-6.6.y&qt=grep&q={commit}"
 url6_9  = f"https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log/?h=linux-6.9.y&qt=grep&q={commit}"
 
-###webbrowser.open(f"https://github.com/gregkh/linux/commit/{commit}")
-#time.sleep(0.5)
 
-#check_stable_fix('CGX2.4', 'v4.14', url4_14)		# CGX2.4
-#time.sleep(0.1)
+if   product == 'CGX2.4':
+    check_stable_fix('CGX2.4', 'v4.14', url4_14)
+elif product == 'CGX2.6':
+    check_stable_fix('CGX2.6', 'v4.19', url4_19)
+elif product == 'CGX3.1':
+    check_stable_fix('CGX3.1', 'v5.4 ', url5_4)
+elif product == 'CGX4.0':
+    check_stable_fix('CGX4.0', 'v5.10', url5_10)
+elif product == 'CGX5.0':
+    check_stable_fix('CGX5.0', 'v6.6 ', url6_6)
+else:
 
-#check_stable_fix('CGX2.6', 'v4.19', url4_19)		# CGX2.6
-#time.sleep(0.1)
+#    check_stable_fix('CGX2.4', 'v4.14', url4_14)		# CGX2.4
+#    check_stable_fix('CGX2.6', 'v4.19', url4_19)		# CGX2.6
+#    check_stable_fix('CGX3.1', 'v5.4 ', url5_4)		# CGX3.1
+    check_stable_fix('CGX4.0', 'v5.10', url5_10)		# CGX4.0
+#    check_stable_fix('CGX5.0', 'v6.6 ', url6_6)		# CGX5.0
 
-#check_stable_fix('CGX3.1', 'v5.4 ', url5_4)		# CGX3.1
-#time.sleep(0.1)
 
-#check_stable_fix('CGX4.0', 'v5.10', url5_10)		# CGX4.0
-#time.sleep(0.1)
-
-check_stable_fix('CGX5.0', 'v6.6', url6_6)		# CGX5.0
 time.sleep(0.1)
-
-#check_fix_mvista_gitcgx('5.0', 'mvl-6.6/msd.cgx', commit)
-#time.sleep(0.1)
-
-###webbrowser.open(url6_9)
-#time.sleep(0.1)
-
+#    check_fix_mvista_gitcgx('5.0', 'mvl-6.6/msd.cgx', commit)
 
 ## Test data: 25 Jun 2024 [class="age-days" availability might change acc to the date on which prog is ran]
 # one link: nogui_find_stable_commit.py 2f945a792f67815abca26fa8a5e863ccf3fa1181 (1+/1-) [class="age-days" NotAvailable]

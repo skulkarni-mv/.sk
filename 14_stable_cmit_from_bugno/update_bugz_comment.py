@@ -22,10 +22,10 @@ def update_bugz_comment(uname, pword, bug_no, comment):
     }
 
     upd_d = {
-           'id': bug_no,
-#  'assigned_to': uname,				# ASSIGN on uname
-        'newcc': uname,
-'status_whiteboard':'kernel-syn',
+               'id': bug_no,
+#      'assigned_to': uname,				# ASSIGN on uname
+            'newcc': uname,
+'status_whiteboard':'cgx_sync',
     }
 
 
