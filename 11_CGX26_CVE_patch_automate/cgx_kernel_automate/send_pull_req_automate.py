@@ -261,9 +261,10 @@ def update_bugz_merge_req_fields(uname, pword, cmnt):
     }
 
     upd_d = {
-        'id': bug_no,
-        'status_whiteboard': 'GitMergeRequest',
-        'newcc': 'cge7-kernel-gatekeepers@mvista.com, cminyard',
+               'id': bug_no,
+'status_whiteboard': 'GitMergeRequest',
+       'bug_status': 'SYNC_REQ',
+            'newcc': 'cge7-kernel-gatekeepers@mvista.com, cminyard',
     }
 
     with requests.session() as s:
@@ -285,35 +286,15 @@ def update_bugz_merge_req_fields(uname, pword, cmnt):
             error_exit(e)
 
 
-def bugz_add_review_req_attachment(uname, pword, cmnt):
-    tmp_f = "%s-bugz-attachement" % (bug_no)
-    fp = open(tmp_f, "w+")
-    fp.write(cmnt)
-    fp.close()
+## -> Added by Shubham
 
+def check_bugz_current_status(uname, pword, bug_no):
     bugz_login_url = 'http://bugz.mvista.com/show_bug.cgi?id='+bug_no
-    bugz_post_url = 'http://bugz.mvista.com/attachment.cgi?bugid='+bug_no+'&action=enter'
+    bugz_post_url = 'http://bugz.mvista.com/process_bug.cgi'
 
     acc_details = {
         'Bugzilla_login': uname,
         'Bugzilla_password': pword,
-    }
-
-    review_req = "Hi, \nPlease review this merge request.\n-- %s" % (username)
-
-    bugz_attach = {
-        'bugid': (None, bug_no),
-        'action': (None, 'insert'),
-        'token': (None, ''),
-        'data': (tmp_f, open(tmp_f, 'rb')),
-        'description': (None, 'Review-content'),
-        'contenttypemethod': (None, 'list'),
-        'contenttypeselection': (None, 'text/plain'),
-        'contenttypeentry': (None, ''),
-        'flag_type-6': (None, 'X'),
-        'flag_type-1': (None, '?'),
-        'requestee_type-1': (None, reviewer_ids),
-        'comment': (None, review_req)
     }
 
     with requests.session() as s:
@@ -322,25 +303,66 @@ def bugz_add_review_req_attachment(uname, pword, cmnt):
             soup = bs(r.text, 'lxml')
             check_err("Invalid Username Or Password", soup.title.string)
 
-            r = s.get(bugz_post_url)
-            soup = bs(r.text, 'lxml')
-            bugz_attach['token'] = (None, soup.find('input', {'name': 'token'}).get('value'))
-
-            r = s.post(bugz_post_url, files=bugz_attach)
-            soup = bs(r.text, 'lxml')
-            result = soup.find("div", {"id": "message"})
+            result = soup.find('div', {'id': 'status'}).find('select', {'name': 'bug_status'})
             if result:
                 result_str = ' '.join(result.get_text().split())
-                print('!'*len(result_str))
-                print(result_str)
-                print('!'*len(result_str))
+                result_cur = result_str.split()[0]
+                result_fut = result_str.split(' ', 1)[1]
+                print("\n\t Current status of the bug:", result_cur)
+#                print(" Following changes in status are possible:", result_fut)
 
-            os.remove(tmp_f)
+                if(result_cur == 'ASSIGNED'):
+                    return 0
+
+                else:
+                    if 'ASSIGNED' in result_fut:
+                        print('\t\t Bugz status is not Assigned, Updating Bugz status first as per the process...')
+                        return 1
+                    else:
+                        error_exit(' Bugz status is: '+ result_cur+ '. As per the process, status should be "ASSIGNED".')
+
         except requests.exceptions.Timeout:
             error_exit("Connection timed out")
         except requests.exceptions.RequestException as e:
             error_exit(e)
 
+
+def update_bugz_status_assigned(uname, pword, bug_no):
+    bugz_login_url = 'http://bugz.mvista.com/show_bug.cgi?id='+bug_no
+    bugz_post_url = 'http://bugz.mvista.com/process_bug.cgi'
+
+    acc_details = {
+        'Bugzilla_login': uname,
+        'Bugzilla_password': pword,
+    }
+
+    upd_d = {
+        'id': bug_no,
+'bug_status': 'ASSIGNED',
+    }
+
+    with requests.session() as s:
+        try:
+            r = s.post(bugz_login_url, data=acc_details)
+            soup = bs(r.text, 'lxml')
+            check_err("Invalid Username Or Password", soup.title.string)
+
+            r = s.get(bugz_login_url)
+            soup = bs(r.text, 'lxml')
+            upd_d['delta_ts'] = soup.find('input', {'name': 'delta_ts'}).get('value')
+            upd_d['token'] = soup.find('input', {'name': 'token'}).get('value')
+            upd_d['comment'] = 'changing status to ASSIGNED'
+
+            r = s.post(bugz_post_url, data=upd_d)
+        except requests.exceptions.Timeout:
+            error_exit("Connection timed out")
+        except requests.exceptions.RequestException as e:
+            error_exit(e)
+
+## <- Added by Shubham
+
+
+### MAIN
 
 parse_args()
 identify_repo()
@@ -356,6 +378,27 @@ dbg_print("----------------------------------------")
 fp = open('cgx_kernel_automate/.bugzpass.txt', 'r')
 bugz_pword=fp.read()
 fp.close()
+
+## -> Added by Shubham
+
+curr_bug_state = check_bugz_current_status(mvista_id, bugz_pword, bug_no)		# if 0 => Assigned, 1 => need to change
+
+if (curr_bug_state == 1):
+    update_bugz_status_assigned(mvista_id, bugz_pword, bug_no)
+
+    curr_bug_state = check_bugz_current_status(mvista_id, bugz_pword, bug_no)
+    if (curr_bug_state != 0):
+        error_exit('Unable to proceed. Exiting..')
+
+elif (curr_bug_state == 0):
+    curr_bug_state = 0
+else:
+    error_exit('Unable to proceed. Exiting...')
+
+
+print("----------------------------------------")
+print("")
+## <- Added by Shubham
 
 run_cmd('git tag -m "%s" "%s"' % (msg, tag), 'Please run after manually deleting the tag', 'tag: %s created\n' % (tag))
 tag_is_created = 1
@@ -388,8 +431,10 @@ dbg_print(bugz_comment)
 dbg_print("Trying to update bugzilla fields for bug %s" % bug_no)
 
 if reviewer_ids != 'None':
-    bugz_add_review_req_attachment(mvista_id, bugz_pword, bugz_comment)
-    print("Successfully posted the review request on bugzilla. Done.")
+#    bugz_add_review_req_attachment(mvista_id, bugz_pword, bugz_comment)
+#    print("Successfully posted the review request on bugzilla. Done.")
+    print("The Review Request process is No Longer Supported as it's not correct review process. Exiting...")
+    sys.exit(1)
 
 else:
     update_bugz_merge_req_fields(mvista_id, bugz_pword, bugz_comment)
