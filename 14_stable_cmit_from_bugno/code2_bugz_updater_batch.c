@@ -10,7 +10,7 @@
 
 
 #define update_bugz 1
-#define update_bugz_confirm 1
+//#define update_bugz_confirm 1
 //#define debug_print 1
 
 
@@ -50,14 +50,14 @@ void main(int argc, char *argv[])
 		exit(1);
 	}
 
-	fp_write=fopen("web_bugz_gitcgx_links.py", "w");	// Create a new file with bugz site & gitcgx search links side by side
+	fp_write=fopen("generated_web_bugz_gitcgx_links.py", "w");	// Create a new file with bugz site & gitcgx search links side by side
 
 	fprintf(fp_write, "#!/usr/bin/python3\n\n");
 	fprintf(fp_write, "import time\n");
 	fprintf(fp_write, "import webbrowser\n\n");
 	fclose(fp_write);
 
-	system("chmod u+x web_bugz_gitcgx_links.py");
+	system("chmod u+x generated_web_bugz_gitcgx_links.py");
 									// seems like fscanf() can not read '\n'
 	while( fscanf(fp_read, "%s", buffer_fp_read) != EOF )
 	{
@@ -216,7 +216,7 @@ int format_comment(char *bugz_num, char *stable_cgit_link, char* stable_version,
 
 	/* Create a Python script to open bugz & gitcgx link side by side */
 
-	fp_write=fopen("web_bugz_gitcgx_links.py", "a+");
+	fp_write=fopen("generated_web_bugz_gitcgx_links.py", "a+");
 	if(fp_write != NULL)
 	{
 		fprintf(fp_write, "#%3d\n", loop_counter);					// Loop Number i.e. how many bugs/bug count

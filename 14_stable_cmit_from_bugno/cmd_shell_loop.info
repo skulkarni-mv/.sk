@@ -1,3 +1,0 @@
-list=`cat input_data.txt`
-echo $list
-rm dumped_data.txt; for i in $list; do ./run1_stable_finder_bugz.out $i; done

@@ -52,7 +52,7 @@ def fetch_cve_summary_from_bugz_number(uname, pword, bug_no):
             assignee = soup.find('input', {'name': 'assigned_to'})
             if assignee:
                 assignee_str = assignee.get('value').split('@mvista')[0]
-                print(assignee_str+'\t')
+                print(assignee_str)
 
 
             reported_extra = soup.find('td', {'id': 'bz_show_bug_column_2'})
@@ -62,13 +62,12 @@ def fetch_cve_summary_from_bugz_number(uname, pword, bug_no):
 
                 if reportedLabel:
                     reportedLabel_str = reportedLabel.get_text(strip=True)
-#                    print(reportedLabel_str +':')
 
                 part2_reportedValue = part1_reportedLabel.find_next('td')
                 reportedValue_str = part2_reportedValue.get_text(strip=True).split('by')[0]
-#                print(reportedValue_str)
 
-                reported_str = reportedLabel_str +': '+ reportedValue_str
+#                reported_str = reportedLabel_str +': '+ reportedValue_str
+                reported_str = reportedValue_str
                 print(reported_str)
 
             return

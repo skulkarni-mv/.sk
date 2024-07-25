@@ -24,9 +24,15 @@ def update_bugz_comment(uname, pword, bug_no, comment):
     upd_d = {
                'id': bug_no,
 #      'assigned_to': uname,				# ASSIGN on uname
-            'newcc': uname,
-'status_whiteboard':'cgx_sync',
+#            'newcc': uname,
+#'status_whiteboard':'cgx_sync',
     }
+
+    if 1==1:
+        upd_d['newcc'] = uname
+
+    if 1==2:
+        upd_d['assigned_to'] = uname
 
 
     with requests.session() as s:
