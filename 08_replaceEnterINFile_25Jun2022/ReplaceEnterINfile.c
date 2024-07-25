@@ -18,13 +18,15 @@ void main(int argc, char *argv[])
         if(fp)                  // check if file exists
         {
         	fseek(fp,-1,SEEK_END);          	// Replacing Enter '\n' with space ' ' at EOF
-		if((last_char=fgetc(fp)) == '\n')
+		last_char=fgetc(fp);
+
+		if(last_char == '\n')
 		{
         		fseek(fp,-1,SEEK_END);          // Replacing Enter '\n' with space ' ' at EOF
                 	fputc('\0',fp);
 		}
 		else
-			printf(" Enter NOT found at the end of File \n");
+			printf(" Enter NOT found (%c=%d Found) at the end of File \n", last_char, last_char);
 
                 fclose(fp);
  	}
