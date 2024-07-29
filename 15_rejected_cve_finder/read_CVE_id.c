@@ -128,7 +128,7 @@ int check_cveorg_rejected_CVE(unsigned int cve_count_passed)
 					strcat(rej_cve_stored, " \n");
 				}
 				else {
-					strcat(rej_cve_stored, "** NOT ENOUGH SPACE, OVERFLOW DETECTED **\n")
+					strcat(rej_cve_stored, "** NOT ENOUGH SPACE, OVERFLOW DETECTED **\n");
 				}
 			}
 			else {							// check if ^C returns 2 or not
