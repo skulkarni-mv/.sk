@@ -70,6 +70,11 @@ def fetch_cve_summary_from_bugz_number(uname, pword, bug_no):
                 reported_str = reportedValue_str
                 print(reported_str)
 
+            whiteboard = soup.find('input', {'id': 'status_whiteboard'})
+            if whiteboard:
+                whiteboard_str = whiteboard.get('value')
+                print(whiteboard_str)
+
             return
 
         except requests.exceptions.Timeout:

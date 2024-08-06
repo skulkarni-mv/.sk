@@ -11,14 +11,15 @@
 // $ Usage: ./run1_stable_finder_bugz.out <bugz_num>
 
 
-#define checkForOtherUsersToo 1
+#define checkForOtherUsersToo 1		// Leave uncommented to check for all users
+
 //#define ManualProduct 1		// To select Product manually in 'nogui_find_stable_commit.py' OR ELSE Auto fetched from bugz
+
 //#define debug_print 1
 
-struct ExtractedBugzFromCSV {
-	char stc_bugz_num[10];
-	struct ExtractedBugzFromCSV *next;
-};
+//#define MailDumpedData 1
+
+
 
 int main_code_logic(int loop_number, int total_count, char *bugz_input, char *prev_bugz_num, char *prev_master_cmit_id);
 void check_if_Ctrl_C_exception(int sys_ret_val_input, char *exception_num, int loop_number, int total_count);
@@ -29,7 +30,7 @@ time_t convertToDate(char *date_str);
 
 void main(int argc, char *argv[])
 {
-	char buf_fgets[500]={0}, buf_fscanf[100]={0}, bugz_num_inloop[10]={0};
+	char buf_fgets[500]={0}, bugz_num_inloop[10]={0};
 	int i=0, Input_digitsOnly=1, totalBugs=0, loopCount=0;
 	char prev_bugz_num[10]={0}, prev_master_cmit_id[45]={0};
 
@@ -49,11 +50,26 @@ void main(int argc, char *argv[])
 	}
 
 	printf("\n");
+	system("rm dumped_data.txt 2> /dev/null");
+
+#ifdef ManualProduct
+
+	printf("\n 'ManualProduct' flag is set. DO NOT RUN 'run2_bugz_updater_batch.out' it will update wrong SYNC_REQ / RESOLVED on bugz. \n");
+	printf("\n --------------------------- Press Enter to continue / Ctrl^C to Terminate ----------------------------- \n");
+	getchar();
+
+#endif
+
+#ifdef MailDumpedData
+	FILE *fp_dump_for_mail=fopen("dumped_data.txt", "w");
+	fprintf(fp_dump_for_mail, "Subject: Script executed, 'dumped_data.txt' data as below \n\n");
+	fclose(fp_dump_for_mail);
+#endif
 
 	if( Input_digitsOnly == 1 && ( strlen(argv[1])==5 || strlen(argv[1])==6 ) ) {	// Single Bug Passed
 		printf(" Bugz Number passed, len 5 or 6 \n");
 
-		system("rm dumped_data.txt 2> /dev/null");
+//		system("rm dumped_data.txt 2> /dev/null");
 		strncpy(bugz_num_inloop, argv[1], 9);
 
 		main_code_logic(1, 1, bugz_num_inloop, prev_bugz_num, prev_master_cmit_id);
@@ -75,13 +91,13 @@ void main(int argc, char *argv[])
 			printf(" File is Empty. Exiting... \n\n");
 		}
 
-		system("rm dumped_data.txt 2> /dev/null");
+//		system("rm dumped_data.txt 2> /dev/null");
 
 		while( fgets(buf_fgets, 490, fp_bugzExtract) != NULL ) totalBugs++;
 		printf("\t Total bugs = %d \n", totalBugs);
 
-		rewind(fp_bugzExtract);			// Go To Start of the file
-		fgets(buf_fgets, 490, fp_bugzExtract);		// Ommit First Line again
+		rewind(fp_bugzExtract);						// Go To Start of the file
+		fgets(buf_fgets, 490, fp_bugzExtract);				// Ommit First Line again
 
 		while( fgets(buf_fgets, 490, fp_bugzExtract) != NULL ) {
 
@@ -90,7 +106,7 @@ void main(int argc, char *argv[])
 
 			for(i=0; i<strlen(buf_fgets); i++) {	//buf_fgets=> '131976,"normal","CGX.'
 
-				if( !isdigit(buf_fgets[i]) ) {
+				if( !isdigit(buf_fgets[i]) ) {			// if not a digit
 					bugz_num_inloop[i] = '\0';
 					break;					// break out of for() NOT while()
 				}
@@ -104,7 +120,7 @@ void main(int argc, char *argv[])
 				main_code_logic(loopCount, totalBugs, bugz_num_inloop, prev_bugz_num, prev_master_cmit_id);
 			}
 			else {
-				printf(" Data contains invalid Bugz Number '%s'. Exiting... \n\n", buf_fscanf);
+				printf(" Data contains invalid Bugz Number '%s'. Exiting... \n\n", bugz_num_inloop);
 				exit(1);
 			}
 		}
@@ -115,6 +131,12 @@ void main(int argc, char *argv[])
 	}
 
 	printf("\n");
+
+
+#ifdef MailDumpedData							// Send Mail once done
+	system("git send-email --to=skulkarni@mvista.com --confirm=never dumped_data.txt");
+#endif
+
 	exit(0);
 }
 
@@ -166,10 +188,15 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 		return(-1);
 	}
 
-	if( strstr(buffer_fp_read, "CVE") == 0) {	// 'CVE' word not found in the 'buffer_fp_read'
+	if( strstr(buffer_fp_read, "CVE") == 0) {		// 'CVE' word not found in the 'buffer_fp_read'
 		printf("\t ERROR: 'CVE' id NOT found in 'buffer_fp_read'. Exiting... \n\n");
 		return(-1);
 	}
+
+	if(strchr(buffer_fp_read, ',') != NULL)	{		// if ',' presents e.g. 131394 (CVE-2023-6356, CVE-2023-6535, CVE-2023-6536)
+		*strchr(buffer_fp_read, ',') = '\0';		// replace with '\0'
+	}
+
 	strcpy(cve_id, buffer_fp_read);
 	fgets(buffer, 499, fp_read_patch_dets);				// first line is read completly, i.e. CVE summary is done
 
@@ -179,8 +206,17 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
                 printf("\t ERROR: Product info in 'generated_details.txt' Not Found. Exiting... \n\n");
                 return(-1);
         }
+
+	if( strlen(buffer_fp_read) > 2 ) {					// for Local Laptop, last char coming out to be '\n', so replaced
+		if( buffer_fp_read[strlen(buffer_fp_read)-1] == '\n') {
+			buffer_fp_read[strlen(buffer_fp_read)-1] = '\0';
+		}
+	}
+
 	strcpy(prod_of_bugz, buffer_fp_read);
-	strcpy( strchr(prod_of_bugz, ' '), strchr(prod_of_bugz, ' ')+1 );	// Remove Space Inbetween
+
+	if( strchr(prod_of_bugz, ' ') != NULL )				// if space found eg- 'CGX 4.0', will not be there in 'CentOS'
+		strcpy( strchr(prod_of_bugz, ' '), strchr(prod_of_bugz, ' ')+1 );	// Remove Space Inbetween
 
 	if( prod_of_bugz[strlen(prod_of_bugz)-1] == '\n' )
 		prod_of_bugz[strlen(prod_of_bugz)-1] = '\0';
@@ -192,8 +228,6 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 #endif
 
 	printf("Product: ");			fflush(stdout);
-//	printf("Product: %s", prod_of_bugz);	fflush(stdout);
-
 
 //	Priority
         if( fgets(buffer_fp_read, 9, fp_read_patch_dets) == NULL) {		// As prio_of_bugz[] size is 10, so read 9 chars only MAX
@@ -279,13 +313,13 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 	check_if_Ctrl_C_exception(sys_ret_val, "U1", loop_number, total_count);
 	if( sys_ret_val != 0) {
 
-		sleep(1);
+		sleep(2);
 		sys_ret_val = system(buffer);
 
 		check_if_Ctrl_C_exception(sys_ret_val, "U2", loop_number, total_count);
 		if( sys_ret_val != 0) {
 
-			sleep(2);
+			sleep(3);
 			sys_ret_val = system(buffer);
 
 			check_if_Ctrl_C_exception(sys_ret_val, "U3", loop_number, total_count);
@@ -321,6 +355,7 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 		strncpy(master_cmit_id, ptr_pos+6, 44);
 
 #ifdef debug_print
+		printf("\n-----------------------\n");
 		printf("Fetched master commit id as : %s \n\n", master_cmit_id);
 #endif
 
@@ -331,14 +366,11 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 		}
 
 
-	//	printf("-----> Prev_bugz _%s_&_%s_ Prev_commit _%s_&_%s_ <------\n", bugz_num,prev_bugz_num, master_cmit_id,prev_master_cmit_id);
-
 		if( (strcmp(bugz_num, prev_bugz_num)==0) && (strcmp(master_cmit_id, prev_master_cmit_id)==0) )	// To avoid repeatations
 		{
 	printf("\n Found same data as of prev: bugz _%s_&_%s_ commit _%s_&_%s_ \n", bugz_num,prev_bugz_num, master_cmit_id,prev_master_cmit_id);
 			strcpy(prev_bugz_num, bugz_num);
 			strcpy(prev_master_cmit_id, master_cmit_id);
-			//return 1;
 			continue;
 		}
 
@@ -367,11 +399,15 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 			printf("_%c_ is the last char of response/commit from .py file\n", char_tmp_read);
 #endif
 
-			for(i=0; i<45; i++)				// max size allocated is 'char stable_cmit_hash[45]={0}', so i<45
-				stable_cmit_hash[i]='\0';
+//			for(i=0; i<45; i++)				// max size allocated is 'char stable_cmit_hash[45]={0}', so i<45
+//				stable_cmit_hash[i]='\0';
+
+			memset(stable_cmit_hash, '\0', 45);
 
 			if(char_tmp_read != EOF) {
-				if(char_tmp_read != '-') {	// '-' means no fix found. '-' written into file by nogui_find_stable_commit.py
+
+				if(char_tmp_read!='-' && char_tmp_read!='x') {	// '-' means no fix found. 'x' means wrong product
+										// '-'/'x' written into file by nogui_find_stable_commit.py
 
 					fseek(fp, -40, SEEK_END);					// as commit length is 40 and its at
 					fscanf(fp,"%s", stable_cmit_hash);				// at the end of line. Hence SEEK_END-40
@@ -398,10 +434,17 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 					printf("_%s=>%ld_\n"  , stable_cmit_hash, strlen(stable_cmit_hash) );
 					printf("_%s=>%ld_\n\n", stable_branch_vers, strlen(stable_branch_vers) );
 #endif
-				}
-			}
+/*				  fseek(fp, 0, SEEK_END);
 
-			fseek(fp, 0, SEEK_END);
+*/				} // END of "if(char_tmp_read!='-' && char_tmp_read!='x') {"
+/*
+				else {						// if no stable fix, replace data with ' ' spaces
+					fseek(fp, -13, SEEK_END);		// _Bug:123456  -_
+					fprintf(fp, "            ");
+				}
+*/			} // END of "if(char_tmp_read != EOF) {"
+
+/*uncommented*/		fseek(fp, 0, SEEK_END);
 
 			if(strlen(stable_cmit_hash) == 40)
 			{
@@ -428,25 +471,23 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 				{
 					i=1;
 
-					if     ( strcmp(status_of_bugz, "NEW")     ==0)	i=0;
+					if     ( strcmp(status_of_bugz, "NEW")     ==0) i=0;		// chk 'code2*.c', filter added there too
 					else if( strcmp(status_of_bugz, "ASSIGNED")==0) i=0;
 					else if( strcmp(status_of_bugz, "REOPENED")==0) i=0;
+					else if( strcmp(status_of_bugz, "SYNC_REQ")==0) i=0;
 					else
-						fprintf(fp, " N 'status'");	// Should not update bug as 'Status' of bug not appropriate
+						fprintf(fp, "%17s", " N 'status'");	// Should not update bug as bugz 'Status' not appropriate
 
-					if(i==0)		// For Next Check
+					if(i==0)		// Stored for Next Check
 					{
-						fprintf(fp, " Y");
 
-// -> To get difference between BugOpenDate & PresentDate(PST)
-
-						setenv("TZ", "PST8PDT", 1);
+						setenv("TZ", "PST8PDT", 1);		// -> To get diff between BugOpenDate & PresentDate(PST)
 						tzset();
 						time_t t = time(NULL);
 						struct tm *local_time = localtime(&t);
 						char date_string[12];
 						strftime(date_string, sizeof(date_string), "%Y-%m-%d", local_time);
-					//	printf("Current date in PST: %s\n", date_string);
+						//	printf("Current date in PST: %s\n", date_string);
 
 						time_t date1 = convertToDate(date_reported_of_bugz);
 						time_t date2 = convertToDate(date_string);
@@ -455,30 +496,48 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 
 						// Convert seconds to days (1 day = 24 hours * 60 minutes * 60 seconds)
 						int diff_days = difference / (60 * 60 * 24);
-					//	printf(" diff_days is: %d", diff_days);
+						//	printf(" diff_days is: %d", diff_days);
 
-						if(diff_days >= 30)
-							fprintf(fp, " dOK  %4d", diff_days);
+						if(diff_days < 1) {
+							fprintf(fp, "%17s", " N 'date'");	// Should not update as bug opened on same day
+							i=1;
+						}
+						else if(diff_days >= 30)
+							fprintf(fp, " Y dOK  %4d", diff_days);
 						else
-							fprintf(fp, " dNOK %4d", diff_days);
-// <-
+							fprintf(fp, " Y dNOK %4d", diff_days);
 
-						if( strcmp(assignee_of_bugz, "secbugz")==0 || strcmp(assignee_of_bugz, "skulkarni")==0 )
-							fprintf(fp, " namY");
-						else
-							fprintf(fp, " namN");
+						if(i==0) {
+							if( strcmp(assignee_of_bugz, "secbugz")==0 || strcmp(assignee_of_bugz, "skulkarni")==0 )
+								fprintf(fp, " namY");
+							else
+								fprintf(fp, " namN");
+						}
 
 					} // if(i==0) ENDS
 
 				} // USERNAME_CHECK OR BYPASS
 				else {
-					fprintf(fp, " N 'user'");		// Should not update bug as another 'User' has the bug
+					fprintf(fp, "%17s", " N 'user'");		// Should not update bug as another 'User' has the bug
 				}
 
-			} // if(strlen(stable_cmit_hash) == 40) ENDS
+//				fprintf(fp, "\n");	// Will be handled in 'mvista_find_gitcgx_commit.py'
+				fclose(fp);
 
-			fprintf(fp, "\n");
-			fclose(fp);
+		                strcpy(buffer, "python3 mvista_find_gitcgx_commit.py "); // writes into 'dumped_data.txt' if successful
+				strcat(buffer, master_cmit_id);
+		                strcat(buffer, " ");
+		                strcat(buffer, prod_of_bugz);
+		                sys_ret_val = system(buffer);
+
+				check_if_Ctrl_C_exception(sys_ret_val, "M1", loop_number, total_count);
+
+			} // if(strlen(stable_cmit_hash) == 40) ENDS
+			else {
+				fprintf(fp, "\n");
+				fclose(fp);
+			}
+
 		} // if(sys_ret_val == 0) ENDS
 
 		check_if_Ctrl_C_exception(sys_ret_val, "S1", loop_number, total_count);

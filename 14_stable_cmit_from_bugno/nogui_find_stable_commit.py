@@ -63,7 +63,6 @@ def check_stable_fix(cgx_vers, kern_vers, url):
                   fp.write(" -")
                   fp.close()
 #                  sys.exit(1)
-
         else:
             print(Fore.RED + f"\t No fix found." + Fore.RESET)
             fp=open("dumped_data.txt", "a+")
@@ -105,7 +104,7 @@ except:
 
 
 
-commit = sys.argv[1]
+commit  = sys.argv[1]
 product = sys.argv[2]
 
 
@@ -120,15 +119,28 @@ url6_9  = f"https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log
 
 if   product == 'CGX2.4':
     check_stable_fix('CGX2.4', 'v4.14', url4_14)
+
 elif product == 'CGX2.6':
     check_stable_fix('CGX2.6', 'v4.19', url4_19)
+
 elif product == 'CGX3.1':
     check_stable_fix('CGX3.1', 'v5.4 ', url5_4)
+
 elif product == 'CGX4.0':
     check_stable_fix('CGX4.0', 'v5.10', url5_10)
+
 elif product == 'CGX5.0':
     check_stable_fix('CGX5.0', 'v6.6 ', url6_6)
-else:
+
+elif product == 'CentOS' or product == 'Rocky':
+
+    print(Fore.RED + "\t Only CGX products are supported. Passed product", product , "is Invalid.\n" + Fore.RESET)
+    fp=open("dumped_data.txt", "a+")
+    fp.write(" x")
+    fp.close()
+
+else:								# Manual Product Checking
+    print("Checking manualy, but Bugz Product '" +product+ "'")
 
 #    check_stable_fix('CGX2.4', 'v4.14', url4_14)		# CGX2.4
 #    check_stable_fix('CGX2.6', 'v4.19', url4_19)		# CGX2.6
@@ -136,12 +148,5 @@ else:
     check_stable_fix('CGX4.0', 'v5.10', url5_10)		# CGX4.0
 #    check_stable_fix('CGX5.0', 'v6.6 ', url6_6)		# CGX5.0
 
-
-time.sleep(0.1)
-#    check_fix_mvista_gitcgx('5.0', 'mvl-6.6/msd.cgx', commit)
-
-## Test data: 25 Jun 2024 [class="age-days" availability might change acc to the date on which prog is ran]
-# one link: nogui_find_stable_commit.py 2f945a792f67815abca26fa8a5e863ccf3fa1181 (1+/1-) [class="age-days" NotAvailable]
-# one link: nogui_find_stable_commit.py 9fe2816816a3c765dff3b88af5b5c3d9bbb911ce (1+/2-) [class="age-days" Available]
-#  no fix : nogui_find_stable_commit.py e9edc188fc76499b0b9bd60364084037f6d03773
+time.sleep(1)
 
