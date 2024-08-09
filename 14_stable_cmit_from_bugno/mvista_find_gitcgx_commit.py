@@ -62,25 +62,25 @@ def check_fix_mvista_gitcgx(cgx_vers_num, mvl_branch, mast_cmit):
                     if maximum == 1:
                         fp.write("       "+"https://gitcgx.mvista.com"+f"{git_link['href']}"+"\n")
                     else:
-                        fp.write("       NA_gitcgx"+"\n")
+                        fp.write("       NA_gitcgx-1"+"\n")
                     fp.close()
 
                 else:
                   print(Fore.RED + f"\t Fix not found" + Fore.RESET)
 
                   fp=open("dumped_data.txt", "a+")
-                  fp.write("       NA_gitcgx"+"\n")
+                  fp.write("       NA_gitcgx-2"+"\n")
                   fp.close()
         else:
             print(Fore.RED + f"\t No fix found." + Fore.RESET)
             fp=open("dumped_data.txt", "a+")
-            fp.write("       NA_gitcgx"+"\n")
+            fp.write("       NA_gitcgx-3"+"\n")
             fp.close()
 
     else:
         print(f"\t Failed to retrieve webpage. Status code: {response.status_code}")
         fp=open("dumped_data.txt", "a+")
-        fp.write("       NA_gitcgx"+"\n")
+        fp.write("       NA_gitcgx-Failed_to_retrieve_webpage"+"\n")
         fp.close()
 
 

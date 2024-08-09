@@ -124,6 +124,8 @@ void main(int argc, char *argv[])
 				exit(1);
 			}
 		}
+
+		system("rm generated_details.txt 2> /dev/null");
 	}
 	else {
 		printf(" Pass either .csv file or bugz number with len 5 or 6 \n");
@@ -348,7 +350,7 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 		}
 
 		if(*(ptr_pos+6)=='-' || *(ptr_pos+7)=='\0') {		// No Fix, only 'Fixed By' - Eg: /ubuntu.com/security/CVE-2024-0564
-			printf("No fix found from Ubuntu Security Page. \n\n");
+			printf("\n No Valid fix found from Ubuntu Security Page. \n\n");
 			return(-1);
 		}
 

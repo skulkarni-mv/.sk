@@ -47,10 +47,10 @@ void decode_flags_create_command()
 			if( strcmp(bugz_status, "NEW")==0 || strcmp(bugz_status, "ASSIGNED")==0 || strcmp(bugz_status, "REOPENED")==0 ) {
 
 				if( strcmp(flag_take_on_name, "namY") == 0 ) {
+										// Uncomment 2 lines to check for CGX2.6 / else Ignore completely
+/*uncomment*/				strcat(cmd_from_flags_to_python, "_uname=Yes_");
 
-//	uncomment			strcat(cmd_from_flags_to_python, "_uname=Yes_");
-
-//	uncomment			strcat(cmd_from_flags_to_python, "_cmnt=chkCodeFilesIfAffected_");	// Only Update if on your name
+/*uncomment*/				strcat(cmd_from_flags_to_python, "_cmnt=chkCodeFilesIfAffected_");	// Only Update if on your name
 				}
 
 				if( strstr(mv_gitcgx_link, "https://gitcgx.mvista.com/cgit/CGX") != 0) {	// found fix -> Rare in CGX2.6
@@ -364,13 +364,12 @@ void main(int argc, char *argv[])
 #ifdef debug_print
 					printf("\n \t      %s", mv_gitcgx_link);		fflush(stdout);
 #endif
-						if( strstr(mv_gitcgx_link, "NA_gitcgx") != 0 );
+						if( strstr(mv_gitcgx_link, "NA_gitcgx") != 0 );					// FOUND string
 
-						else if( strstr(mv_gitcgx_link, "https://gitcgx.mvista.com/cgit/CGX") == 0) {
-							printf("\n ************ Are you sure this is master github link? ************ \n");
+						else if( strstr(mv_gitcgx_link, "https://gitcgx.mvista.com/cgit/CGX") == 0) {	// NOT found
+							printf("\n ************ Are you sure this is correct gitcgx commit link? ********* \n");
 							continue;
 						}
-
 
 					decode_flags_create_command();
 
