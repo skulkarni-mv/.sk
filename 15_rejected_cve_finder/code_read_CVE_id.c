@@ -11,6 +11,10 @@ void check_if_Ctrl_C_exception(int sys_ret_val_input, char *exception_num, int l
 
 char* inp_filename;
 
+
+#define delete_generated_temp_data 1
+
+
 void main(int argc, char **argv)
 {
 
@@ -83,6 +87,11 @@ void main(int argc, char **argv)
 		if (count > 0) {
 			check_cveorg_rejected_CVE(count);
 		}
+
+#ifdef delete_generated_temp_data
+		system("rm CVE_nums_extracted.txt 2> /dev/null");
+		system("rm temp_comment_file.tmp  2> /dev/null");
+#endif
 	}
 	else
 		perror("fopen");
