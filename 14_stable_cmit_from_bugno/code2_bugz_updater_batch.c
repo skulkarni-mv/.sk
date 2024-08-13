@@ -34,6 +34,7 @@ char bugz_product[15]={0}, bugz_prio[10]={0}, bugz_status[15]={0}, bugz_assignee
 char flag_update_bug_y_n[2]={0}, flag_date_ok_nok[5]={0}, flag_date_difference[5]={0}, flag_take_on_name[5]={0}, flag_reason_of_N[9]={0};
 char mv_gitcgx_link[150]={0}, cmd_from_flags_to_python[200]={0};
 
+bool override_update_bugz_confirm=false;
 
 void decode_flags_create_command()
 {
@@ -147,9 +148,15 @@ void main(int argc, char *argv[])
 
 	FILE *fp_read=NULL, *fp_write=NULL;
 
-	if(argc != 2)
+	if     (argc == 2);
+
+	else if(argc == 3 && !strcmp(argv[2], "--upbugz") ) {
+
+		override_update_bugz_confirm = true;
+	}
+	else
 	{
-		printf("\n\t Usage: ./run2_bugz_updater.out <'dumped_data'_file_path> \n\n");
+		printf("\n\t Usage: ./run2_bugz_updater.out <'dumped_data'_file_path> {OPT: --upbugz}\n\n");
 		exit(1);
 	}
 
@@ -159,6 +166,15 @@ void main(int argc, char *argv[])
 
 	printf("\n --------------------------- Press Enter to continue / Ctrl^C to Terminate ----------------------------- \n");
 	getchar();
+#else
+
+      if(override_update_bugz_confirm == true) {
+
+	printf("\n ----------- Command option passed: '--upbugz', UPDATE the BUGs on bugz site. Are you sure ?? ---------- \n");
+
+	printf("\n --------------------------- Press Enter to continue / Ctrl^C to Terminate ----------------------------- \n");
+	getchar();
+      }
 #endif
 
 
@@ -468,7 +484,15 @@ int format_comment(char chr_bugz_uname, char chr_cmnt_chk_files, char chr_bugz_s
 #ifdef update_bugz_confirm
 	system(cmd_buf);
 #else
+
+      if(override_update_bugz_confirm == true) {
+
+	system(cmd_buf);
+      }
+      else {
+
 	printf("\n\n\t\t\t NOT UPDATING ON THE BUGZ AS PER THE SETTINGS IN THE CODE. \n");
+      }
 #endif
 
 

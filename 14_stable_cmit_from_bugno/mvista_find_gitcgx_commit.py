@@ -13,7 +13,7 @@ import warnings
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 
-def check_fix_mvista_gitcgx(cgx_vers_num, mvl_branch, mast_cmit):
+def check_fix_mvista_gitcgx(cgx_vers_num, mvl_branch, mast_cmit, recheck_flag):
 
     url="https://gitcgx.mvista.com/cgit/CGX"+cgx_vers_num+"/kernel/linux-mvista-"+cgx_vers_num+".git/log/?h="+mvl_branch+"&qt=grep&q="+mast_cmit
 
@@ -78,10 +78,15 @@ def check_fix_mvista_gitcgx(cgx_vers_num, mvl_branch, mast_cmit):
             fp.close()
 
     else:
-        print(f"\t Failed to retrieve webpage. Status code: {response.status_code}")
-        fp=open("dumped_data.txt", "a+")
-        fp.write("       NA_gitcgx-Failed_to_retrieve_webpage"+"\n")
-        fp.close()
+        if recheck_flag == 1:
+            print(f"\t Failed to retrieve webpage. Status code: {response.status_code}. RETRYING...")
+            check_fix_mvista_gitcgx(cgx_vers_num, mvl_branch, mast_cmit, 0)
+
+        else:
+            print(f"\t Failed to retrieve webpage. Status code: {response.status_code}")
+            fp=open("dumped_data.txt", "a+")
+            fp.write("       NA_gitcgx-Failed_to_retrieve_webpage_x2"+"\n")
+            fp.close()
 
 
 
@@ -106,19 +111,19 @@ commit = sys.argv[1]
 product = sys.argv[2]
 
 if   product == 'CGX2.4':
-    check_fix_mvista_gitcgx('2.4', 'mvl-4.14/msd.cgx', commit)
+    check_fix_mvista_gitcgx('2.4', 'mvl-4.14/msd.cgx', commit, 1)
 
 elif product == 'CGX2.6':
-    check_fix_mvista_gitcgx('2.6', 'mvl-4.19/msd.cgx', commit)
+    check_fix_mvista_gitcgx('2.6', 'mvl-4.19/msd.cgx', commit, 1)
 
 elif product == 'CGX3.1':
-    check_fix_mvista_gitcgx('3.1', 'mvl-5.4/msd.cgx', commit)
+    check_fix_mvista_gitcgx('3.1', 'mvl-5.4/msd.cgx', commit, 1)
 
 elif product == 'CGX4.0':
-    check_fix_mvista_gitcgx('4.0', 'mvl-5.10/msd.cgx', commit)
+    check_fix_mvista_gitcgx('4.0', 'mvl-5.10/msd.cgx', commit, 1)
 
 elif product == 'CGX5.0':
-    check_fix_mvista_gitcgx('5.0', 'mvl-6.6/msd.cgx', commit)
+    check_fix_mvista_gitcgx('5.0', 'mvl-6.6/msd.cgx', commit, 1)
 
 elif product == 'CentOS' or product == 'Rocky':				# Unsupported Products
 
@@ -129,9 +134,9 @@ else:									# Manual Product checking
 
     print("Checking manualy, but Bugz Product '" +product+"'")
 
-#    check_fix_mvista_gitcgx('2.4', 'mvl-4.14/msd.cgx', commit)		# CGX2.4
-#    check_fix_mvista_gitcgx('2.6', 'mvl-4.19/msd.cgx', commit)		# CGX2.6
-#    check_fix_mvista_gitcgx('3.1', 'mvl-5.4/msd.cgx', commit)		# CGX3.1
-    check_fix_mvista_gitcgx('4.0', 'mvl-5.10/msd.cgx', commit)		# CGX4.0
-#    check_fix_mvista_gitcgx('5.0', 'mvl-6.6/msd.cgx', commit)		# CGX5.0
+#    check_fix_mvista_gitcgx('2.4', 'mvl-4.14/msd.cgx', commit, 1)	# CGX2.4
+#    check_fix_mvista_gitcgx('2.6', 'mvl-4.19/msd.cgx', commit, 1)	# CGX2.6
+#    check_fix_mvista_gitcgx('3.1', 'mvl-5.4/msd.cgx',  commit, 1)	# CGX3.1
+    check_fix_mvista_gitcgx('4.0', 'mvl-5.10/msd.cgx',  commit, 1)	# CGX4.0
+#    check_fix_mvista_gitcgx('5.0', 'mvl-6.6/msd.cgx',  commit, 1)	# CGX5.0
 
