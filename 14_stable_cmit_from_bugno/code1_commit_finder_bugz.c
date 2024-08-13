@@ -73,6 +73,8 @@ void main(int argc, char *argv[])
 		strncpy(bugz_num_inloop, argv[1], 9);
 
 		main_code_logic(1, 1, bugz_num_inloop, prev_bugz_num, prev_master_cmit_id);
+
+		system("rm generated_details.txt 2> /dev/null");                // Delete unnecessary file
 	}
 
 	else if( strstr(argv[1], ".csv") != NULL ) {
@@ -125,7 +127,7 @@ void main(int argc, char *argv[])
 			}
 		}
 
-		system("rm generated_details.txt 2> /dev/null");
+		system("rm generated_details.txt 2> /dev/null");                // Delete unnecessary file
 	}
 	else {
 		printf(" Pass either .csv file or bugz number with len 5 or 6 \n");
@@ -560,6 +562,8 @@ void check_if_Ctrl_C_exception(int sys_ret_val_input, char *exception_num, int l
 	if(sys_ret_val_input == 2) {
 		printf("\n\t Unhandled Exception #%s in loop %d/%d. system() function returned '%d'. Exiting... \n\n", \
 					exception_num, loop_number, total_count, sys_ret_val_input);
+
+		system("rm generated_details.txt 2> /dev/null");		// Delete unnecessary file
 		exit(1);
 	}
 }
