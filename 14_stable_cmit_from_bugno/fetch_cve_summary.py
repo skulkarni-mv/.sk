@@ -8,6 +8,9 @@ import subprocess
 import re
 import os
 
+from colorama import Fore
+
+
 mvista_id='skulkarni'
 
 def fetch_cve_summary_from_bugz_number(uname, pword, bug_no):
@@ -24,8 +27,8 @@ def fetch_cve_summary_from_bugz_number(uname, pword, bug_no):
             r = s.post(bugz_login_url, data=acc_details)
             soup = bs(r.text, 'lxml')
             if "Invalid Username Or Password" == soup.title.string:
-                print("Invalid Username Or Password")
-                print("Exiting..")
+                print(Fore.RED, "Invalid Username Or Password")
+                print("Exiting..", Fore.RESET)
                 sys.exit(1)
 
             cve_summ = soup.find('span', {'id': 'short_desc_nonedit_display'})
@@ -78,12 +81,12 @@ def fetch_cve_summary_from_bugz_number(uname, pword, bug_no):
             return
 
         except requests.exceptions.Timeout:
-            print("Connection timed out")
-            print("Exiting..")
+            print(Fore.RED, "Connection timed out")
+            print("Exiting..", Fore.RESET)
             sys.exit(1)
         except requests.exceptions.RequestException as e:
-            print(e)
-            print("Exiting..")
+            print(Fore.RED, e)
+            print("Exiting..", Fore.RESET)
             sys.exit(1)
 
 
