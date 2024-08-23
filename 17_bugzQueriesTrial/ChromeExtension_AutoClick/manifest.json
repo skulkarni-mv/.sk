@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Clicker",
+  "version": "1.0",
+  "description": "Automatically clicks a button on a specific page.",
+  "permissions": [
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;*"],  // Replace with your target URL
+      "js": ["content.js"]
+    }
+  ]
+}
+
