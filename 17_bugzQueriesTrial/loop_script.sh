@@ -25,10 +25,12 @@ while true; do
         echo ""
         echo "--------- following csv files are downloaded using the script ----------"
         echo ""
-        ls -lh /home/shubham/Downloads/csv_dnld*
+        ls -lh /home/shubham/Downloads/csv_dnld* | grep $yesterday_date
         echo ""
         echo "------ 'weblinks.py' script execution completed, Sending mail now ------"
-        echo "Subject: Script Execution Completed for Today" > output ; echo "" >> output ; ls -lh /home/shubham/Downloads/csv_dnld* >> output
+        echo "Subject: Script Execution Completed for Today" > output ; echo "" >> output
+        ls -lh /home/shubham/Downloads/csv_dnld* | grep $yesterday_date >> output ; echo "" >> output; echo "" >> output; echo "" >> output
+        ls -lh /home/shubham/Downloads/csv_dnld* >> output
         echo ""
         sleep 5 &&  git send-email --to=skulkarni@mvista.com --confirm=never output > /dev/null ; rm output
         echo ""
