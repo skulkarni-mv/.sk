@@ -9,6 +9,7 @@ import argparse
 import os
 import glob
 from datetime import datetime, timedelta
+import pytz
 
 import csv
 from colorama import Fore
@@ -92,7 +93,11 @@ till_date_inp  = sys.argv[2]
 compare_dates(from_date_inp, till_date_inp)
 
 date_format = '%Y-%m-%d'
-today_date = datetime.now().strftime(date_format)
+#today_date = datetime.now().strftime(date_format)
+
+now_pst = datetime.now(pytz.utc).astimezone(pytz.timezone('US/Pacific'))
+today_date = now_pst.strftime(date_format)
+
 downloads_folder = os.path.expanduser('~/Downloads')
 
 
