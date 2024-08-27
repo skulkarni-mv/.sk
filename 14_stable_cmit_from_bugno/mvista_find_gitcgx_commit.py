@@ -79,11 +79,11 @@ def check_fix_mvista_gitcgx(cgx_vers_num, mvl_branch, mast_cmit, recheck_flag):
 
     else:
         if recheck_flag == 1:
-            print(f"\t Failed to retrieve webpage. Status code: {response.status_code}. RETRYING...")
+            print(Fore.RED + f"\t Failed to retrieve webpage. Status code: {response.status_code}." +Fore.YELLOW+ " RETRYING..." + Fore.RESET)
             check_fix_mvista_gitcgx(cgx_vers_num, mvl_branch, mast_cmit, 0)
 
         else:
-            print(f"\t Failed to retrieve webpage. Status code: {response.status_code}")
+            print(Fore.RED + f"\t Failed to retrieve webpage. Status code: {response.status_code}" + Fore.RESET)
             fp=open("dumped_data.txt", "a+")
             fp.write("       NA_gitcgx-Failed_to_retrieve_webpage_x2"+"\n")
             fp.close()
