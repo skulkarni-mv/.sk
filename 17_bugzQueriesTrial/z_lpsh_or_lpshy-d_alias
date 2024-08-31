@@ -1,3 +1,5 @@
 alias WD='cd /home/shubham/.sk/17_bugzQueriesTrial; export DISPLAY=:0 ; echo $DISPLAY'	# setting DISP is req for running on PC, remotely
 alias lpsh='./loop_script.sh'
-alias lpsm='touch manual_run.file ; ./loop_script.sh'
+alias lpshy='touch manual_yday.file ; ./loop_script.sh'
+alias lpsht='touch manual_today.file; ./loop_script.sh'
+### $ cat z_lpsh_or_lpshy-d_alias >> ~/.bashrc

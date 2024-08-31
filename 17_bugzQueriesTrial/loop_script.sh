@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Function to get yesterday's date in YYYY-MM-DD format
-get_yesterday_date() {
-    date -d "yesterday" '+%Y-%m-%d'
-}
+
+GREEN='\033[32m'
+RESET='\033[0m'
+
 
 # Main loop
 while true; do
@@ -11,20 +11,35 @@ while true; do
     current_time=$(date '+%H:%M')
 
     # Check if it's 12:30 PM
-    if [ "$current_time" == "12:30" ] || [ -f "manual_run.file" ]; then
+    if [ "$current_time" == "12:30" ] || [ -f "manual_yday.file" ] || [ -f "manual_today.file" ] ; then
 
 	if [ "$current_time" == "12:30" ]; then
-	        yesterday_date=$(get_yesterday_date)			# Get yesterday's date
 
-	elif [ -f "manual_run.file" ]; then
-		rm "manual_run.file"
+		pass_date=$(date -d "yesterday" '+%Y-%m-%d')		# Get IST yesterday's date
+
+	elif [ -f "manual_yday.file" ]; then
+		rm "manual_yday.file"
 
 		export TZ='America/Los_Angeles' 			# Note: This does not account for DST
-		current_date_pst=$(TZ='Etc/GMT+7' date '+%Y-%m-%d' )
+		yest_date_pst=$(TZ='Etc/GMT+7' date -d "yesterday" '+%Y-%m-%d' )
 
 		echo ""
-		echo "Running Manually with Current PST Date: $current_date_pst"
-		yesterday_date=$current_date_pst
+		echo "Running Manually with Yesterday's PST Date: $yest_date_pst"
+		pass_date=$yest_date_pst
+
+		unset TZ						# Reset the timezone to the system's default
+		echo "Resetting Timezone"
+		echo ""
+
+	elif [ -f "manual_today.file" ]; then
+		rm "manual_today.file"
+
+		export TZ='America/Los_Angeles' 			# Note: This does not account for DST
+		today_date_pst=$(TZ='Etc/GMT+7' date '+%Y-%m-%d' )
+
+		echo ""
+		echo "Running Manually with Today's PST Date: $today_date_pst"
+		pass_date=$today_date_pst
 
 		unset TZ						# Reset the timezone to the system's default
 		echo "Resetting Timezone"
@@ -35,19 +50,19 @@ while true; do
 
         # Call the Python script with yesterday's date as an argument
         echo ""
-        echo "Running Python script with date: $yesterday_date"
+        echo -e "${GREEN} Running Python script with date: $pass_date ${RESET}"
 
-        python3 weblinks.py "$yesterday_date" "$yesterday_date"
+        python3 weblinks.py "$pass_date" "$pass_date"
 
         echo ""
         echo "--------- following csv files are downloaded using the script ----------"
         echo ""
-        ls -lh /home/shubham/Downloads/csv_dnld* | grep $yesterday_date
+        ls -lh ~/Downloads/csv_dnld* | grep $pass_date
         echo ""
         echo "------ 'weblinks.py' script execution completed, Sending mail now ------"
         echo "Subject: Script Execution Completed for Today" > output ; echo "" >> output
-        ls -lh /home/shubham/Downloads/csv_dnld* | grep $yesterday_date >> output ; echo "" >> output; echo "" >> output; echo "" >> output
-        ls -lh /home/shubham/Downloads/csv_dnld* >> output
+        ls -lh ~/Downloads/csv_dnld* | grep $pass_date >> output ; echo "" >> output; echo "" >> output; echo "" >> output
+        ls -lh ~/Downloads/csv_dnld* >> output
         echo ""
         sleep 5 &&  git send-email --to=skulkarni@mvista.com --confirm=never output > /dev/null ; rm output
         echo ""
