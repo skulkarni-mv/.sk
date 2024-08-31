@@ -11,9 +11,26 @@ while true; do
     current_time=$(date '+%H:%M')
 
     # Check if it's 12:30 PM
-    if [ "$current_time" == "12:30" ]; then
-        # Get yesterday's date
-        yesterday_date=$(get_yesterday_date)
+    if [ "$current_time" == "12:30" ] || [ -f "manual_run.file" ]; then
+
+	if [ "$current_time" == "12:30" ]; then
+	        yesterday_date=$(get_yesterday_date)			# Get yesterday's date
+
+	elif [ -f "manual_run.file" ]; then
+		rm "manual_run.file"
+
+		export TZ='America/Los_Angeles' 			# Note: This does not account for DST
+		current_date_pst=$(TZ='Etc/GMT+7' date '+%Y-%m-%d' )
+
+		echo ""
+		echo "Running Manually with Current PST Date: $current_date_pst"
+		yesterday_date=$current_date_pst
+
+		unset TZ						# Reset the timezone to the system's default
+		echo "Resetting Timezone"
+		echo ""
+	fi
+
         echo $current_time
 
         # Call the Python script with yesterday's date as an argument

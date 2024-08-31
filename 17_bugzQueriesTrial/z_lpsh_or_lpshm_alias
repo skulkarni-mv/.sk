@@ -1,0 +1,3 @@
+alias WD='cd /home/shubham/.sk/17_bugzQueriesTrial; export DISPLAY=:0 ; echo $DISPLAY'	# setting DISP is req for running on PC, remotely
+alias lpsh='./loop_script.sh'
+alias lpsm='touch manual_run.file ; ./loop_script.sh'
