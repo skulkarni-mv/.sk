@@ -133,7 +133,7 @@ time.sleep(1)
 old_file_name = f'bugs-{today_date}.csv'					# Construct the original and new file paths
 old_file_path = os.path.join(downloads_folder, old_file_name)
 
-for i in range(delay_time_pageload):						# takes time to load the data
+for i in range(delay_time_pageload+30):						# takes time to load the data
     time.sleep(1)
     if os.path.exists(old_file_path):						# break from sleep, if the file is downloaded & exists
         time.sleep(1)
@@ -301,6 +301,55 @@ else:
     print(Fore.RED, f"\n\t\t\t\t File not found to rename: {old_file_path}", Fore.RESET)
 
     manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_4-ReOpWithin_bugs-00.csv'
+    file = open(os.path.join(downloads_folder, manual_file_name), 'w')
+    file.close()
+    print(f"Created file: {os.path.join(downloads_folder, manual_file_name)}")
+
+
+#########################--- 5-ReOp-Creat_bugs ---------------------------------------------------------------------
+
+time.sleep(2)
+
+webbrowser.open(f'file://ReOpened_in_same_duration_as_Created__"{from_date_inp}"_and_"{till_date_inp}"')
+time.sleep(1)
+
+
+# ReOpened between Specified Duration
+webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=bug_status;chfieldvalue=REOPENED;value0-0-0={from_date_query};value0-1-0={till_date_query};type0-0-0=greaterthan;type0-1-0=lessthan;field0-0-0=creation_ts;field0-1-0=creation_ts;field0-0-0=creation_ts;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
+
+time.sleep(1)
+
+### RENAME FILE
+
+old_file_name = f'bugs-{today_date}.csv'					# Construct the original and new file paths
+old_file_path = os.path.join(downloads_folder, old_file_name)
+
+for i in range(delay_time_pageload):						# takes time to load the data
+    time.sleep(1)
+    if os.path.exists(old_file_path):						# break from sleep, if the file is downloaded & exists
+        time.sleep(1)
+        break
+
+lines=0
+if os.path.exists(old_file_path):
+    lines = count_lines_csv(old_file_path)
+    lines = lines - 1
+
+new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_5-ReOp-Creat_bugs-{lines}.csv'
+new_file_path = os.path.join(downloads_folder, new_file_name)
+
+
+if os.path.exists(old_file_path):						# Check if the old file exists
+    try:
+        os.rename(old_file_path, new_file_path)					# Rename the file
+        print(f"Renamed file: {old_file_path} to {new_file_path}")
+
+    except Exception as e:
+        print(Fore.RED, f"Error renaming file: {e}", Fore.RESET)
+else:
+    print(Fore.RED, f"\n\t\t\t\t File not found to rename: {old_file_path}", Fore.RESET)
+
+    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_5-ReOp-Creat_bugs-00.csv'
     file = open(os.path.join(downloads_folder, manual_file_name), 'w')
     file.close()
     print(f"Created file: {os.path.join(downloads_folder, manual_file_name)}")
