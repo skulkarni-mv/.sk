@@ -77,6 +77,7 @@ try:
     parser = argparse.ArgumentParser()
     parser.add_argument("DateFrom", type=str)
     parser.add_argument("DateTill", type=str)
+    parser.add_argument('--optional',type=str, help='"-" Not to open file:// tabs on browser')
     args = parser.parse_args()
 
     print(Fore.YELLOW ,"Argument passed: ", sys.argv[1], sys.argv[2], "\n", Fore.RESET)
@@ -116,16 +117,17 @@ delete_today_date_csv_files(date_format, today_date, downloads_folder)
 print("------------------------------------------------------------")
 
 
-#########################--- 1-Open_Still_bugs ---------------------------------------------------------------------
+#########################--- A1-Open_Still_bugs ---------------------------------------------------------------------
 
 time.sleep(2)
 
-now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-webbrowser.open(f'file://Still_Open_as_of_Now_{now}')
-time.sleep(1)
+if not args.optional:
+    now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    webbrowser.open(f'file://Still_Open_as_of_Now_{now}')
+    time.sleep(1)
 
 #  Still Open as of Now / UnResolved Yet
-webbrowser.open('http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;bug_status=NEW;bug_status=ASSIGNED;bug_status=IN_REVIEW;bug_status=SYNC_REQ;bug_status=REOPENED;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
+webbrowser.open('http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=A1-Open_Still_bugs;bug_status=NEW;bug_status=ASSIGNED;bug_status=IN_REVIEW;bug_status=SYNC_REQ;bug_status=REOPENED;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
 time.sleep(1)
 
 ### RENAME FILE
@@ -144,7 +146,7 @@ if os.path.exists(old_file_path):
     lines = count_lines_csv(old_file_path)
     lines = lines - 1
 
-new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_1-Open_Still_bugs-{lines}.csv'
+new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_A1-Open_Still_bugs-{lines}.csv'
 new_file_path = os.path.join(downloads_folder, new_file_name)
 
 
@@ -158,21 +160,23 @@ if os.path.exists(old_file_path):						# Check if the old file exists
 else:
     print(Fore.RED, f"\n\t\t\t\t File not found to rename: {old_file_path}", Fore.RESET)
 
-    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_1-Open_Still_bugs-00.csv'
+    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_A1-Open_Still_bugs-00.csv'
     file = open(os.path.join(downloads_folder, manual_file_name), 'w')
     file.close()
     print(f"Created file: {os.path.join(downloads_folder, manual_file_name)}")
 
+count_A1=lines
 
-#########################--- 2-CreatedNEW_bugs ---------------------------------------------------------------------
+#########################--- B2-CreatedNEW_bugs ---------------------------------------------------------------------
 
 time.sleep(2)
 
-webbrowser.open(f'file://Created_Between_"{from_date_inp}"_and_"{till_date_inp}"')
-time.sleep(1)
+if not args.optional:
+    webbrowser.open(f'file://Created_Between_"{from_date_inp}"_and_"{till_date_inp}"')
+    time.sleep(1)
 
 # Created between Specified Duration
-webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=%5BBug%20creation%5D;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
+webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=B2-CreatedNEW_bugs;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=%5BBug%20creation%5D;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
 time.sleep(1)
 
 ### RENAME FILE
@@ -191,7 +195,7 @@ if os.path.exists(old_file_path):
     lines = count_lines_csv(old_file_path)
     lines = lines - 1
 
-new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_2-CreatedNEW_bugs-{lines}.csv'
+new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_B2-CreatedNEW_bugs-{lines}.csv'
 new_file_path = os.path.join(downloads_folder, new_file_name)
 
 
@@ -205,21 +209,23 @@ if os.path.exists(old_file_path):						# Check if the old file exists
 else:
     print(Fore.RED, f"\n\t\t\t\t File not found to rename: {old_file_path}", Fore.RESET)
 
-    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_2-CreatedNEW_bugs-00.csv'
+    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_B2-CreatedNEW_bugs-00.csv'
     file = open(os.path.join(downloads_folder, manual_file_name), 'w')
     file.close()
     print(f"Created file: {os.path.join(downloads_folder, manual_file_name)}")
 
+count_B2=lines
 
-#########################--- 3-Res_Within_bugs ---------------------------------------------------------------------
+#########################--- C3-Res_Within_bugs ---------------------------------------------------------------------
 
 time.sleep(2)
 
-webbrowser.open(f'file://Resolved_Between_"{from_date_inp}"_and_"{till_date_inp}"')
-time.sleep(1)
+if not args.optional:
+    webbrowser.open(f'file://Resolved_Between_"{from_date_inp}"_and_"{till_date_inp}"')
+    time.sleep(1)
 
 # Resolved between Specified Duration
-webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=bug_status;chfieldvalue=RESOLVED;bug_status=RESOLVED;bug_status=CLOSED;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
+webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=C3-Res_Within_bugs;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=bug_status;chfieldvalue=RESOLVED;bug_status=RESOLVED;bug_status=CLOSED;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
 time.sleep(1)
 
 ### RENAME FILE
@@ -238,7 +244,7 @@ if os.path.exists(old_file_path):
     lines = count_lines_csv(old_file_path)
     lines = lines - 1
 
-new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_3-Res_Within_bugs-{lines}.csv'
+new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_C3-Res_Within_bugs-{lines}.csv'
 new_file_path = os.path.join(downloads_folder, new_file_name)
 
 
@@ -252,21 +258,23 @@ if os.path.exists(old_file_path):						# Check if the old file exists
 else:
     print(Fore.RED, f"\n\t\t\t\t File not found to rename: {old_file_path}", Fore.RESET)
 
-    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_3-Res_Within_bugs-00.csv'
+    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_C3-Res_Within_bugs-00.csv'
     file = open(os.path.join(downloads_folder, manual_file_name), 'w')
     file.close()
     print(f"Created file: {os.path.join(downloads_folder, manual_file_name)}")
 
+count_C3=lines
 
-#########################--- 4-ReOpWithin_bugs ---------------------------------------------------------------------
+#########################--- D4-ReOpWithin_bugs ---------------------------------------------------------------------
 
 time.sleep(2)
 
-webbrowser.open(f'file://ReOpened_Between_"{from_date_inp}"_and_"{till_date_inp}"')
-time.sleep(1)
+if not args.optional:
+    webbrowser.open(f'file://ReOpened_Between_"{from_date_inp}"_and_"{till_date_inp}"')
+    time.sleep(1)
 
 # ReOpened between Specified Duration
-webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=bug_status;chfieldvalue=REOPENED;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
+webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=D4-ReOpWithin_bugs;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=bug_status;chfieldvalue=REOPENED;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
 
 time.sleep(1)
 
@@ -275,7 +283,7 @@ time.sleep(1)
 old_file_name = f'bugs-{today_date}.csv'					# Construct the original and new file paths
 old_file_path = os.path.join(downloads_folder, old_file_name)
 
-for i in range(delay_time_pageload):						# takes time to load the data
+for i in range(delay_time_pageload-30):						# takes time to load the data
     time.sleep(1)
     if os.path.exists(old_file_path):						# break from sleep, if the file is downloaded & exists
         time.sleep(1)
@@ -286,7 +294,7 @@ if os.path.exists(old_file_path):
     lines = count_lines_csv(old_file_path)
     lines = lines - 1
 
-new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_4-ReOpWithin_bugs-{lines}.csv'
+new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_D4-ReOpWithin_bugs-{lines}.csv'
 new_file_path = os.path.join(downloads_folder, new_file_name)
 
 
@@ -300,22 +308,24 @@ if os.path.exists(old_file_path):						# Check if the old file exists
 else:
     print(Fore.RED, f"\n\t\t\t\t File not found to rename: {old_file_path}", Fore.RESET)
 
-    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_4-ReOpWithin_bugs-00.csv'
+    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_D4-ReOpWithin_bugs-00.csv'
     file = open(os.path.join(downloads_folder, manual_file_name), 'w')
     file.close()
     print(f"Created file: {os.path.join(downloads_folder, manual_file_name)}")
 
+count_D4=lines
 
-#########################--- 5-ReOp-Creat_bugs ---------------------------------------------------------------------
+#########################--- E5-ReOpInSame_bugs ---------------------------------------------------------------------
 
 time.sleep(2)
 
-webbrowser.open(f'file://ReOpened_in_same_duration_as_Created__"{from_date_inp}"_and_"{till_date_inp}"')
-time.sleep(1)
+if not args.optional:
+    webbrowser.open(f'file://ReOpened_in_same_duration_as_Created__"{from_date_inp}"_and_"{till_date_inp}"')
+    time.sleep(1)
 
 
 # ReOpened between Specified Duration
-webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=bug_status;chfieldvalue=REOPENED;value0-0-0={from_date_query};value0-1-0={till_date_query};type0-0-0=greaterthan;type0-1-0=lessthan;field0-0-0=creation_ts;field0-1-0=creation_ts;field0-0-0=creation_ts;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
+webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=E5-ReOpInSame_bugs;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=bug_status;chfieldvalue=REOPENED;value0-0-0={from_date_query};value0-1-0={till_date_query};type0-0-0=greaterthan;type0-1-0=lessthan;field0-0-0=creation_ts;field0-1-0=creation_ts;field0-0-0=creation_ts;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
 
 time.sleep(1)
 
@@ -324,7 +334,7 @@ time.sleep(1)
 old_file_name = f'bugs-{today_date}.csv'					# Construct the original and new file paths
 old_file_path = os.path.join(downloads_folder, old_file_name)
 
-for i in range(delay_time_pageload):						# takes time to load the data
+for i in range(delay_time_pageload-30):						# takes time to load the data
     time.sleep(1)
     if os.path.exists(old_file_path):						# break from sleep, if the file is downloaded & exists
         time.sleep(1)
@@ -335,7 +345,7 @@ if os.path.exists(old_file_path):
     lines = count_lines_csv(old_file_path)
     lines = lines - 1
 
-new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_5-ReOp-Creat_bugs-{lines}.csv'
+new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_E5-ReOpInSame_bugs-{lines}.csv'
 new_file_path = os.path.join(downloads_folder, new_file_name)
 
 
@@ -349,10 +359,66 @@ if os.path.exists(old_file_path):						# Check if the old file exists
 else:
     print(Fore.RED, f"\n\t\t\t\t File not found to rename: {old_file_path}", Fore.RESET)
 
-    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_5-ReOp-Creat_bugs-00.csv'
+    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_E5-ReOpInSame_bugs-00.csv'
     file = open(os.path.join(downloads_folder, manual_file_name), 'w')
     file.close()
     print(f"Created file: {os.path.join(downloads_folder, manual_file_name)}")
+
+count_E5=lines
+
+#########################--- G6-ResBUTOpen_bugs ---------------------------------------------------------------------
+
+time.sleep(2)
+
+if not args.optional:
+    webbrowser.open(f'file://Resolved_BUT_StillOpened_"{from_date_inp}"_and_"{till_date_inp}"')
+    time.sleep(1)
+
+# Resolved between Specified Duration
+webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=G6-ResBUTOpen_bugs;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=bug_status;chfieldvalue=RESOLVED;bug_status=NEW;bug_status=ASSIGNED;bug_status=IN_REVIEW;bug_status=SYNC_REQ;bug_status=REOPENED;component=Kernel;component=Toolchain;component=userland;product=Carrier%20Grade;product=CentOS;product=CGX%202.0;product=CGX%202.2;product=CGX%202.4;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0;product=Kubernetes;product=Rocky;product=Ubuntu')
+time.sleep(1)
+
+### RENAME FILE
+
+old_file_name = f'bugs-{today_date}.csv'					# Construct the original and new file paths
+old_file_path = os.path.join(downloads_folder, old_file_name)
+
+for i in range(delay_time_pageload-30):						# takes time to load the data
+    time.sleep(1)
+    if os.path.exists(old_file_path):						# break from sleep, if the file is downloaded & exists
+        time.sleep(1)
+        break
+
+lines=0
+if os.path.exists(old_file_path):
+    lines = count_lines_csv(old_file_path)
+    lines = lines - 1
+
+new_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_G6-ResBUTOpen_bugs-{lines}.csv'
+new_file_path = os.path.join(downloads_folder, new_file_name)
+
+
+if os.path.exists(old_file_path):						# Check if the old file exists
+    try:
+        os.rename(old_file_path, new_file_path)					# Rename the file
+        print(f"Renamed file: {old_file_path} to {new_file_path}")
+
+    except Exception as e:
+        print(Fore.RED, f"Error renaming file: {e}", Fore.RESET)
+else:
+    print(Fore.RED, f"\n\t\t\t\t File not found to rename: {old_file_path}", Fore.RESET)
+
+    manual_file_name = f'csv_dnld_{from_date.strftime(date_format)}_TO_{till_date.strftime(date_format)}_G6-ResBUTOpen_bugs-00.csv'
+    file = open(os.path.join(downloads_folder, manual_file_name), 'w')
+    file.close()
+    print(f"Created file: {os.path.join(downloads_folder, manual_file_name)}")
+
+count_G6=lines
 
 #########################-----------------------------------------------------------------------------------------------------
+
+print("")
+print("\t", "A1:", count_A1," ", "B2:", count_B2," ", "C3:", count_C3," ", "D4:", count_D4," ", "E5:", count_E5, " ", "G:", count_G6)
+print("Formula => (Required)Aprev = A1 - B2 + C3 - D4 + E5 + G6 = ", count_A1 - count_B2 + count_C3 - count_D4 + count_E5 + count_G6)
+print("")
 

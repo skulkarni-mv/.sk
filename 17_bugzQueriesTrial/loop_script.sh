@@ -48,11 +48,16 @@ while true; do
 
         echo $current_time
 
+        echo "Subject: Script Execution Completed for Today" > output ; echo "" >> output;
+        echo -n "Current Time/Date: ">> output;                date '+%H:%M %d/%m/%Y' >> output ;
+        echo -n "PST (-12:30 IST) : ">> output; TZ='Etc/GMT+7' date '+%H:%M %d/%m/%Y' >> output ; echo "" >> output;
+        echo -n "Fetched data for : ">> output; echo $pass_date >> output; echo "" >> output;
+
         # Call the Python script with yesterday's date as an argument
         echo ""
         echo -e "${GREEN} Running Python script with date: $pass_date ${RESET}"
 
-        python3 weblinks.py "$pass_date" "$pass_date"
+        python3 weblinks.py "$pass_date" "$pass_date" --optional "-"		# Optional flag will not Open file:// tabs on browser
 
         echo ""
         echo "--------- following csv files are downloaded using the script ----------"
@@ -60,8 +65,12 @@ while true; do
         ls -lh ~/Downloads/csv_dnld* | grep $pass_date
         echo ""
         echo "------ 'weblinks.py' script execution completed, Sending mail now ------"
-        echo "Subject: Script Execution Completed for Today" > output ; echo "" >> output
-        ls -lh ~/Downloads/csv_dnld* | grep $pass_date >> output ; echo "" >> output; echo "" >> output; echo "" >> output
+
+
+        ls -lh ~/Downloads/csv_dnld* | grep $pass_date >> output ; echo "" >> output; echo "" >> output
+        echo "Formula => (Required)Aprev = A1 - B2 + C3 - D4 + E5 + G6 " >> output
+        echo "____________________________________________________________________________________________" >> output
+        echo "" >> output; echo "" >> output
         ls -lh ~/Downloads/csv_dnld* >> output
         echo ""
         sleep 5 &&  git send-email --to=skulkarni@mvista.com --confirm=never output > /dev/null ; rm output

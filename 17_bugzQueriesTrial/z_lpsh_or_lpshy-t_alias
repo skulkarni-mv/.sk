@@ -2,4 +2,4 @@ alias WD='cd /home/shubham/.sk/17_bugzQueriesTrial; export DISPLAY=:0 ; echo $DI
 alias lpsh='./loop_script.sh'
 alias lpshy='touch manual_yday.file ; ./loop_script.sh'
 alias lpsht='touch manual_today.file; ./loop_script.sh'
-### $ cat z_lpsh_or_lpshy-d_alias >> ~/.bashrc
+### $ cat z_lpsh_or_lpshy-t_alias >> ~/.bashrc
