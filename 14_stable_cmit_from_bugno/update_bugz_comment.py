@@ -135,7 +135,7 @@ if flags_bugz:				## if flags_bugz is not empty
 		flag_status_change_sync_req=1
 
 
-fp = open('.bugzpass.txt', 'r')
+fp = open('/home/shubham/.bugzpass.txt', 'r')
 bugz_pword=fp.read()
 fp.close()
 
