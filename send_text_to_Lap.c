@@ -40,7 +40,7 @@ void main(int argc, char *argv[])
 	ip_matrix[1].matx_chproc_num = 1;  strcpy(ip_matrix[1].matx_ip,"172.31.84.172");  strcpy(ip_matrix[1].matx_nameof_ip,"Office_WiFi");
 	ip_matrix[2].matx_chproc_num = 2;  strcpy(ip_matrix[2].matx_ip,"192.168.50.160"); strcpy(ip_matrix[2].matx_nameof_ip,"Cisco_VPN");
 	ip_matrix[3].matx_chproc_num = 3;  strcpy(ip_matrix[3].matx_ip,"10.80.10.30");    strcpy(ip_matrix[3].matx_nameof_ip,"NetExtender_VPN");
-	ip_matrix[4].matx_chproc_num = 4;  strcpy(ip_matrix[4].matx_ip,"10.80.244.125");  strcpy(ip_matrix[4].matx_nameof_ip,"Office_Ethernet");
+	ip_matrix[4].matx_chproc_num = 4;  strcpy(ip_matrix[4].matx_ip,"10.80.244.201");  strcpy(ip_matrix[4].matx_nameof_ip,"Office_Ethernet");
 
 	if(argc!=2)
 	{
