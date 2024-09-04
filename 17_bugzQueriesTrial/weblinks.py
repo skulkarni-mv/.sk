@@ -418,7 +418,12 @@ count_G6=lines
 #########################-----------------------------------------------------------------------------------------------------
 
 print("")
-print("\t", "A1:", count_A1," ", "B2:", count_B2," ", "C3:", count_C3," ", "D4:", count_D4," ", "E5:", count_E5, " ", "G:", count_G6)
+#print("\t", "A1:", count_A1," ", "B2:", count_B2," ", "C3:", count_C3," ", "D4:", count_D4," ", "E5:", count_E5, " ", "G:", count_G6)
+
+print("\t\t\t  "              + "   A1 " + "  B2 " + "  C3 " + "  D4 " + "  E5 " + "  G6 ")
+print("\t\t\t  ", f'{count_A1:>3}',  f'{count_B2:>4}', f'{count_C3:>4}', f'{count_D4:>4}', f'{count_E5:>4}', f'{count_G6:>4}' )
+
 print("Formula => (Required)Aprev = A1 - B2 + C3 - D4 + E5 + G6 = ", count_A1 - count_B2 + count_C3 - count_D4 + count_E5 + count_G6)
+print("Formula => [Aprev = A-P]      P = B2 - C3 + D4 - E5 - G6 = ", count_B2 - count_C3 + count_D4 - count_E5 - count_G6)
 print("")
 
