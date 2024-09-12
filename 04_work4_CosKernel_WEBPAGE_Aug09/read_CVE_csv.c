@@ -97,6 +97,7 @@ void create_python_code(void)
 	
 	FILE *fpy=fopen("/home/shubham/.sk/04_work4_CosKernel_WEBPAGE_Aug09/code_web.py", "w");
 	
+	fprintf(fpy, "#!/usr/bin/python3\n\n");
 	fprintf(fpy, "import time\n");
 	fprintf(fpy, "import webbrowser\n");
 	fprintf(fpy, "\n");
@@ -149,9 +150,11 @@ void open_tabs_browser(int i)
 	printf("\n\n\n");
 	printf(" ******* OPENING NEW WINDOW IS SUGGESTED as multiple ( %d ) tabs will open... ******** \n\n\n", i);
 
-	printf(" Run following command now (Copied to Clipboard  Ctrl+Shift+v  ): \n\n");
-	printf("\t python /home/shubham/.sk/04_work4_CosKernel_WEBPAGE_Aug09/code_web.py \n\n");
-
+	printf(" Run following command now (Copied to Clipboard  Shift+Insert  ): \n\n");
+//	printf("\t python /home/shubham/.sk/04_work4_CosKernel_WEBPAGE_Aug09/code_web.py \n\n");
+	printf("\t");	fflush(stdout);
+	system("cat /home/shubham/.sk/04_work4_CosKernel_WEBPAGE_Aug09/.copy_cmd");
+	printf("\n\n");
 
 	system("xclip -selection primary /home/shubham/.sk/04_work4_CosKernel_WEBPAGE_Aug09/.copy_cmd");
 	//system("xclip -selection clipboard /home/shubham/.sk/04_work4_CosKernel_WEBPAGE_Aug09/.copy_cmd");
