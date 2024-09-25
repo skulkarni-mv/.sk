@@ -27,6 +27,8 @@ void check_if_Ctrl_C_exception(int sys_ret_val_input, char *exception_num, int l
 time_t convertToDate(char *date_str);
 
 
+bool override_MailDumpedData=false;
+
 
 void main(int argc, char *argv[])
 {
@@ -37,8 +39,15 @@ void main(int argc, char *argv[])
 	FILE *fp_bugzExtract=NULL;
 
 
-	if(argc != 2) {
-		printf("\n\t Usage: ./run1_stable_finder.out <bugz_num> OR <csv_file_name> \n\n");
+	if(argc == 2);
+
+	else if(argc == 3 && !strcmp(argv[2], "--maildata") ) {
+
+		override_MailDumpedData = true;
+	}
+	else
+	{
+		printf("\n\t Usage: ./run1_stable_finder.out <bugz_num> OR <csv_file_name> {OPT: --maildata}\n\n");
 		exit(1);
 	}
 
@@ -64,6 +73,13 @@ void main(int argc, char *argv[])
 	FILE *fp_dump_for_mail=fopen("dumped_data.txt", "w");
 	fprintf(fp_dump_for_mail, "Subject: Script executed, 'dumped_data.txt' data as below \n\n");
 	fclose(fp_dump_for_mail);
+#else
+	if(override_MailDumpedData == true) {
+
+	FILE *fp_dump_for_mail=fopen("dumped_data.txt", "w");
+	fprintf(fp_dump_for_mail, "Subject: Script executed, 'dumped_data.txt' data as below \n\n");
+	fclose(fp_dump_for_mail);
+	}
 #endif
 
 	if( Input_digitsOnly == 1 && ( strlen(argv[1])==5 || strlen(argv[1])==6 ) ) {	// Single Bug Passed
@@ -138,7 +154,12 @@ void main(int argc, char *argv[])
 
 
 #ifdef MailDumpedData							// Send Mail once done
-	system("git send-email --to=skulkarni@mvista.com --confirm=never dumped_data.txt");
+	system("sleep 2 && git send-email --to=skulkarni@mvista.com --confirm=never dumped_data.txt >> dumped_data.txt");
+#else
+	if(override_MailDumpedData == true) {
+
+	system("sleep 2 && git send-email --to=skulkarni@mvista.com --confirm=never dumped_data.txt >> dumped_data.txt");
+	}
 #endif
 
 	exit(0);
@@ -317,13 +338,13 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 	check_if_Ctrl_C_exception(sys_ret_val, "U1", loop_number, total_count);
 	if( sys_ret_val != 0) {
 
-		sleep(2);
+		sleep(3);
 		sys_ret_val = system(buffer);
 
 		check_if_Ctrl_C_exception(sys_ret_val, "U2", loop_number, total_count);
 		if( sys_ret_val != 0) {
 
-			sleep(3);
+			sleep(5);
 			sys_ret_val = system(buffer);
 
 			check_if_Ctrl_C_exception(sys_ret_val, "U3", loop_number, total_count);
@@ -506,7 +527,7 @@ int main_code_logic(int loop_number, int total_count, char *bugz_input, char *pr
 							fprintf(fp, "%17s", " N 'date'");	// Should not update as bug opened on same day
 							i=1;
 						}
-						else if(diff_days >= 30)
+						else if(diff_days >= 1)
 							fprintf(fp, " Y dOK  %4d", diff_days);
 						else
 							fprintf(fp, " Y dNOK %4d", diff_days);

@@ -1,0 +1,5 @@
+## Copied from folder17 & changed accordingly
+alias WD='cd /home/shubham/.sk/14_stable_cmit_from_bugno/autoCSVdnloader; export DISPLAY=:0 ; echo $DISPLAY' # setting DISP @PC for remote Work
+alias lpsh='./loop_script.sh'
+alias lpshy='touch manual_yday.file ; ./loop_script.sh'
+alias lpsht='touch manual_today.file; ./loop_script.sh'
