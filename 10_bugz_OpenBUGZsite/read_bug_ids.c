@@ -58,6 +58,15 @@ void create_python_code(void)
 			fprintf(fpy, "%s", buffer);		
 
 				fprintf(fpy, "time.sleep(0.5)\n");
+
+
+			strcpy(buffer, "webbrowser.open('");
+			strcat(buffer, "http://bugz.mvista.com/show_bug.cgi?id=");
+			strcat(buffer, buf_fscanf);	// buffer = CVE-xxxx-xxxx
+			strcat(buffer, "')\n");
+
+			fprintf(fpy, "%s", buffer);	// Otherwise, first entry is getting omitted
+				fprintf(fpy, "time.sleep(0.1)\n");
 		}
 		
 		i++;
