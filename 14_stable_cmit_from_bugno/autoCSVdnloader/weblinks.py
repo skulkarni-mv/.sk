@@ -114,7 +114,7 @@ print("------------------------------------------------------------")
 time.sleep(2)
 
 #  Bugs Created on Date passed in the Input
-webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=AutoScriptCheck;emailtype1=substring;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=%5BBug%20creation%5D;emailassigned_to1=1;email1=secbugz%40mvista.com;bug_status=NEW;bug_status=ASSIGNED;bug_status=IN_REVIEW;bug_status=SYNC_REQ;bug_status=REOPENED;component=Kernel;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0')
+webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=AutoScriptCheck;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=%5BBug%20creation%5D;bug_status=NEW;bug_status=ASSIGNED;bug_status=IN_REVIEW;bug_status=SYNC_REQ;bug_status=REOPENED;component=Kernel;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0')
 time.sleep(1)
 
 ### RENAME FILE
