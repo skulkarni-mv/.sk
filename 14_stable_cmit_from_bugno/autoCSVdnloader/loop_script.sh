@@ -64,8 +64,8 @@ while true; do
         cd ..
         ./run1_stable_finder_bugz.out /home/shubham/Downloads/csv_dnld_Created_bugs.csv --maildata
 
-        echo ""
-        echo "********"
+#        echo ""
+#        echo "********"
         echo -e "${YELLOW}  Sent Mail ${RESET}"
         echo -e  "${GREEN}  Remember... this script is running in while() loop... ${RESET}"
         echo ""

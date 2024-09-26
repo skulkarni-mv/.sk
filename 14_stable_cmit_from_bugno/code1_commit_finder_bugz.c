@@ -154,10 +154,12 @@ void main(int argc, char *argv[])
 
 
 #ifdef MailDumpedData							// Send Mail once done
+	printf("\n********\n  Sending E-Mail...\n");
 	system("sleep 2 && git send-email --to=skulkarni@mvista.com --confirm=never dumped_data.txt >> dumped_data.txt");
 #else
 	if(override_MailDumpedData == true) {
 
+	printf("\n********\n  Sending E-Mail...\n");
 	system("sleep 2 && git send-email --to=skulkarni@mvista.com --confirm=never dumped_data.txt >> dumped_data.txt");
 	}
 #endif
