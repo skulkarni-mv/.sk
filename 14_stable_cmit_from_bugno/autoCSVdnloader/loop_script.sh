@@ -17,7 +17,7 @@ while true; do
     # Get the current time in HH:MM format
     current_time=$(date '+%H:%M')
 
-    # Check if it's 09:30 AM
+    # Check if it's 08:30 AM
     if [ "$current_time" == "08:30" ] || [ -f "manual_yday.file" ] || [ -f "manual_today.file" ] ; then
 
 	if [ "$current_time" == "08:30" ]; then
