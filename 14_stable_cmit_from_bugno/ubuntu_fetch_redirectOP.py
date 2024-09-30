@@ -19,7 +19,7 @@ def check_cve_fix(cve):
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        fixed_by_text_all = soup.find_all(string=lambda text: text and "Fixed by" in text)
+        fixed_by_text_all = soup.find_all(string=lambda text: text and "fixed by" in text)
 
         count_fixes = len(fixed_by_text_all)
 

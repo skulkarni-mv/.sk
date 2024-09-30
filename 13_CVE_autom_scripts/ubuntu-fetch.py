@@ -20,7 +20,7 @@ def check_cve_fix(cve):
         soup = BeautifulSoup(response.content, 'html.parser')
 
         #Find the "Fixed by" text
-        fixed_by_text = soup.find(string=lambda text: text and "Fixed by" in text)
+        fixed_by_text = soup.find(string=lambda text: text and "fixed by" in text)
 
         # If "Fixed by" text is found then extract the commit hash
         if fixed_by_text:
