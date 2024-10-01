@@ -1,0 +1,45 @@
+checking on date: 01/10/2024	from	import kernel-5.14.0-427.28.1.el9_4	to	import kernel-5.14.0-427.37.1.el9_4
+
+------------------------------------------------------------------------------------------------------------------------------
+
+   CVE-2024-42082 		 https://access.redhat.com/security/cve/CVE-2024-42082
+http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-42082&short_desc_type=allwordssubstr&version=9.1%20Standard&version=9.2%20Standard&version=9.3%20Standard&version=9.4%20Standard&order=version
+
+------------------------------------------------------------------------------------------------------------------------------
+
+   CVE-2024-36979 		 https://access.redhat.com/security/cve/CVE-2024-36979
+http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-36979&short_desc_type=allwordssubstr&version=9.1%20Standard&version=9.2%20Standard&version=9.3%20Standard&version=9.4%20Standard&order=version
+
+------------------------------------------------------------------------------------------------------------------------------
+
+   CVE-2024-42131 		 https://access.redhat.com/security/cve/CVE-2024-42131
+http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-42131&short_desc_type=allwordssubstr&version=9.1%20Standard&version=9.2%20Standard&version=9.3%20Standard&version=9.4%20Standard&order=version
+
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+
+   CVE-2024-38570 		 https://access.redhat.com/security/cve/CVE-2024-38570
+http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-38570&short_desc_type=allwordssubstr&version=9.1%20Standard&version=9.2%20Standard&version=9.3%20Standard&version=9.4%20Standard&order=version
+
+------------------------------------------------------------------------------------------------------------------------------
+
+   CVE-2024-38562 		 https://access.redhat.com/security/cve/CVE-2024-38562
+http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-38562&short_desc_type=allwordssubstr&version=9.1%20Standard&version=9.2%20Standard&version=9.3%20Standard&version=9.4%20Standard&order=version
+
+------------------------------------------------------------------------------------------------------------------------------
+
+   CVE-2024-40984 		 https://access.redhat.com/security/cve/CVE-2024-40984
+http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-40984&short_desc_type=allwordssubstr&version=9.1%20Standard&version=9.2%20Standard&version=9.3%20Standard&version=9.4%20Standard&order=version
+
+------------------------------------------------------------------------------------------------------------------------------
+
+   CVE-2024-42225 		 https://access.redhat.com/security/cve/CVE-2024-42225
+http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-42225&short_desc_type=allwordssubstr&version=9.1%20Standard&version=9.2%20Standard&version=9.3%20Standard&version=9.4%20Standard&order=version
+
+------------------------------------------------------------------------------------------------------------------------------
+
+   CVE-2024-42246 		 https://access.redhat.com/security/cve/CVE-2024-42246
+http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-42246&short_desc_type=allwordssubstr&version=9.1%20Standard&version=9.2%20Standard&version=9.3%20Standard&version=9.4%20Standard&order=version
+
+------------------------------------------------------------------------------------------------------------------------------
+

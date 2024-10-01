@@ -1,0 +1,70 @@
++* Fri Jul 19 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.28.1.el9_4]
++- mlxbf_gige: call request_irq() after NAPI initialized (Kamal Heib) [RHEL-43012 RHEL-37179] {CVE-2024-35907}
++- mlxbf_gige: stop PHY during open() error paths (Kamal Heib) [RHEL-43012 RHEL-37179] {CVE-2024-35907}
++- mlxbf_gige: stop interface during shutdown (Kamal Heib) [RHEL-41708 RHEL-37244] {CVE-2024-35885}
++- net: amd-xgbe: Fix skb data length underflow (Ken Cox) [RHEL-43796 RHEL-43794] {CVE-2022-48743}
++- nfp: flower: handle acti_netdevs allocation failure (Ken Cox) [RHEL-42852 RHEL-35158] {CVE-2024-27046}
++- block: add check that partition length needs to be aligned with block size (Ming Lei) [RHEL-45501 RHEL-26616] {CVE-2023-52458}
++- nfsd: hold a lighter-weight client reference over CB_RECALL_ANY (Benjamin Coddington) [RHEL-45517 RHEL-31513]
++- NFSD: CREATE_SESSION must never cache NFS4ERR_DELAY replies (Benjamin Coddington) [RHEL-45517 RHEL-31513]
++- NFSD: Document the phases of CREATE_SESSION (Benjamin Coddington) [RHEL-45517 RHEL-31513]
++- NFSD: Fix the NFSv4.1 CREATE_SESSION operation (Benjamin Coddington) [RHEL-45517 RHEL-31513]
++- icmp: prevent possible NULL dereferences from icmp_build_probe() (Antoine Tenart) [RHEL-42974 RHEL-37002] {CVE-2024-35857}
++- NFSv4.1: fix handling NFS4ERR_DELAY when testing for session trunking (Scott Mayhew) [RHEL-45360 RHEL-24133]
++- RAS/AMD/ATL: Use system settings for MI300 DRAM to normalized address translation (Aristeu Rozanski) [RHEL-46335 RHEL-38634]
++- RAS/AMD/ATL: Fix MI300 bank hash (Aristeu Rozanski) [RHEL-46335 RHEL-38634]
++- net/ipv6: avoid possible UAF in ip6_route_mpath_notify() (Hangbin Liu) [RHEL-42689 RHEL-33271] {CVE-2024-26852}
++- epoll: be better about file lifetimes (Pavel Reichl) [RHEL-44091 RHEL-44083] {CVE-2024-38580}
++- scsi: lpfc: Release hbalock before calling lpfc_worker_wake_up() (Dick Kennedy) [RHEL-40659 RHEL-40665 RHEL-24508 RHEL-39793] {CVE-2024-36924}
++- scsi: lpfc: Move NPIV's transport unregistration to after resource clean up (Dick Kennedy) [RHEL-40659 RHEL-40669 RHEL-24508 RHEL-39887] {CVE-2024-36952}
++- bpf: Fix racing between bpf_timer_cancel_and_free and bpf_timer_cancel (Viktor Malik) [RHEL-42640 RHEL-31726] {CVE-2024-26737}
++- can: j1939: j1939_netdev_start(): fix UAF for rx_kref of j1939_priv (Ken Cox) [RHEL-41489 RHEL-38415] {CVE-2021-47459}
++- wifi: ath11k: restore country code during resume (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- wifi: ath11k: refactor setting country code logic (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- bus: mhi: host: Add mhi_power_down_keep_dev() API to support system suspend/hibernation (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- net: qrtr: support suspend/hibernation (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- wifi: ath11k: support hibernation (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- wifi: ath11k: thermal: don't try to register multiple times (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- wifi: ath11k: fix warning on DMA ring capabilities event (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- wifi: ath11k: do not dump SRNG statistics during resume (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- wifi: ath11k: remove MHI LOOPBACK channels (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++- wifi: ath11k: rearrange IRQ enable/disable in reset path (Jose Ignacio Tornos Martinez) [RHEL-46230 RHEL-12349]
++
++* Mon Jul 15 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.27.1.el9_4]
++- drm/ast: Fix soft lockup (CKI Backport Bot) [RHEL-45716]
++- dm: call the resume method on internal suspend (Benjamin Marzinski) [RHEL-41838 RHEL-33217] {CVE-2024-26880}
++- KVM: arm64: Do not re-initialize the KVM lock (Sebastian Ott) [RHEL-37528 RHEL-36279]
++- KVM: arm64: vgic-v2: Check for non-NULL vCPU in vgic_v2_parse_attr() (Sebastian Ott) [RHEL-37528 RHEL-36279]
++- KVM: arm64: Fix host-programmed guest events in nVHE (Sebastian Ott) [RHEL-37528 RHEL-36279]
++- KVM: arm64: vgic-its: Test for valid IRQ in MOVALL handler (Sebastian Ott) [RHEL-37528 RHEL-36279]
++- KVM: arm64: vgic-its: Test for valid IRQ in its_sync_lpi_pending_table() (Sebastian Ott) [RHEL-37528 RHEL-36279]
++- KVM: arm64: Fix double-free following kvm_pgtable_stage2_free_unlinked() (Sebastian Ott) [RHEL-37528 RHEL-36279]
++- octeontx2-af: Use separate handlers for interrupts (Kamal Heib) [RHEL-42846 RHEL-35170] {CVE-2024-27030}
++- Squashfs: check the inode number is not the invalid value of zero (Abhi Das) [RHEL-42811 RHEL-35098] {CVE-2024-26982}
++- net: fix sk_memory_allocated_{add|sub} vs softirqs (Paolo Abeni) [RHEL-36773 RHEL-34070]
++- tcp: sk_forced_mem_schedule() optimization (Paolo Abeni) [RHEL-36773 RHEL-34070]
++- net: make SK_MEMORY_PCPU_RESERV tunable (Paolo Abeni) [RHEL-36773 RHEL-34070]
++- ext4: avoid allocating blocks from corrupted group in ext4_mb_try_best_found() (Pavel Reichl) [RHEL-42655 RHEL-31690] {CVE-2024-26773}
++- scsi: libfc: Fix potential NULL pointer dereference in fc_lport_ptp_setup() (John Meneghini) [RHEL-42528 RHEL-38200] {CVE-2023-52809}
++- KVM: x86/mmu: Retry fault before acquiring mmu_lock if mapping is changing (Maxim Levitsky) [RHEL-43388]
++- s390/cpum_cf: make crypto counters upward compatible across machine types (Tobias Huschle) [RHEL-40398 RHEL-36047]
++- RAS: enable CONFIG_RAS_FMPM (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS: Avoid build errors when CONFIG_DEBUG_FS=n (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/FMPM: Safely handle saved records of various sizes (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/FMPM: Avoid NULL ptr deref in get_saved_records() (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- Merge tag 'edac_updates_for_v6.9' of git://git.kernel.org/pub/scm/linux/kernel/git/ras/ras (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/FMPM: Fix off by one when unwinding on error (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/FMPM: Add debugfs interface to print record entries (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/FMPM: Save SPA values (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS: Export helper to get ras_debugfs_dir (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/ATL: Fix bit overflow in denorm_addr_df4_np2() (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS: Introduce a FRU memory poison manager (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- x86/cpu/amd: Provide a separate accessor for Node ID (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/ATL: Add MI300 row retirement support (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- Documentation: Move RAS section to admin-guide (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/ATL: Add MI300 DRAM to normalized address translation support (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/ATL: Fix array overflow in get_logical_coh_st_fabric_id_mi300() (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- RAS/AMD/ATL: Add MI300 support (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- Documentation: RAS: Add index and address translation section (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++- cpu/SMT: Make SMT control more robust against enumeration failures (Aristeu Rozanski) [RHEL-36212 RHEL-17008]
++

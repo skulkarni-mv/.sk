@@ -1,0 +1,68 @@
++* Fri Aug 09 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.31.1.el9_4]
++- net: fix __dst_negative_advice() race (CKI Backport Bot) [RHEL-46798] {CVE-2024-36971}
++- net: annotate data-races around sk->sk_dst_pending_confirm (CKI Backport Bot) [RHEL-46798] {CVE-2024-36971}
++
++* Mon Aug 05 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.30.1.el9_4]
++- dmaengine: idxd: add a write() method for applications to submit work (Jerry Snitselaar) [RHEL-35840] {CVE-2024-21823}
++- dmaengine: idxd: add a new security check to deal with a hardware erratum (Jerry Snitselaar) [RHEL-35840] {CVE-2024-21823}
++- VFIO: Add the SPR_DSA and SPR_IAX devices to the denylist (Jerry Snitselaar) [RHEL-35840] {CVE-2024-21823}
++- tpm_tis_spi: Account for SPI header when allocating TPM SPI xfer buffer (Mark Salter) [RHEL-49538 RHEL-39308]
++- virtio: delete vq in vp_find_vqs_msix() when request_irq() fails (Jon Maloy) [RHEL-44467] {CVE-2024-37353}
++- phy: ti: phy-omap-usb2: Fix NULL pointer dereference for SRP (Izabela Bakollari) [RHEL-36271 RHEL-26682] {CVE-2024-26600}
++- eeprom: at24: fix memory corruption race condition (CKI Backport Bot) [RHEL-42970] {CVE-2024-35848}
++- eeprom: at24: Probe for DDR3 thermal sensor in the SPD case (CKI Backport Bot) [RHEL-42970] {CVE-2024-35848}
++- eeprom: at24: Use dev_err_probe for nvmem register failure (CKI Backport Bot) [RHEL-42970] {CVE-2024-35848}
++- eeprom: at24: Add support for 24c1025 EEPROM (CKI Backport Bot) [RHEL-42970] {CVE-2024-35848}
++- eeprom: at24: remove struct at24_client (CKI Backport Bot) [RHEL-42970] {CVE-2024-35848}
++- at24: Support probing while in non-zero ACPI D state (CKI Backport Bot) [RHEL-42970] {CVE-2024-35848}
++- tcp: Fix shift-out-of-bounds in dctcp_update_alpha(). (CKI Backport Bot) [RHEL-44439] {CVE-2024-37356}
++- cxl/region: Fix cxlr_pmem leaks (cki-backport-bot) [RHEL-44486] {CVE-2024-38391}
++- tls: fix missing memory barrier in tls_init (cki-backport-bot) [RHEL-44480] {CVE-2024-36489}
++- igc: avoid returning frame twice in XDP_REDIRECT (Corinna Vinschen) [RHEL-42714 RHEL-33266] {CVE-2024-26853}
++- ipvlan: Dont Use skb->sk in ipvlan_process_v{4,6}_outbound (Hangbin Liu) [RHEL-44404 RHEL-44402] {CVE-2024-33621}
++- ipvlan: add ipvlan_route_v6_outbound() helper (Davide Caratti) [RHEL-44404 RHEL-32205]
++- ipvlan: properly track tx_errors (Davide Caratti) [RHEL-44404 RHEL-32205]
++- wifi: nl80211: don't free NULL coalescing rule (Jose Ignacio Tornos Martinez) [RHEL-41698 RHEL-39754] {CVE-2024-36941}
++- wifi: iwlwifi: dbg-tlv: ensure NUL termination (Jose Ignacio Tornos Martinez) [RHEL-41658 RHEL-37028] {CVE-2024-35845}
++- mlxsw: spectrum_acl_tcam: Fix memory leak when canceling rehash work (Ivan Vecera) [RHEL-41556 RHEL-37018] {CVE-2024-35852}
++- net: openvswitch: fix overwriting ct original tuple for ICMPv6 (cki-backport-bot) [RHEL-44215] {CVE-2024-38558}
++- wifi: iwlwifi: read txq->read_ptr under lock (Jose Ignacio Tornos Martinez) [RHEL-41520 RHEL-39799] {CVE-2024-36922}
++- wifi: cfg80211: check A-MSDU format more carefully (Jose Ignacio Tornos Martinez) [RHEL-38754 RHEL-37345] {CVE-2024-35937}
++- ice: fix memory corruption bug with suspend and rebuild (Petr Oros) [RHEL-49858 RHEL-17486] {CVE-2024-35911}
++- ipv6: prevent possible NULL deref in fib6_nh_init() (Hangbin Liu) [RHEL-48182 RHEL-45826] {CVE-2024-40961}
++- netns: Make get_net_ns() handle zero refcount net (Paolo Abeni) [RHEL-48117 RHEL-46610] {CVE-2024-40958}
++- net: do not leave a dangling sk pointer, when socket creation fails (Paolo Abeni) [RHEL-48072 RHEL-46610] {CVE-2024-40954}
++- net: ethtool: fix the error condition in ethtool_get_phy_stats_ethtool() (CKI Backport Bot) [RHEL-47902] {CVE-2024-40928}
++- net: netlink: af_netlink: Prevent empty skb by adding a check on len. (Ivan Vecera) [RHEL-43619 RHEL-30344] {CVE-2021-47606}
++- bonding: Fix out-of-bounds read in bond_option_arp_ip_targets_set() (CKI Backport Bot) [RHEL-46921] {CVE-2024-39487}
++- nfs: fix panic when nfs4_ff_layout_prepare_ds() fails (Benjamin Coddington) [RHEL-42732 RHEL-34875] {CVE-2024-26868}
++- efi: fix panic in kdump kernel (Steve Best) [RHEL-42920 RHEL-36998] {CVE-2024-35800}
++- ipv6: fix potential "struct net" leak in inet6_rtm_getaddr() (Hangbin Liu) [RHEL-41735 RHEL-31050] {CVE-2024-27417}
++- netfilter: nf_tables: do not compare internal table flags on updates (Florian Westphal) [RHEL-41682 RHEL-33985] {CVE-2024-27065}
++- ipv6: Fix potential uninit-value access in __ip6_make_skb() (Antoine Tenart) [RHEL-41466 RHEL-39786] {CVE-2024-36903}
++- netfilter: nf_tables: honor table dormant flag from netdev release event path (Florian Westphal) [RHEL-40056 RHEL-33985] {CVE-2024-36005}
++- cifs: fix underflow in parse_server_interfaces() (Paulo Alcantara) [RHEL-34636 RHEL-31245] {CVE-2024-26828}
++- drm/i915/audio: Fix audio time stamp programming for DP (CKI Backport Bot) [RHEL-45843]
++- platform/x86: wmi: Fix opening of char device (David Arcari) [RHEL-42548 RHEL-38260] {CVE-2023-52864}
++- platform/x86: wmi: remove unnecessary initializations (David Arcari) [RHEL-42548 RHEL-38260] {CVE-2023-52864}
++- rtnetlink: Correct nested IFLA_VF_VLAN_LIST attribute validation (CKI Backport Bot) [RHEL-43170] {CVE-2024-36017}
++- netfilter: nft_chain_filter: handle NETDEV_UNREGISTER for inet/ingress basechain (Florian Westphal) [RHEL-40062 RHEL-33985] {CVE-2024-26808}
++- ipv6: fix race condition between ipv6_get_ifaddr and ipv6_del_addr (Jiri Benc) [RHEL-39017 RHEL-32372] {CVE-2024-35969}
++- netfilter: nf_tables: flush pending destroy work before exit_net release (Florian Westphal) [RHEL-38765 RHEL-33985] {CVE-2024-35899}
++- vt: fix unicode buffer corruption when deleting characters (Andrew Halaney) [RHEL-42947 RHEL-24205] {CVE-2024-35823}
++
++* Fri Jul 26 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.29.1.el9_4]
++- net: Avoid address overwrite in kernel_connect (Davide Caratti) [RHEL-45728 RHEL-30875]
++- net: replace calls to sock->ops->connect() with kernel_connect() (Davide Caratti) [RHEL-45728 RHEL-33410]
++- i40e: fix vf may be used uninitialized in this function warning (Kamal Heib) [RHEL-41638 RHEL-39704] {CVE-2024-36020}
++- cifs: translate network errors on send to -ECONNABORTED (Jay Shin) [RHEL-47047 RHEL-31245]
++- wifi: brcmfmac: pcie: handle randbuf allocation failure (Jose Ignacio Tornos Martinez) [RHEL-44132] {CVE-2024-38575}
++- wifi: iwlwifi: mvm: guard against invalid STA ID on removal (Jose Ignacio Tornos Martinez) [RHEL-43208 RHEL-39803] {CVE-2024-36921}
++- wifi: mac80211: check/clear fast rx for non-4addr sta VLAN changes (Jose Ignacio Tornos Martinez) [RHEL-42906 RHEL-36809] {CVE-2024-35789}
++- wifi: iwlwifi: mvm: don't set the MFP flag for the GTK (Jose Ignacio Tornos Martinez) [RHEL-42886 RHEL-36900] {CVE-2024-27434}
++- wifi: rtl8xxxu: add cancel_work_sync() for c2hcmd_work (Jose Ignacio Tornos Martinez) [RHEL-42860 RHEL-35142] {CVE-2024-27052}
++- wifi: mt76: mt7925e: fix use-after-free in free_irq() (Jose Ignacio Tornos Martinez) [RHEL-42856 RHEL-35148] {CVE-2024-27049}
++- wifi: ath9k: delay all of ath9k_wmi_event_tasklet() until init is complete (Jose Ignacio Tornos Martinez) [RHEL-42743 RHEL-34187] {CVE-2024-26897}
++- wifi: ath10k: fix NULL pointer dereference in ath10k_wmi_tlv_op_pull_mgmt_tx_compl_ev() (Jose Ignacio Tornos Martinez) [RHEL-42383 RHEL-35199] {CVE-2023-52651}
++- net: core: reject skb_copy(_expand) for fraglist GSO skbs (Xin Long) [RHEL-41402 RHEL-39781] {CVE-2024-36929}
++

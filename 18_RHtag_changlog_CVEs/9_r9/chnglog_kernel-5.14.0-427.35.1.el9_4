@@ -1,0 +1,49 @@
++* Fri Aug 30 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.35.1.el9_4]
++- usb-storage: alauda: Check whether the media is initialized (CKI Backport Bot) [RHEL-43716] {CVE-2024-38619}
++- ceph: force sending a cap update msg back to MDS for revoke op (Xiubo Li) [RHEL-55437]
++- ceph: periodically flush the cap releases (Xiubo Li) [RHEL-55437]
++- mm: avoid overflows in dirty throttling logic (Jay Shin) [RHEL-51848 RHEL-50004] {CVE-2024-42131}
++- Revert "mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again" (Jay Shin) [RHEL-51701 RHEL-50004] {CVE-2024-42102}
++- mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again (Jay Shin) [RHEL-42628 RHEL-5619] {CVE-2024-26720}
++- net: fix out-of-bounds access in ops_init (Paolo Abeni) [RHEL-43188 RHEL-46610] {CVE-2024-36883}
++- nvme: avoid double free special payload (CKI Backport Bot) [RHEL-51311] {CVE-2024-41073}
++- kernfs: change kernfs_rename_lock into a read-write lock (Jay Shin) [RHEL-55253 RHEL-52956]
++- kernfs: Separate kernfs_pr_cont_buf and rename_lock (Jay Shin) [RHEL-55253 RHEL-52956]
++- kernfs: fix missing kernfs_iattr_rwsem locking (Jay Shin) [RHEL-55253 RHEL-52956]
++- kernfs: Use a per-fs rwsem to protect per-fs list of kernfs_super_info (Jay Shin) [RHEL-55253 RHEL-52956]
++- kernfs: Introduce separate rwsem to protect inode attributes (Jay Shin) [RHEL-55253 RHEL-52956]
++- xhci: Handle TD clearing for multiple streams case (CKI Backport Bot) [RHEL-47894 RHEL-47892] {CVE-2024-40927}
++- Bluetooth: af_bluetooth: Fix deadlock (Bastien Nocera) [RHEL-34161] {CVE-2024-26886}
++- xdp: Remove WARN() from __xdp_reg_mem_model() (CKI Backport Bot) [RHEL-51586] {CVE-2024-42082}
++- nfsd: don't take fi_lock in nfsd_break_deleg_cb() (Benjamin Coddington) [RHEL-42578 RHEL-34875]
++- nfsd: fix RELEASE_LOCKOWNER (Benjamin Coddington) [RHEL-42578 RHEL-34875] {CVE-2024-26629}
++- net: bridge: mst: fix suspicious rcu usage in br_mst_set_state (CKI Backport Bot) [RHEL-43729 RHEL-43727]
++- net: bridge: mst: pass vlan group directly to br_mst_vlan_set_state (CKI Backport Bot) [RHEL-43729 RHEL-43727]
++- net: bridge: mst: fix vlan use-after-free (cki-backport-bot) [RHEL-43729] {CVE-2024-36979}
++- efivarfs: force RO when remounting if SetVariable is not supported (Pavel Reichl) [RHEL-42343 RHEL-26588] {CVE-2023-52463}
++- ACPI: arm64: export acpi_arch_thermal_cpufreq_pctg() (Charles Mirabile) [RHEL-34234 RHEL-1697]
++- ACPI: processor: reduce CPUFREQ thermal reduction pctg for Tegra241 (Charles Mirabile) [RHEL-34234 RHEL-1697]
++- ACPI: thermal: Add Thermal fast Sampling Period (_TFP) support (Scott Weaver) [RHEL-34234 RHEL-1697]
++
++* Thu Aug 22 2024 Scott Weaver <scweaver@redhat.com> [5.14.0-427.34.1.el9_4]
++- mm: prevent derefencing NULL ptr in pfn_section_valid() (Jarod Wilson) [RHEL-51140 RHEL-51138] {CVE-2024-41055}
++- mm, kmsan: fix infinite recursion due to RCU critical section (Jarod Wilson) [RHEL-51140 RHEL-51138] {CVE-2024-41055}
++- ppp: reject claimed-as-LCP but actually malformed packets (CKI Backport Bot) [RHEL-51061 RHEL-51059] {CVE-2024-41044}
++- x86: stop playing stack games in profile_pc() (CKI Backport Bot) [RHEL-51651] {CVE-2024-42096}
++- PCI/MSI: Fix UAF in msi_capability_init (CKI Backport Bot) [RHEL-51438] {CVE-2024-41096}
++- iommufd: Fix missing update of domains_itree after splitting iopt_area (Jerry Snitselaar) [RHEL-42518 RHEL-28780] {CVE-2023-52801}
++- mm: cachestat: fix folio read-after-free in cache walk (Nico Pache) [RHEL-41739 RHEL-5619] {CVE-2024-26630}
++- regmap: maple: Fix cache corruption in regcache_maple_drop() (Jaroslav Kysela) [RHEL-43179 RHEL-39706] {CVE-2024-36019}
++- mm: cachestat: fix two shmem bugs (Nico Pache) [RHEL-36912] {CVE-2024-35797}
++- kprobes/x86: Use copy_from_kernel_nofault() to read from unsafe address (Steve Best) [RHEL-42778 RHEL-34985] {CVE-2024-26946}
++- mm/hugetlb: fix missing hugetlb_lock for resv uncharge (Rafael Aquini) [RHEL-43132 RHEL-37467] {CVE-2024-36000}
++- rbd: don't assume rbd_is_lock_owner() for exclusive mappings (Ilya Dryomov) [RHEL-52675 RHEL-50366]
++- rbd: don't assume RBD_LOCK_STATE_LOCKED for exclusive mappings (Ilya Dryomov) [RHEL-52675 RHEL-50366]
++- rbd: rename RBD_LOCK_STATE_RELEASING and releasing_wait (Ilya Dryomov) [RHEL-52675 RHEL-50366]
++- gpio: tegra186: Fix tegra186_gpio_is_accessible() check (Charles Mirabile) [RHEL-49347 RHEL-32452]
++- net/sched: Fix UAF when resolving a clash (CKI Backport Bot) [RHEL-51022 RHEL-51020] {CVE-2024-41040}
++- KVM: SVM: Flush pages under kvm->lock to fix UAF in svm_register_enc_region() (Maxim Levitsky) [RHEL-41462 RHEL-32430] {CVE-2024-35791}
++- cxl/region: Fix memregion leaks in devm_cxl_add_region() (John W. Linville) [RHEL-47965 RHEL-23582] {CVE-2024-40936}
++- x86/coco: Require seeding RNG with RDRAND on CoCo systems (Lenny Szubowicz) [RHEL-42986 RHEL-37269] {CVE-2024-35875}
++- scsi: qedf: Ensure the copied buf is NUL terminated (cki-backport-bot) [RHEL-44203] {CVE-2024-38559}
++
