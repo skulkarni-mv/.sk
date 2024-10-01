@@ -117,6 +117,8 @@ time.sleep(2)
 webbrowser.open(f'http://bugz.mvista.com/buglist.cgi?keywords=Security;keywords_type=allwords;known_name=AutoScriptCheck;chfieldfrom={from_date_query};chfieldto={till_date_query};chfield=%5BBug%20creation%5D;bug_status=NEW;bug_status=ASSIGNED;bug_status=IN_REVIEW;bug_status=SYNC_REQ;bug_status=REOPENED;component=Kernel;product=CGX%202.6;product=CGX%203.1;product=CGX%204.0;product=CGX%205.0')
 time.sleep(1)
 
+print(" Opened the Webpage, waiting for MAX", delay_time_pageload, "seconds for the data to be downloaded \n")
+
 ### RENAME FILE
 
 old_file_name = f'bugs-{today_date}.csv'					# Construct the original and new file paths
