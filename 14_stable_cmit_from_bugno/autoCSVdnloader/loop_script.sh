@@ -68,7 +68,7 @@ while true; do
         if [ -f "/home/shubham/Downloads/csv_dnld_Created_bugs.csv" ]; then	# If csv file was downloaded & renamed by 'weblinks.py'
             cd ..								# Go to Parent dir to run './run1_stable_finder_bugz.out'
 
-#            ./run1_stable_finder_bugz.out /home/shubham/Downloads/csv_dnld_Created_bugs.csv --maildata
+            ./run1_stable_finder_bugz.out /home/shubham/Downloads/csv_dnld_Created_bugs.csv --maildata
 
             cd - > /dev/null							# Imp to come back to the original dir, > /dev/null as cmd prints
 #            echo ""
