@@ -2,18 +2,8 @@ checking on date: 01/10/2024	from	import kernel-4.18.0-553.16.1.el8_10	to	import
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-   CVE-2024-38627 		 https://access.redhat.com/security/cve/CVE-2024-38627
-http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-38627&short_desc_type=allwordssubstr&version=8.4%20Standard&version=8.5%20Standard&version=8.6%20Standard&version=8.7%20Standard&version=8.8%20Standard&version=8.9%20Standard&version=8.10%20Standard&order=version
-
-------------------------------------------------------------------------------------------------------------------------------
-
    CVE-2024-36979 		 https://access.redhat.com/security/cve/CVE-2024-36979
 http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-36979&short_desc_type=allwordssubstr&version=8.4%20Standard&version=8.5%20Standard&version=8.6%20Standard&version=8.7%20Standard&version=8.8%20Standard&version=8.9%20Standard&version=8.10%20Standard&order=version
-
-------------------------------------------------------------------------------------------------------------------------------
-
-   CVE-2024-38555 		 https://access.redhat.com/security/cve/CVE-2024-38555
-http://bugz.mvista.com/buglist.cgi?component=Kernel&keywords=Security&keywords_type=allwords&product=Rocky&short_desc=CVE-2024-38555&short_desc_type=allwordssubstr&version=8.4%20Standard&version=8.5%20Standard&version=8.6%20Standard&version=8.7%20Standard&version=8.8%20Standard&version=8.9%20Standard&version=8.10%20Standard&order=version
 
 ------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------
