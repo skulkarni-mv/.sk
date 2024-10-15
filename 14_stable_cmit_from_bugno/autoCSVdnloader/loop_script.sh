@@ -9,8 +9,12 @@ MAGENTA='\033[35m'
 CYAN='\033[36m'
 RESET='\033[0m'
 
+
+DOMAIN=$( hostname )				## will be "shubhamPC" for PC
+
 current_time=$(date '+%H:%M')
-echo "Start Time: "$current_time
+echo ""
+echo "Start Time: "$current_time"  for User/Domain: "$DOMAIN
 
 execute_at_time="08:30"
 
@@ -56,6 +60,11 @@ while true; do
 	fi
 
         echo "Current Time: "$current_time
+
+        if [ "$DOMAIN" = "shubhamPC" ]; then
+            sudo cp /home/shubham/etc_resolv.conf /etc/resolv.conf
+            sleep 2
+        fi
 
         # Call the Python script with yesterday's date as an argument
         echo ""
