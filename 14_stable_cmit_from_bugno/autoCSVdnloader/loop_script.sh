@@ -66,6 +66,15 @@ while true; do
             sleep 2
         fi
 
+###     Temporary Integration
+        echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"; echo ""
+        pushd /home/shubham/.sk/19_stable_kernel_rel_checker
+        ./script_check_new_rel.sh
+        popd
+        echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"; echo ""
+        sleep 10
+###
+
         # Call the Python script with yesterday's date as an argument
         echo ""
         echo -e "${GREEN} Running Python script with date: $pass_date ${RESET}"
