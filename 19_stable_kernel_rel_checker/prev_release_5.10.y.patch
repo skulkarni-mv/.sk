@@ -1,0 +1,31 @@
+From b874a7e65b4f3cbd3cf979d653772732958eb443 Mon Sep 17 00:00:00 2001
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date: Fri, 8 Nov 2024 16:22:04 +0100
+Subject: Linux 5.10.229
+
+Link: https://lore.kernel.org/r/20241106120303.135636370@linuxfoundation.org
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 7dbddd98e44173..ebeab12f249aff 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ VERSION = 5
+ PATCHLEVEL = 10
+-SUBLEVEL = 228
++SUBLEVEL = 229
+ EXTRAVERSION =
+ NAME = Dare mighty things
+ 
+-- 
+cgit 1.2.3-korg
+

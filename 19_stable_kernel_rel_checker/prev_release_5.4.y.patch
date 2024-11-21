@@ -1,0 +1,32 @@
+From 6b8cbbd5977d7d7a2d6a466b46875b18a98b53d0 Mon Sep 17 00:00:00 2001
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date: Fri, 8 Nov 2024 16:20:54 +0100
+Subject: Linux 5.4.285
+
+Link: https://lore.kernel.org/r/20241106120331.497003148@linuxfoundation.org
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20241107063341.146657755@linuxfoundation.org
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Tested-by: kernelci.org bot <bot@kernelci.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 6a4587f51d008f..831fc4cffbbc87 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ VERSION = 5
+ PATCHLEVEL = 4
+-SUBLEVEL = 284
++SUBLEVEL = 285
+ EXTRAVERSION =
+ NAME = Kleptomaniac Octopus
+ 
+-- 
+cgit 1.2.3-korg
+

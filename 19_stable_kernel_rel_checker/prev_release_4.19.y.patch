@@ -1,0 +1,33 @@
+From a8c422f8f7233300271453594f40da83c513d22c Mon Sep 17 00:00:00 2001
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date: Fri, 8 Nov 2024 16:19:24 +0100
+Subject: Linux 4.19.323
+
+Link: https://lore.kernel.org/r/20241106120320.865793091@linuxfoundation.org
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20241107063342.964868073@linuxfoundation.org
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: kernelci.org bot <bot@kernelci.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 64cc724be11381..0f4d0d0117870d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ VERSION = 4
+ PATCHLEVEL = 19
+-SUBLEVEL = 322
++SUBLEVEL = 323
+ EXTRAVERSION =
+ NAME = "People's Front"
+ 
+-- 
+cgit 1.2.3-korg
+
