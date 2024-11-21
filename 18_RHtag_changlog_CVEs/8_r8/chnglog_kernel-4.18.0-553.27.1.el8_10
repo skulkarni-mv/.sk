@@ -1,0 +1,121 @@
++* Thu Oct 17 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.27.1.el8_10]
++- lib/generic-radix-tree.c: Fix rare race in __genradix_ptr_alloc() (Waiman Long) [RHEL-62139] {CVE-2024-47668}
++- bonding: fix xfrm real_dev null pointer dereference (Hangbin Liu) [RHEL-57239] {CVE-2024-44989}
++- bonding: fix null pointer deref in bond_ipsec_offload_ok (Hangbin Liu) [RHEL-57233] {CVE-2024-44990}
++- bpf: Fix overrunning reservations in ringbuf (Viktor Malik) [RHEL-49414] {CVE-2024-41009}
++- xprtrdma: fix pointer derefs in error cases of rpcrdma_ep_create (CKI Backport Bot) [RHEL-49309] {CVE-2022-48773}
++- tty: tty_io: update timestamps on all device nodes (Aristeu Rozanski) [RHEL-55257]
++- tty: use 64-bit timstamp (Aristeu Rozanski) [RHEL-55257]
++- ELF: fix kernel.randomize_va_space double read (Rafael Aquini) [RHEL-60669] {CVE-2024-46826}
++- xfrm: set dst dev to blackhole_netdev instead of loopback_dev in ifdown (Xin Long) [RHEL-58100]
++- loopback: fix lockdep splat (Xin Long) [RHEL-58100]
++- blackhole_netdev: use blackhole_netdev to invalidate dst entries (Xin Long) [RHEL-58100]
++- loopback: create blackhole net device similar to loopack. (Xin Long) [RHEL-58100]
++
++* Wed Oct 09 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.26.1.el8_10]
++- nouveau: lock the client object tree. (Abdiel Janulgue) [RHEL-35118] {CVE-2024-27062}
++- cifs: fix deadlock between reconnect and lease break (Paulo Alcantara) [RHEL-58037]
++- ACPI: PAD: fix crash in exit_round_robin() (Mark Langsdorf) [RHEL-56156]
++- gfs2: Randomize GLF_VERIFY_DELETE work delay (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Use mod_delayed_work in gfs2_queue_try_to_evict (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Update to the evict / remote delete documentation (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Clean up delete work processing (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Return enum evict_behavior from gfs2_upgrade_iopen_glock (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Rename dinode_demise to evict_behavior (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Rename GIF_{DEFERRED -> DEFER}_DELETE (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Faster gfs2_upgrade_iopen_glock wakeups (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Fix unlinked inode cleanup (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Initialize gl_no_formal_ino earlier (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Rename GLF_VERIFY_EVICT to GLF_VERIFY_DELETE (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: make timeout values more explicit (Wolfram Sang) [RHEL-35757]
++- gfs2: Simplify function gfs2_upgrade_iopen_glock (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Rename SDF_DEACTIVATING to SDF_KILL (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Cease delete work during unmount (Bob Peterson) [RHEL-35757]
++- gfs2: Improve gfs2_upgrade_iopen_glock comment (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: nit: gfs2_drop_inode shouldn't return bool (Bob Peterson) [RHEL-35757]
++- dmaengine: fix NULL pointer in channel unregistration function (Jerry Snitselaar) [RHEL-28867] {CVE-2023-52492}
++- dma-direct: Leak pages on dma_set_decrypted() failure (Jerry Snitselaar) [RHEL-37335] {CVE-2024-35939}
++- nfsd: fix delegation_blocked() to block correctly for at least 30 seconds (Olga Kornievskaia) [RHEL-41075]
++- NFSv4: Always ask for type with READDIR (Benjamin Coddington) [RHEL-39397]
++- cifs: get rid of unneeded conditional in cifs_get_num_sgs() (Paulo Alcantara) [RHEL-60251]
++- cifs: Get rid of unneeded conditional in the smb2_get_aead_req() (Paulo Alcantara) [RHEL-60251]
++- cifs: Remove duplicated include in cifsglob.h (Paulo Alcantara) [RHEL-60251]
++- cifs: fix oops during encryption (Paulo Alcantara) [RHEL-60251]
++
++* Wed Oct 02 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.25.1.el8_10]
++- cifs: modefromsids must add an ACE for authenticated users (Paulo Alcantara) [RHEL-56052]
++- cifs: do not use uninitialized data in the owner/group sid (Paulo Alcantara) [RHEL-56052]
++- cifs: fix set of group SID via NTSD xattrs (Paulo Alcantara) [RHEL-56052]
++- smb3: correct smb3 ACL security descriptor (Paulo Alcantara) [RHEL-56052]
++- smb3: fix possible access to uninitialized pointer to DACL (Paulo Alcantara) [RHEL-56052]
++- cifs: remove two cases where rc is set unnecessarily in sid_to_id (Paulo Alcantara) [RHEL-56052]
++- cifs: Fix chmod with modefromsid when an older ACE already exists. (Paulo Alcantara) [RHEL-56052]
++- cifs: update new ACE pointer after populate_new_aces. (Paulo Alcantara) [RHEL-56052]
++- cifs: If a corrupted DACL is returned by the server, bail out. (Paulo Alcantara) [RHEL-56052]
++- cifs: cleanup a few le16 vs. le32 uses in cifsacl.c (Paulo Alcantara) [RHEL-56052]
++- cifs: Change SIDs in ACEs while transferring file ownership. (Paulo Alcantara) [RHEL-56052]
++- cifs: Retain old ACEs when converting between mode bits and ACL. (Paulo Alcantara) [RHEL-56052]
++- cifs: Fix cifsacl ACE mask for group and others. (Paulo Alcantara) [RHEL-56052]
++- Add SMB 2 support for getting and setting SACLs (Paulo Alcantara) [RHEL-56052]
++- SMB3: Add support for getting and setting SACLs (Paulo Alcantara) [RHEL-56052]
++- cifs: Enable sticky bit with cifsacl mount option. (Paulo Alcantara) [RHEL-56052]
++- cifs: Fix unix perm bits to cifsacl conversion for "other" bits. (Paulo Alcantara) [RHEL-56052]
++- drm/i915/gt: Fix potential UAF by revoke of fence registers (Mika Penttilä) [RHEL-53633] {CVE-2024-41092}
++- scsi: lpfc: Validate hdwq pointers before dereferencing in reset/errata paths (Dick Kennedy) [RHEL-27224]
++- kobject_uevent: Fix OOB access within zap_modalias_env() (Rafael Aquini) [RHEL-55000] {CVE-2024-42292}
++- gfs2: Fix NULL pointer dereference in gfs2_log_flush (Andrew Price) [RHEL-51553] {CVE-2024-42079}
++- of: module: add buffer overflow check in of_modalias() (Charles Mirabile) [RHEL-44267] {CVE-2024-38541}
++
++* Wed Sep 25 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.24.1.el8_10]
++- cifs: do not set WorkstationName in NTLMSSP auth blob (Paulo Alcantara) [RHEL-56729]
++- padata: Fix possible divide-by-0 panic in padata_mt_helper() (Steve Best) [RHEL-56162] {CVE-2024-43889}
++- i40e: Fix wrong check for I40E_TXR_FLAGS_WB_ON_ITR (CKI Backport Bot) [RHEL-57000]
++- sctp: Fix null-ptr-deref in reuseport_add_sock(). (Xin Long) [RHEL-56234] {CVE-2024-44935}
++- net/mlx5e: Fix netif state handling (Michal Schmidt) [RHEL-43864] {CVE-2024-38608}
++- net/mlx5e: Add wrapping for auxiliary_driver ops and remove unused args (Michal Schmidt) [RHEL-43864] {CVE-2024-38608}
++- r8169: Fix possible ring buffer corruption on fragmented Tx packets. (cki-backport-bot) [RHEL-44031] {CVE-2024-38586}
++- netfilter: flowtable: initialise extack before use (Florian Westphal) [RHEL-58542] {CVE-2024-45018}
++- memcg: protect concurrent access to mem_cgroup_idr (Rafael Aquini) [RHEL-56252] {CVE-2024-43892}
++- memcontrol: ensure memcg acquired by id is properly set up (Rafael Aquini) [RHEL-56252] {CVE-2024-43892}
++- mm: memcontrol: fix cannot alloc the maximum memcg ID (Rafael Aquini) [RHEL-56252] {CVE-2024-43892}
++- mm/memcg: minor cleanup for MEM_CGROUP_ID_MAX (Rafael Aquini) [RHEL-56252] {CVE-2024-43892}
++- ice: Add netif_device_attach/detach into PF reset flow (CKI Backport Bot) [RHEL-23676]
++
++* Thu Sep 19 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.23.1.el8_10]
++- ethtool: check device is present when getting link settings (Jamie Bainbridge) [RHEL-57002]
++- netfilter: nft_set_pipapo: do not free live element (Phil Sutter) [RHEL-34221] {CVE-2024-26924}
++- netfilter: nf_tables: missing iterator type in lookup walk (Phil Sutter) [RHEL-35033] {CVE-2024-27017}
++- netfilter: nft_set_pipapo: walk over current view on netlink dump (Phil Sutter) [RHEL-35033] {CVE-2024-27017}
++- netfilter: nftables: add helper function to flush set elements (Phil Sutter) [RHEL-35033] {CVE-2024-27017}
++- netfilter: nf_tables: prefer nft_chain_validate (Phil Sutter) [RHEL-51040] {CVE-2024-41042}
++- netfilter: nf_tables: fully validate NFT_DATA_VALUE on store to data registers (Phil Sutter) [RHEL-51516] {CVE-2024-42070}
++- netfilter: nf_tables: Fix potential data-race in __nft_flowtable_type_get() (Phil Sutter) [RHEL-43003] {CVE-2024-35898}
++- netfilter: ipset: Fix suspicious rcu_dereference_protected() (Phil Sutter) [RHEL-47606] {CVE-2024-39503}
++- netfilter: ipset: Fix race between namespace cleanup and gc in the list:set type (Phil Sutter) [RHEL-47606] {CVE-2024-39503}
++- netfilter: ipset: Add list flush to cancel_gc (Phil Sutter) [RHEL-47606] {CVE-2024-39503}
++- netfilter: nf_conntrack_h323: Add protection for bmp length out of range (Phil Sutter) [RHEL-42680] {CVE-2024-26851}
++- netfilter: bridge: replace physindev with physinif in nf_bridge_info (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: propagate net to nf_bridge_get_physindev (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: nfnetlink_log: use proper helper for fetching physinif (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: nf_queue: remove excess nf_bridge variable (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- dev/parport: fix the array out-of-bounds risk (Steve Best) [RHEL-54985] {CVE-2024-42301}
++- KVM: Always flush async #PF workqueue when vCPU is being destroyed (Sean Christopherson) [RHEL-35100] {CVE-2024-26976}
++- bnxt_re: avoid shift undefined behavior in bnxt_qplib_alloc_init_hwq (Kamal Heib) [RHEL-44279] {CVE-2024-38540}
++- tipc: Return non-zero value from tipc_udp_addr2str() on error (Xin Long) [RHEL-55069] {CVE-2024-42284}
++- Bluetooth: Fix TOCTOU in HCI debugfs implementation (CKI Backport Bot) [RHEL-26831] {CVE-2024-24857}
++- drm/i915/dpt: Make DPT object unshrinkable (CKI Backport Bot) [RHEL-47856] {CVE-2024-40924}
++- tipc: force a dst refcount before doing decryption (Xin Long) [RHEL-48363] {CVE-2024-40983}
++- block: initialize integrity buffer to zero before writing it to media (Ming Lei) [RHEL-54763] {CVE-2024-43854}
++- gso: do not skip outer ip header in case of ipip and net_failover (CKI Backport Bot) [RHEL-55790] {CVE-2022-48936}
++- drm/amdgpu: avoid using null object of framebuffer (CKI Backport Bot) [RHEL-51405] {CVE-2024-41093}
++- ipv6: prevent possible NULL deref in fib6_nh_init() (Guillaume Nault) [RHEL-48170] {CVE-2024-40961}
++- mlxsw: spectrum_acl_erp: Fix object nesting warning (CKI Backport Bot) [RHEL-55568] {CVE-2024-43880}
++- ibmvnic: Add tx check to prevent skb leak (CKI Backport Bot) [RHEL-51249] {CVE-2024-41066}
++- ibmvnic: rename local variable index to bufidx (CKI Backport Bot) [RHEL-51249] {CVE-2024-41066}
++- netfilter: bridge: replace physindev with physinif in nf_bridge_info (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: propagate net to nf_bridge_get_physindev (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: nfnetlink_log: use proper helper for fetching physinif (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: nf_queue: remove excess nf_bridge variable (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- USB: serial: mos7840: fix crash on resume (CKI Backport Bot) [RHEL-53680] {CVE-2024-42244}
++- ACPICA: Revert "ACPICA: avoid Info: mapping multiple BARs. Your kernel is fine." (CKI Backport Bot) [RHEL-48381] {CVE-2024-40984}
++

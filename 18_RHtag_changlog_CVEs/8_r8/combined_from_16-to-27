@@ -1,0 +1,962 @@
+--
++* Thu Oct 17 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.27.1.el8_10]
++- lib/generic-radix-tree.c: Fix rare race in __genradix_ptr_alloc() (Waiman Long) [RHEL-62139] {CVE-2024-47668}
++- bonding: fix xfrm real_dev null pointer dereference (Hangbin Liu) [RHEL-57239] {CVE-2024-44989}
++- bonding: fix null pointer deref in bond_ipsec_offload_ok (Hangbin Liu) [RHEL-57233] {CVE-2024-44990}
++- bpf: Fix overrunning reservations in ringbuf (Viktor Malik) [RHEL-49414] {CVE-2024-41009}
++- xprtrdma: fix pointer derefs in error cases of rpcrdma_ep_create (CKI Backport Bot) [RHEL-49309] {CVE-2022-48773}
++- tty: tty_io: update timestamps on all device nodes (Aristeu Rozanski) [RHEL-55257]
++- tty: use 64-bit timstamp (Aristeu Rozanski) [RHEL-55257]
++- ELF: fix kernel.randomize_va_space double read (Rafael Aquini) [RHEL-60669] {CVE-2024-46826}
++- xfrm: set dst dev to blackhole_netdev instead of loopback_dev in ifdown (Xin Long) [RHEL-58100]
++- loopback: fix lockdep splat (Xin Long) [RHEL-58100]
++- blackhole_netdev: use blackhole_netdev to invalidate dst entries (Xin Long) [RHEL-58100]
++- loopback: create blackhole net device similar to loopack. (Xin Long) [RHEL-58100]
++
++* Wed Oct 09 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.26.1.el8_10]
++- nouveau: lock the client object tree. (Abdiel Janulgue) [RHEL-35118] {CVE-2024-27062}
++- cifs: fix deadlock between reconnect and lease break (Paulo Alcantara) [RHEL-58037]
++- ACPI: PAD: fix crash in exit_round_robin() (Mark Langsdorf) [RHEL-56156]
++- gfs2: Randomize GLF_VERIFY_DELETE work delay (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Use mod_delayed_work in gfs2_queue_try_to_evict (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Update to the evict / remote delete documentation (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Clean up delete work processing (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Return enum evict_behavior from gfs2_upgrade_iopen_glock (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Rename dinode_demise to evict_behavior (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Rename GIF_{DEFERRED -> DEFER}_DELETE (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Faster gfs2_upgrade_iopen_glock wakeups (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Fix unlinked inode cleanup (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Initialize gl_no_formal_ino earlier (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Rename GLF_VERIFY_EVICT to GLF_VERIFY_DELETE (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: make timeout values more explicit (Wolfram Sang) [RHEL-35757]
++- gfs2: Simplify function gfs2_upgrade_iopen_glock (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Rename SDF_DEACTIVATING to SDF_KILL (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: Cease delete work during unmount (Bob Peterson) [RHEL-35757]
++- gfs2: Improve gfs2_upgrade_iopen_glock comment (Andreas Gruenbacher) [RHEL-35757]
++- gfs2: nit: gfs2_drop_inode shouldn't return bool (Bob Peterson) [RHEL-35757]
++- dmaengine: fix NULL pointer in channel unregistration function (Jerry Snitselaar) [RHEL-28867] {CVE-2023-52492}
++- dma-direct: Leak pages on dma_set_decrypted() failure (Jerry Snitselaar) [RHEL-37335] {CVE-2024-35939}
++- nfsd: fix delegation_blocked() to block correctly for at least 30 seconds (Olga Kornievskaia) [RHEL-41075]
++- NFSv4: Always ask for type with READDIR (Benjamin Coddington) [RHEL-39397]
++- cifs: get rid of unneeded conditional in cifs_get_num_sgs() (Paulo Alcantara) [RHEL-60251]
++- cifs: Get rid of unneeded conditional in the smb2_get_aead_req() (Paulo Alcantara) [RHEL-60251]
++- cifs: Remove duplicated include in cifsglob.h (Paulo Alcantara) [RHEL-60251]
++- cifs: fix oops during encryption (Paulo Alcantara) [RHEL-60251]
++
++* Wed Oct 02 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.25.1.el8_10]
++- cifs: modefromsids must add an ACE for authenticated users (Paulo Alcantara) [RHEL-56052]
++- cifs: do not use uninitialized data in the owner/group sid (Paulo Alcantara) [RHEL-56052]
++- cifs: fix set of group SID via NTSD xattrs (Paulo Alcantara) [RHEL-56052]
++- smb3: correct smb3 ACL security descriptor (Paulo Alcantara) [RHEL-56052]
++- smb3: fix possible access to uninitialized pointer to DACL (Paulo Alcantara) [RHEL-56052]
++- cifs: remove two cases where rc is set unnecessarily in sid_to_id (Paulo Alcantara) [RHEL-56052]
++- cifs: Fix chmod with modefromsid when an older ACE already exists. (Paulo Alcantara) [RHEL-56052]
++- cifs: update new ACE pointer after populate_new_aces. (Paulo Alcantara) [RHEL-56052]
++- cifs: If a corrupted DACL is returned by the server, bail out. (Paulo Alcantara) [RHEL-56052]
++- cifs: cleanup a few le16 vs. le32 uses in cifsacl.c (Paulo Alcantara) [RHEL-56052]
++- cifs: Change SIDs in ACEs while transferring file ownership. (Paulo Alcantara) [RHEL-56052]
++- cifs: Retain old ACEs when converting between mode bits and ACL. (Paulo Alcantara) [RHEL-56052]
++- cifs: Fix cifsacl ACE mask for group and others. (Paulo Alcantara) [RHEL-56052]
++- Add SMB 2 support for getting and setting SACLs (Paulo Alcantara) [RHEL-56052]
++- SMB3: Add support for getting and setting SACLs (Paulo Alcantara) [RHEL-56052]
++- cifs: Enable sticky bit with cifsacl mount option. (Paulo Alcantara) [RHEL-56052]
++- cifs: Fix unix perm bits to cifsacl conversion for "other" bits. (Paulo Alcantara) [RHEL-56052]
++- drm/i915/gt: Fix potential UAF by revoke of fence registers (Mika Penttilä) [RHEL-53633] {CVE-2024-41092}
++- scsi: lpfc: Validate hdwq pointers before dereferencing in reset/errata paths (Dick Kennedy) [RHEL-27224]
++- kobject_uevent: Fix OOB access within zap_modalias_env() (Rafael Aquini) [RHEL-55000] {CVE-2024-42292}
++- gfs2: Fix NULL pointer dereference in gfs2_log_flush (Andrew Price) [RHEL-51553] {CVE-2024-42079}
++- of: module: add buffer overflow check in of_modalias() (Charles Mirabile) [RHEL-44267] {CVE-2024-38541}
++
++* Wed Sep 25 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.24.1.el8_10]
++- cifs: do not set WorkstationName in NTLMSSP auth blob (Paulo Alcantara) [RHEL-56729]
++- padata: Fix possible divide-by-0 panic in padata_mt_helper() (Steve Best) [RHEL-56162] {CVE-2024-43889}
++- i40e: Fix wrong check for I40E_TXR_FLAGS_WB_ON_ITR (CKI Backport Bot) [RHEL-57000]
++- sctp: Fix null-ptr-deref in reuseport_add_sock(). (Xin Long) [RHEL-56234] {CVE-2024-44935}
++- net/mlx5e: Fix netif state handling (Michal Schmidt) [RHEL-43864] {CVE-2024-38608}
++- net/mlx5e: Add wrapping for auxiliary_driver ops and remove unused args (Michal Schmidt) [RHEL-43864] {CVE-2024-38608}
++- r8169: Fix possible ring buffer corruption on fragmented Tx packets. (cki-backport-bot) [RHEL-44031] {CVE-2024-38586}
++- netfilter: flowtable: initialise extack before use (Florian Westphal) [RHEL-58542] {CVE-2024-45018}
++- memcg: protect concurrent access to mem_cgroup_idr (Rafael Aquini) [RHEL-56252] {CVE-2024-43892}
++- memcontrol: ensure memcg acquired by id is properly set up (Rafael Aquini) [RHEL-56252] {CVE-2024-43892}
++- mm: memcontrol: fix cannot alloc the maximum memcg ID (Rafael Aquini) [RHEL-56252] {CVE-2024-43892}
++- mm/memcg: minor cleanup for MEM_CGROUP_ID_MAX (Rafael Aquini) [RHEL-56252] {CVE-2024-43892}
++- ice: Add netif_device_attach/detach into PF reset flow (CKI Backport Bot) [RHEL-23676]
++
++* Thu Sep 19 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.23.1.el8_10]
++- ethtool: check device is present when getting link settings (Jamie Bainbridge) [RHEL-57002]
++- netfilter: nft_set_pipapo: do not free live element (Phil Sutter) [RHEL-34221] {CVE-2024-26924}
++- netfilter: nf_tables: missing iterator type in lookup walk (Phil Sutter) [RHEL-35033] {CVE-2024-27017}
++- netfilter: nft_set_pipapo: walk over current view on netlink dump (Phil Sutter) [RHEL-35033] {CVE-2024-27017}
++- netfilter: nftables: add helper function to flush set elements (Phil Sutter) [RHEL-35033] {CVE-2024-27017}
++- netfilter: nf_tables: prefer nft_chain_validate (Phil Sutter) [RHEL-51040] {CVE-2024-41042}
++- netfilter: nf_tables: fully validate NFT_DATA_VALUE on store to data registers (Phil Sutter) [RHEL-51516] {CVE-2024-42070}
++- netfilter: nf_tables: Fix potential data-race in __nft_flowtable_type_get() (Phil Sutter) [RHEL-43003] {CVE-2024-35898}
++- netfilter: ipset: Fix suspicious rcu_dereference_protected() (Phil Sutter) [RHEL-47606] {CVE-2024-39503}
++- netfilter: ipset: Fix race between namespace cleanup and gc in the list:set type (Phil Sutter) [RHEL-47606] {CVE-2024-39503}
++- netfilter: ipset: Add list flush to cancel_gc (Phil Sutter) [RHEL-47606] {CVE-2024-39503}
++- netfilter: nf_conntrack_h323: Add protection for bmp length out of range (Phil Sutter) [RHEL-42680] {CVE-2024-26851}
++- netfilter: bridge: replace physindev with physinif in nf_bridge_info (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: propagate net to nf_bridge_get_physindev (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: nfnetlink_log: use proper helper for fetching physinif (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: nf_queue: remove excess nf_bridge variable (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- dev/parport: fix the array out-of-bounds risk (Steve Best) [RHEL-54985] {CVE-2024-42301}
++- KVM: Always flush async #PF workqueue when vCPU is being destroyed (Sean Christopherson) [RHEL-35100] {CVE-2024-26976}
++- bnxt_re: avoid shift undefined behavior in bnxt_qplib_alloc_init_hwq (Kamal Heib) [RHEL-44279] {CVE-2024-38540}
++- tipc: Return non-zero value from tipc_udp_addr2str() on error (Xin Long) [RHEL-55069] {CVE-2024-42284}
++- Bluetooth: Fix TOCTOU in HCI debugfs implementation (CKI Backport Bot) [RHEL-26831] {CVE-2024-24857}
++- drm/i915/dpt: Make DPT object unshrinkable (CKI Backport Bot) [RHEL-47856] {CVE-2024-40924}
++- tipc: force a dst refcount before doing decryption (Xin Long) [RHEL-48363] {CVE-2024-40983}
++- block: initialize integrity buffer to zero before writing it to media (Ming Lei) [RHEL-54763] {CVE-2024-43854}
++- gso: do not skip outer ip header in case of ipip and net_failover (CKI Backport Bot) [RHEL-55790] {CVE-2022-48936}
++- drm/amdgpu: avoid using null object of framebuffer (CKI Backport Bot) [RHEL-51405] {CVE-2024-41093}
++- ipv6: prevent possible NULL deref in fib6_nh_init() (Guillaume Nault) [RHEL-48170] {CVE-2024-40961}
++- mlxsw: spectrum_acl_erp: Fix object nesting warning (CKI Backport Bot) [RHEL-55568] {CVE-2024-43880}
++- ibmvnic: Add tx check to prevent skb leak (CKI Backport Bot) [RHEL-51249] {CVE-2024-41066}
++- ibmvnic: rename local variable index to bufidx (CKI Backport Bot) [RHEL-51249] {CVE-2024-41066}
++- netfilter: bridge: replace physindev with physinif in nf_bridge_info (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: propagate net to nf_bridge_get_physindev (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: nfnetlink_log: use proper helper for fetching physinif (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- netfilter: nf_queue: remove excess nf_bridge variable (Florian Westphal) [RHEL-37038 RHEL-37039] {CVE-2024-35839}
++- USB: serial: mos7840: fix crash on resume (CKI Backport Bot) [RHEL-53680] {CVE-2024-42244}
++- ACPICA: Revert "ACPICA: avoid Info: mapping multiple BARs. Your kernel is fine." (CKI Backport Bot) [RHEL-48381] {CVE-2024-40984}
++
+--
++* Wed Sep 11 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.22.1.el8_10]
++- wifi: mac80211: Avoid address calculations via out of bounds array indexing (Michal Schmidt) [RHEL-51278] {CVE-2024-41071}
++
++* Wed Sep 04 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.21.1.el8_10]
++- s390/dasd: fix error recovery leading to data corruption on ESE devices (Mete Durlu) [RHEL-55874]
++- protect the fetch of ->fd[fd] in do_dup2() from mispredictions (CKI Backport Bot) [RHEL-55123] {CVE-2024-42265}
++- net: openvswitch: fix overwriting ct original tuple for ICMPv6 (cki-backport-bot) [RHEL-44207] {CVE-2024-38558}
++- mlxsw: thermal: Fix out-of-bounds memory accesses (CKI Backport Bot) [RHEL-38375] {CVE-2021-47441}
++- USB: class: cdc-wdm: Fix CPU lockup caused by excessive log messages (CKI Backport Bot) [RHEL-47552] {CVE-2024-40904}
++- ipvs: properly dereference pe in ip_vs_add_service (Phil Sutter) [RHEL-54903] {CVE-2024-42322}
++- net, sunrpc: Remap EPERM in case of connection failure in xs_tcp_setup_socket (CKI Backport Bot) [RHEL-53702] {CVE-2024-42246}
++- drm/amdgpu: change vm->task_info handling (Michel Dänzer) [RHEL-49379] {CVE-2024-41008}
++- drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq() (Michel Dänzer) [RHEL-45036] {CVE-2024-39471}
++- drm/amdgpu: add error handle to avoid out-of-bounds (Michel Dänzer) [RHEL-45036] {CVE-2024-39471}
++- drm/amdgpu: Using uninitialized value *size when calling amdgpu_vce_cs_reloc (Michel Dänzer) [RHEL-52845] {CVE-2024-42228}
++
++* Thu Aug 29 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.20.1.el8_10]
++- KVM: arm64: Disassociate vcpus from redistributor region on teardown (Shaoqin Huang) [RHEL-48417] {CVE-2024-40989}
++- devres: Fix memory leakage caused by driver API devm_free_percpu() (CKI Backport Bot) [RHEL-55597] {CVE-2024-43871}
++- phy: ti: phy-omap-usb2: Fix NULL pointer dereference for SRP (Izabela Bakollari) [RHEL-26680] {CVE-2024-26600}
++- nvmet-fc: avoid deadlock on delete association path (Maurizio Lombardi) [RHEL-31618] {CVE-2024-26769}
++- nvmet-fc: release reference on target port (Maurizio Lombardi) [RHEL-31618] {CVE-2024-26769}
++- ACPI: LPIT: Avoid u32 multiplication overflow (Mark Langsdorf) [RHEL-37062] {CVE-2023-52683}
++- sched/deadline: Fix task_struct reference leak (Phil Auld) [RHEL-50904] {CVE-2024-41023}
++- nfsd: fix crash on LOCKT on reexported NFSv3 (Benjamin Coddington) [RHEL-31515]
++- mlxsw: spectrum_acl_tcam: Fix NULL pointer dereference in error path (CKI Backport Bot) [RHEL-26570] {CVE-2024-26595}
++- mlxsw: spectrum_acl_tcam: Move devlink param to TCAM code (Ivan Vecera) [RHEL-26570] {CVE-2024-26595}
++- ACPI: extlog: fix NULL pointer dereference check (Mark Langsdorf) [RHEL-29110] {CVE-2023-52605}
++- ACPI: processor_idle: Fix memory leak in acpi_processor_power_exit() (Mark Langsdorf) [RHEL-33198] {CVE-2024-26894}
++- mm: prevent derefencing NULL ptr in pfn_section_valid() (Audra Mitchell) [RHEL-51132] {CVE-2024-41055}
++- mm, kmsan: fix infinite recursion due to RCU critical section (Audra Mitchell) [RHEL-51132] {CVE-2024-41055}
++- cipso: make cipso_v4_skbuff_delattr() fully remove the CIPSO options (Ondrej Mosnacek) [RHEL-30904]
++- cipso: fix total option length computation (Ondrej Mosnacek) [RHEL-30904]
++- ext4: do not create EA inode under buffer lock (Carlos Maiolino) [RHEL-48271] {CVE-2024-40972}
++- ext4: fold quota accounting into ext4_xattr_inode_lookup_create() (Carlos Maiolino) [RHEL-48271] {CVE-2024-40972}
++- ext4: check the return value of ext4_xattr_inode_dec_ref() (Carlos Maiolino) [RHEL-48271] {CVE-2024-40972}
++- ext4: fix uninitialized ratelimit_state->lock access in __ext4_fill_super() (Carlos Maiolino) [RHEL-48507] {CVE-2024-40998}
++- ext4: remove duplicate definition of ext4_xattr_ibody_inline_set() (Carlos Maiolino) [RHEL-48271] {CVE-2024-40972}
++
++* Thu Aug 22 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.19.1.el8_10]
++- drm/i915/vma: Fix UAF on destroy against retire race (Mika Penttilä) [RHEL-35222] {CVE-2024-26939}
++- RHEL-48620 (Kenneth Yin) [RHEL-48620]
++- net: ice: Fix potential NULL pointer dereference in ice_bridge_setlink() (CKI Backport Bot) [RHEL-42721] {CVE-2024-26855}
++- net: usb: asix: do not force pause frames support (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: asix: fix "can't send until first packet is send" issue (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: asix: fix modprobe "sysfs: cannot create duplicate filename" (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: asix: add proper error handling of usb read errors (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- asix: fix wrong return value in asix_check_host_enable() (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- asix: fix uninit-value in asix_mdio_read() (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: ax88772: fix boolconv.cocci warnings (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: do not call phy_disconnect() for ax88178 (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: ax88772: move embedded PHY detection as early as possible (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: asix: fix uninit value bugs (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: ax88772: add missing stop (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: ax88772: suspend PHY on driver probe (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: ax88772: manage PHY PM from MAC (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: ax88772: Fix less than zero comparison of a u16 (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: Fix less than zero comparison of a u16 (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: add error handling for asix_mdio_* functions (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: ax88772: add phylib support (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- net: usb: asix: refactor asix_read_phy_addr() and handle errors on return (Ken Cox) [RHEL-28108] {CVE-2021-47101}
++- SUNRPC: always free ctxt when freeing deferred request (Jay Shin) [RHEL-40936]
++- SUNRPC: double free xprt_ctxt while still in use (Jay Shin) [RHEL-40936]
++- SUNRPC: Remove svc_rqst::rq_xprt_hlen (Jay Shin) [RHEL-40936]
++- SUNRPC: Remove dead code in svc_tcp_release_rqst() (Jay Shin) [RHEL-40936]
++- x86/bugs: Extend VMware Retbleed workaround to Nehalem & earlier CPUs (Waiman Long) [RHEL-48646]
++- wifi: iwlwifi: read txq->read_ptr under lock (Jose Ignacio Tornos Martinez) [RHEL-39797] {CVE-2024-36922}
++- scsi: bnx2fc: Remove spin_lock_bh while releasing resources after upload (John Meneghini) [RHEL-39908] {CVE-2024-36919}
++- nbd: always initialize struct msghdr completely (Ming Lei) [RHEL-29498] {CVE-2024-26638}
++- block: don't call rq_qos_ops->done_bio if the bio isn't tracked (Ming Lei) [RHEL-42151] {CVE-2021-47412}
++- nvmet: fix a possible leak when destroy a ctrl during qp establishment (Maurizio Lombardi) [RHEL-52013] {CVE-2024-42152}
++- ipv6: prevent NULL dereference in ip6_output() (Sabrina Dubroca) [RHEL-39912] {CVE-2024-36901}
++- ppp: reject claimed-as-LCP but actually malformed packets (Guillaume Nault) [RHEL-51052] {CVE-2024-41044}
++- leds: trigger: Unregister sysfs attributes before calling deactivate() (CKI Backport Bot) [RHEL-54834] {CVE-2024-43830}
++- crypto: bcm - Fix pointer arithmetic (cki-backport-bot) [RHEL-44108] {CVE-2024-38579}
++- scsi: qedf: Ensure the copied buf is NUL terminated (John Meneghini) [RHEL-44195] {CVE-2024-38559}
++- x86/bhi: Avoid warning in #DB handler due to BHI mitigation (Waiman Long) [RHEL-53657] {CVE-2024-42240}
++- scsi: mpt3sas: Avoid test/set_bit() operating in non-allocated memory (CKI Backport Bot) [RHEL-47529] {CVE-2024-40901}
++- ipv6: fib6_rules: avoid possible NULL dereference in fib6_rule_action() (CKI Backport Bot) [RHEL-39843] {CVE-2024-36902}
++- net: usb: ax88179_178a: improve link status logs (Jose Ignacio Tornos Martinez) [RHEL-45167]
++- net: usb: ax88179_178a: improve reset check (Jose Ignacio Tornos Martinez) [RHEL-45167]
++- net: usb: ax88179_178a: fix link status when link is set to down/up (Jose Ignacio Tornos Martinez) [RHEL-45167]
++- net: usb: ax88179_178a: avoid writing the mac address before first reading (Jose Ignacio Tornos Martinez) [RHEL-45167]
++- KVM: arm64: vgic-v2: Check for non-NULL vCPU in vgic_v2_parse_attr() (Shaoqin Huang) [RHEL-40837] {CVE-2024-36953}
++- KVM: arm64: vgic-v2: Use cpuid from userspace as vcpu_id (Shaoqin Huang) [RHEL-40837] {CVE-2024-36953}
++- media: cec: cec-api: add locking in cec_release() (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: avoid confusing "transmit timed out" message (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: avoid recursive cec_claim_log_addrs (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: cec-adap: always cancel work in cec_transmit_msg_fh (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: remove length check of Timer Status (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: count low-drive, error and arb-lost conditions (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: add note about *_from_edid() function usage in drm (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: add adap_unconfigured() callback (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: add adap_nb_transmit_canceled() callback (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: don't set last_initiator if tx in progress (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: disable adapter in cec_devnode_unregister (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: core: not all messages were passed on when monitoring (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: add support for Absolute Volume Control (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-adap.c: log when claiming LA fails unexpectedly (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-adap.c: drop activate_cnt, use state info instead (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-adap.c: reconfigure if the PA changes during configuration (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-adap.c: fix is_configuring state (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-adap.c: stop trying LAs on CEC_TX_STATUS_TIMEOUT (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-adap.c: don't unconfigure if already unconfigured (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: add optional adap_configured callback (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: add xfer_timeout_ms field (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: use call_op and check for !unregistered (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-pin: fix interrupt en/disable handling (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-pin: drop unused 'enabled' field from struct cec_pin (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-pin: fix off-by-one SFT check (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-pin: rename timer overrun variables (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: correctly pass on reply results (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: abort if the current transmit was canceled (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: call enable_adap on s_log_addrs (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: media/cec.h: document cec_adapter fields (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: fix a deadlock situation (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: safely unhook lists in cec_data (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: copy sequence field for the reply (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: fix trivial style warnings (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-adap.c: add 'unregistered' checks (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec-adap.c: don't use flush_scheduled_work() (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: Use fallthrough pseudo-keyword (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: remove unused waitq and phys_addrs fields (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: silence shift wrapping warning in __cec_s_log_addrs() (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- media: cec: move the core to a separate directory (Kate Hsuan) [RHEL-22559] {CVE-2024-23848}
++- net/iucv: Avoid explicit cpumask var allocation on stack (CKI Backport Bot) [RHEL-51631] {CVE-2024-42094}
++- scsi: lpfc: Handle mailbox timeouts in lpfc_get_sfp_info (Dick Kennedy) [RHEL-40400]
++- KVM: selftests: Make hyperv_clock require TSC based system clocksource (Vitaly Kuznetsov) [RHEL-19027]
++- KVM: selftests: Run clocksource dependent tests with hyperv_clocksource_tsc_page too (Vitaly Kuznetsov) [RHEL-19027]
++- KVM: selftests: Use generic sys_clocksource_is_tsc() in vmx_nested_tsc_scaling_test (Vitaly Kuznetsov) [RHEL-19027]
++- KVM: selftests: Generalize check_clocksource() from kvm_clock_test (Vitaly Kuznetsov) [RHEL-19027]
++- firmware: cs_dsp: Return error if block header overflows file (CKI Backport Bot) [RHEL-53646] {CVE-2024-42238}
++- firmware: cs_dsp: Validate payload length before processing block (CKI Backport Bot) [RHEL-53638] {CVE-2024-42237}
++- mm, slub: fix potential memoryleak in kmem_cache_open() (Waiman Long) [RHEL-38404] {CVE-2021-47466}
++- slub: don't panic for memcg kmem cache creation failure (Waiman Long) [RHEL-38404] {CVE-2021-47466}
++- wifi: ath11k: fix htt pktlog locking (Jose Ignacio Tornos Martinez) [RHEL-38317] {CVE-2023-52800}
++- wifi: ath11k: fix dfs radar event locking (Jose Ignacio Tornos Martinez) [RHEL-38165] {CVE-2023-52798}
++- lib/generic-radix-tree.c: Don't overflow in peek() (Waiman Long) [RHEL-37737] {CVE-2021-47432}
++- include/linux/generic-radix-tree.h: replace kernel.h with the necessary inclusions (Waiman Long) [RHEL-37737] {CVE-2021-47432}
++- EDAC/i10nm: Skip the absent memory controllers (Aristeu Rozanski) [RHEL-43236]
++- scsi: libfc: Fix potential NULL pointer dereference in fc_lport_ptp_setup() (John Meneghini) [RHEL-38197] {CVE-2023-52809}
++- gfs2: Fix potential glock use-after-free on unmount (Andreas Gruenbacher) [RHEL-44149] {CVE-2024-38570}
++- gfs2: simplify gdlm_put_lock with out_free label (Andreas Gruenbacher) [RHEL-44149] {CVE-2024-38570}
++- gfs2: Remove ill-placed consistency check (Andreas Gruenbacher) [RHEL-44149] {CVE-2024-38570}
++- nvme-fc: do not wait in vain when unloading module (Ewan D. Milne) [RHEL-33083] {CVE-2024-26846}
++- HID: hid-thrustmaster: fix OOB read in thrustmaster_interrupts (CKI Backport Bot) [RHEL-49698] {CVE-2022-48866}
++- scsi: qedf: Set qed_slowpath_params to zero before use (John Meneghini) [RHEL-9797]
++- scsi: qedf: Wait for stag work during unload (John Meneghini) [RHEL-9797]
++- scsi: qedf: Don't process stag work during unload and recovery (John Meneghini) [RHEL-9797]
++- Revert "mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again" (Audra Mitchell) [RHEL-42625] {CVE-2024-26720}
++- mm: avoid overflows in dirty throttling logic (Audra Mitchell) [RHEL-51840] {CVE-2024-42131}
++- mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again (Audra Mitchell) [RHEL-42625] {CVE-2024-26720}
++- ACPI: fix NULL pointer dereference (Mark Langsdorf) [RHEL-37897] {CVE-2021-47289}
++
++* Fri Aug 16 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.18.1.el8_10]
++- scsi: mpi3mr: Avoid memcpy field-spanning write WARNING (Ewan D. Milne) [RHEL-39805] {CVE-2024-36920}
++- tun: limit printing rate when illegal packet received by tun dev (Jon Maloy) [RHEL-35046] {CVE-2024-27013}
++- drm/amdgpu/debugfs: fix error code when smc register accessors are NULL (Michel Dänzer) [RHEL-38210] {CVE-2023-52817}
++- drm/amdgpu: Fix a null pointer access when the smc_rreg pointer is NULL (Michel Dänzer) [RHEL-38210] {CVE-2023-52817}
++- drm/amdgpu/mes: fix use-after-free issue (Michel Dänzer) [RHEL-44043] {CVE-2024-38581}
++- drm/amdgpu: Fix the null pointer when load rlc firmware (Michel Dänzer) [RHEL-30603] {CVE-2024-26649}
++- drm/amdgpu: Fix potential out-of-bounds access in 'amdgpu_discovery_reg_base_init()' (Michel Dänzer) [RHEL-35160] {CVE-2024-27042}
++- net/sched: Fix UAF when resolving a clash (Xin Long) [RHEL-51014] {CVE-2024-41040}
++- tcp_metrics: validate source addr length (Guillaume Nault) [RHEL-52025] {CVE-2024-42154}
++- NFSv4/pnfs: Fix a use-after-free bug in open (Benjamin Coddington) [RHEL-35508]
++- NFSv4: Don't hold the layoutget locks across multiple RPC calls (Benjamin Coddington) [RHEL-35508]
++- scsi: qedf: Make qedf_execute_tmf() non-preemptible (John Meneghini) [RHEL-51799] {CVE-2024-42124}
++- Input: elantech - fix stack out of bound access in elantech_change_report_id() (CKI Backport Bot) [RHEL-41938] {CVE-2021-47097}
++- HID: logitech-hidpp: Fix kernel crash on receiver USB disconnect (CKI Backport Bot) [RHEL-28982] {CVE-2023-52478}
++- drm/radeon: fix UBSAN warning in kv_dpm.c (CKI Backport Bot) [RHEL-48399] {CVE-2024-40988}
++- usb: core: Don't hold the device lock while sleeping in do_proc_control() (Desnes Nunes) [RHEL-43646] {CVE-2021-47582}
++- USB: core: Make do_proc_control() and do_proc_bulk() killable (Desnes Nunes) [RHEL-43646] {CVE-2021-47582}
++- scsi: qedi: Fix crash while reading debugfs attribute (CKI Backport Bot) [RHEL-48327] {CVE-2024-40978}
++- wifi: mt76: mt7921s: fix potential hung tasks during chip recovery (CKI Backport Bot) [RHEL-48309] {CVE-2024-40977}
++- net: tcp: accept old ack during closing (Jamie Bainbridge) [RHEL-52433]
++- wifi: iwlwifi: mvm: don't read past the mfuart notifcation (CKI Backport Bot) [RHEL-48016] {CVE-2024-40941}
++- net/iucv: fix use after free in iucv_sock_close() (Mete Durlu) [RHEL-53988]
++- wifi: iwlwifi: mvm: check n_ssids before accessing the ssids (CKI Backport Bot) [RHEL-47908] {CVE-2024-40929}
++- Input: aiptek - properly check endpoint type (Benjamin Tissoires) [RHEL-48963] {CVE-2022-48836}
++- Input: aiptek - use descriptors of current altsetting (Benjamin Tissoires) [RHEL-48963] {CVE-2022-48836}
++- Input: aiptek - fix endpoint sanity check (Benjamin Tissoires) [RHEL-48963] {CVE-2022-48836}
++- usb: xhci: prevent potential failure in handle_tx_event() for Transfer events without TRB (CKI Backport Bot) [RHEL-52373] {CVE-2024-42226}
++- wifi: mt76: replace skb_put with skb_put_zero (CKI Backport Bot) [RHEL-52366] {CVE-2024-42225}
++- wifi: mac80211: Fix deadlock in ieee80211_sta_ps_deliver_wakeup() (CKI Backport Bot) [RHEL-47776] {CVE-2024-40912}
++- wifi: cfg80211: Lock wiphy in cfg80211_get_station (CKI Backport Bot) [RHEL-47758] {CVE-2024-40911}
++- VMCI: Use struct_size() in kmalloc() (Steve Best) [RHEL-37325] {CVE-2024-35944}
++- VMCI: Fix possible memcpy() run-time warning in vmci_datagram_invoke_guest_handler() (Steve Best) [RHEL-37325] {CVE-2024-35944}
++- VMCI: Fix memcpy() run-time warning in dg_dispatch_as_host() (Steve Best) [RHEL-37325] {CVE-2024-35944}
++- wifi: cfg80211: restrict NL80211_ATTR_TXQ_QUANTUM values (Jose Ignacio Tornos Martinez) [RHEL-51761] {CVE-2024-42114}
++- usb: atm: cxacru: fix endpoint checking in cxacru_bind() (CKI Backport Bot) [RHEL-51442] {CVE-2024-41097}
++- nfs: handle error of rpc_proc_register() in init_nfs_fs() (Scott Mayhew) [RHEL-39904] {CVE-2024-36939}
++- drm/radeon: check bo_va->bo is non-NULL before using it (CKI Backport Bot) [RHEL-51184] {CVE-2024-41060}
++- udp: Set SOCK_RCU_FREE earlier in udp_lib_get_port(). (CKI Backport Bot) [RHEL-51027] {CVE-2024-41041}
++- USB: core: Fix duplicate endpoint bug by clearing reserved bits in the descriptor (CKI Backport Bot) [RHEL-50961] {CVE-2024-41035}
++- tcp: Fix shift-out-of-bounds in dctcp_update_alpha(). (CKI Backport Bot) [RHEL-44408] {CVE-2024-37356}
++- tcp: avoid too many retransmit packets (Florian Westphal) [RHEL-48627] {CVE-2024-41007}
++- tcp: use signed arithmetic in tcp_rtx_probe0_timed_out() (Florian Westphal) [RHEL-48627]
++- net: tcp: fix unexcepted socket die when snd_wnd is 0 (Florian Westphal) [RHEL-48627]
++- tcp: refactor tcp_retransmit_timer() (Florian Westphal) [RHEL-48627]
++- tcp: exit if nothing to retransmit on RTO timeout (Florian Westphal) [RHEL-48627]
++- netfilter: nf_tables: Reject tables of unsupported family (Florian Westphal) [RHEL-21418] {CVE-2023-6040}
++
++* Wed Aug 07 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.17.1.el8_10]
++- kyber: fix out of bounds access when preempted (Ming Lei) [RHEL-27258] {CVE-2021-46984}
++- vfs: don't mod negative dentry count when on shrinker list (Brian Foster) [RHEL-35874]
++- fs/dcache: Re-use value stored to dentry->d_flags instead of re-reading (Brian Foster) [RHEL-35874]
++- fbmem: Do not delete the mode that is still in use (CKI Backport Bot) [RHEL-37796] {CVE-2021-47338}
++- netpoll: Fix race condition in netpoll_owner_active (CKI Backport Bot) [RHEL-49361] {CVE-2024-41005}
++- firmware: arm_scpi: Fix string overflow in SCPI genpd driver (Mark Salter) [RHEL-43702] {CVE-2021-47609}
++- ipv6: prevent possible NULL dereference in rt6_probe() (Guillaume Nault) [RHEL-48149] {CVE-2024-40960}
++- HID: i2c-hid-of: fix NULL-deref on failed power up (CKI Backport Bot) [RHEL-31598] {CVE-2024-26717}
++- cpufreq: amd-pstate: fix memory leak on CPU EPP exit (CKI Backport Bot) [RHEL-48489] {CVE-2024-40997}
++- x86/mm/pat: fix VM_PAT handling in COW mappings (Chris von Recklinghausen) [RHEL-37258] {CVE-2024-35877}
++- PCI/PM: Drain runtime-idle callbacks before driver removal (Myron Stowe) [RHEL-42937] {CVE-2024-35809}
++- PCI: Drop pci_device_remove() test of pci_dev->driver (Myron Stowe) [RHEL-42937] {CVE-2024-35809}
++- drm/radeon: check the alloc_workqueue return value in radeon_crtc_init() (Mika Penttilä) [RHEL-26909] {CVE-2023-52470}
++- USB: core: Fix hang in usb_kill_urb by adding memory barriers (Desnes Nunes) [RHEL-43979] {CVE-2022-48760}
++- cifs: fix bad fids sent over wire (Paulo Alcantara) [RHEL-52517]
++- smb3: add additional null check in SMB311_posix_mkdir (Paulo Alcantara) [RHEL-52517]
++- smb3: add additional null check in SMB2_tcon (Paulo Alcantara) [RHEL-52517]
++- smb3: add additional null check in SMB2_open (Paulo Alcantara) [RHEL-52517]
++- smb3: add additional null check in SMB2_ioctl (Paulo Alcantara) [RHEL-52517]
++- selftests: forwarding: devlink_lib: Wait for udev events after reloading (Mark Langsdorf) [RHEL-47642] {CVE-2024-39501}
++- drivers: core: synchronize really_probe() and dev_uevent() (Mark Langsdorf) [RHEL-47642] {CVE-2024-39501}
++- udp: do not accept non-tunnel GSO skbs landing in a tunnel (Xin Long) [RHEL-42997] {CVE-2024-35884}
++- filelock: Remove locks reliably when fcntl/close race is detected (Bill O'Donnell) [RHEL-50170] {CVE-2024-41012}
++- Input: add bounds checking to input_set_capability() (Benjamin Tissoires) [RHEL-21413] {CVE-2022-48619}
++- xfrm6: check ip6_dst_idev() return value in xfrm6_get_saddr() (CKI Backport Bot) [RHEL-48130] {CVE-2024-40959}
++- blk-cgroup: fix list corruption from reorder of WRITE ->lqueued (Ming Lei) [RHEL-33695]
++- blk-cgroup: fix list corruption from resetting io stat (Ming Lei) [RHEL-33695]
++- net: do not leave a dangling sk pointer, when socket creation fails (CKI Backport Bot) [RHEL-48060] {CVE-2024-40954}
++- perf/x86/lbr: Filter vsyscall addresses (Michael Petlan) [RHEL-28991] {CVE-2023-52476}
++- vmci: prevent speculation leaks by sanitizing event in event_deliver() (CKI Backport Bot) [RHEL-47678] {CVE-2024-39499}
++- serial: core: fix transmit-buffer reset and memleak (Steve Best) [RHEL-38731] {CVE-2021-47527}
++- powerpc/pseries: Whitelist dtl slub object for copying to userspace (Mamatha Inamdar) [RHEL-51236] {CVE-2024-41065}
++- powerpc/eeh: avoid possible crash when edev->pdev changes (Mamatha Inamdar) [RHEL-51220] {CVE-2024-41064}
++- x86: stop playing stack games in profile_pc() (Steve Best) [RHEL-51643] {CVE-2024-42096}
++- mptcp: ensure snd_una is properly initialized on connect (Florian Westphal) [RHEL-47933 RHEL-47934] {CVE-2024-40931}
++- liquidio: Adjust a NULL pointer handling path in lio_vf_rep_copy_packet (CKI Backport Bot) [RHEL-47492] {CVE-2024-39506}
++- tun: add missing verification for short frame (Patrick Talbert) [RHEL-50194] {CVE-2024-41091}
++- tap: add missing verification for short frame (Patrick Talbert) [RHEL-50279] {CVE-2024-41090}
++- usb-storage: alauda: Check whether the media is initialized (Desnes Nunes) [RHEL-43708] {CVE-2024-38619}
++- usb-storage: alauda: Fix uninit-value in alauda_check_media() (Desnes Nunes) [RHEL-43708] {CVE-2024-38619}
++- hwmon: (w83793) Fix NULL pointer dereference by removing unnecessary structure field (Steve Best) [RHEL-37723] {CVE-2021-47384}
++- block: fix that util can be greater than 100%% (Ming Lei) [RHEL-23074]
++- block: support to account io_ticks precisely (Ming Lei) [RHEL-23074]
++- watchdog: Fix possible use-after-free by calling del_timer_sync() (Steve Best) [RHEL-38795] {CVE-2021-47321}
++- hwmon: (w83792d) Fix NULL pointer dereference by removing unnecessary structure field (Steve Best) [RHEL-37719] {CVE-2021-47385}
++- mlxsw: spectrum: Protect driver from buggy firmware (CKI Backport Bot) [RHEL-42245] {CVE-2021-47560}
++- mlxsw: Verify the accessed index doesn't exceed the array length (CKI Backport Bot) [RHEL-42245] {CVE-2021-47560}
++- dm: call the resume method on internal suspend (Benjamin Marzinski) [RHEL-41835] {CVE-2024-26880}
++- tty: Fix out-of-bound vmalloc access in imageblit (Steve Best) [RHEL-37727] {CVE-2021-47383}
++- hwmon: (w83791d) Fix NULL pointer dereference by removing unnecessary structure field (Steve Best) [RHEL-37715] {CVE-2021-47386}
++- hwmon: (mlxreg-fan) Return non-zero value when fan current state is enforced from sysfs (Steve Best) [RHEL-37710] {CVE-2021-47393}
++- nvmem: Fix shift-out-of-bound (UBSAN) with byte size cells (Steve Best) [RHEL-38436] {CVE-2021-47497}
++- driver core: auxiliary bus: Fix memory leak when driver_register() fail (Steve Best) [RHEL-37901] {CVE-2021-47287}
++- phylib: fix potential use-after-free (cki-backport-bot) [RHEL-43764] {CVE-2022-48754}
++- ptp: Fix possible memory leak in ptp_clock_register() (Hangbin Liu) [RHEL-38424] {CVE-2021-47455}
++- NFSv4: Fix memory leak in nfs4_set_security_label (CKI Backport Bot) [RHEL-51315] {CVE-2024-41076}
++- pinctrl: fix deadlock in create_pinctrl() when handling -EPROBE_DEFER (CKI Backport Bot) [RHEL-51618] {CVE-2024-42090}
++- ftruncate: pass a signed offset (CKI Backport Bot) [RHEL-51598] {CVE-2024-42084}
++- af_unix: Fix garbage collector racing against connect() (Felix Maurer) [RHEL-34225] {CVE-2024-26923}
++- virtio-net: Add validation for used length (Laurent Vivier) [RHEL-42080] {CVE-2021-47352}
++- net: fix possible store tearing in neigh_periodic_work() (Antoine Tenart) [RHEL-42359] {CVE-2023-52522}
++- tunnels: fix out of bounds access when building IPv6 PMTU error (Antoine Tenart) [RHEL-41823] {CVE-2024-26665}
++- vt_ioctl: fix array_index_nospec in vt_setactivate (John W. Linville) [RHEL-49141] {CVE-2022-48804}
++- Input: synaptics-rmi4 - fix use after free in rmi_unregister_function() (CKI Backport Bot) [RHEL-38302] {CVE-2023-52840}
++- netns: Make get_net_ns() handle zero refcount net (Antoine Tenart) [RHEL-48105] {CVE-2024-40958}
++- tracing: Ensure visibility when inserting an element into tracing_map (Michael Petlan) [RHEL-30457] {CVE-2024-26645}
++- KVM: s390: fix LPSWEY handling (CKI Backport Bot) [RHEL-50072]
++- firmware: cs_dsp: Use strnlen() on name fields in V1 wmfw files (CKI Backport Bot) [RHEL-51144] {CVE-2024-41056}
++- SUNRPC: Fix a race to wake a sync task (Benjamin Coddington) [RHEL-11843]
++- firmware: cs_dsp: Fix overflow checking of wmfw header (CKI Backport Bot) [RHEL-50999] {CVE-2024-41039}
++- firmware: cs_dsp: Prevent buffer overrun when processing V2 alg headers (CKI Backport Bot) [RHEL-50987] {CVE-2024-41038}
++- net/sched: act_api: fix possible infinite loop in tcf_idr_check_alloc() (Xin Long) [RHEL-48471] {CVE-2024-40995}
++- net: fix out-of-bounds access in ops_init (Xin Long) [RHEL-43185] {CVE-2024-36883}
++- x86/mce/therm_throt: Undo thermal polling properly on CPU offline (Steve Best) [RHEL-45310]
++- x86/mce/therm_throt: Do not access uninitialized therm_work (Steve Best) [RHEL-45310]
++- x86/mce/therm_throt: Mark throttle_active_work() as __maybe_unused (Steve Best) [RHEL-45310]
++- x86/mce/therm_throt: Mask out read-only and reserved MSR bits (Steve Best) [RHEL-45310]
++- x86/mce/therm_throt: Optimize notifications of thermal throttle (Steve Best) [RHEL-45310]
++- jiffies: add utility function to calculate delta in ms (Steve Best) [RHEL-45310]
++- x86/mce: Lower throttling MCE messages' priority to warning (Steve Best) [RHEL-45310]
++- dmaengine: idxd: Fix oops during rmmod on single-CPU platforms (Eder Zulian) [RHEL-37361] {CVE-2024-35989}
++- xfs: don't walk off the end of a directory data block (CKI Backport Bot) [RHEL-50879] {CVE-2024-41013}
++- xfs: add bounds checking to xlog_recover_process_data (CKI Backport Bot) [RHEL-50856] {CVE-2024-41014}
++- dm-crypt: limit the size of encryption requests (Benjamin Marzinski) [RHEL-29330]
++- netfilter: flowtable: remove nf_ct_l4proto_find() call (Florian Westphal) [RHEL-49589]
++
+--
++* Thu Aug 01 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.16.1.el8_10]
++- x86/bhi: Fix incorrect CLEAR_BRANCH_HISTORY position in entry_INT80_compat (Waiman Long) [RHEL-50648]
++
++* Fri Jul 26 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.15.1.el8_10]
++- Revert "scsi: st: Add third party poweron reset handling" (John Meneghini) [RHEL-44613]
++- ionic: fix use after netif_napi_del() (CKI Backport Bot) [RHEL-47624] {CVE-2024-39502}
++- ionic: clean interrupt before enabling queue to avoid credit race (CKI Backport Bot) [RHEL-47624] {CVE-2024-39502}
++- net/sunrpc: fix reference count leaks in rpc_sysfs_xprt_state_change (CKI Backport Bot) [RHEL-49321] {CVE-2021-47624}
++- xhci: Handle TD clearing for multiple streams case (CKI Backport Bot) [RHEL-47882] {CVE-2024-40927}
++- net: openvswitch: Fix Use-After-Free in ovs_ct_exit (cki-backport-bot) [RHEL-36362] {CVE-2024-27395}
++- net: bridge: mst: fix suspicious rcu usage in br_mst_set_state (Ivan Vecera) [RHEL-43721] {CVE-2024-36979}
++- net: bridge: mst: pass vlan group directly to br_mst_vlan_set_state (Ivan Vecera) [RHEL-43721] {CVE-2024-36979}
++- net: bridge: mst: fix vlan use-after-free (cki-backport-bot) [RHEL-43721] {CVE-2024-36979}
++- irqchip/gic-v3-its: Prevent double free on error (Charles Mirabile) [RHEL-37022] {CVE-2024-35847}
++- irqchip/gic-v3-its: Fix potential VPE leak on error (Charles Mirabile) [RHEL-37744] {CVE-2021-47373}
++- i2c: mlxbf: prevent stack overflow in mlxbf_i2c_smbus_start_transaction() (Charles Mirabile) [RHEL-34735] {CVE-2022-48632}
++- iommu/dma: fix zeroing of bounce buffer padding used by untrusted devices (Eder Zulian) [RHEL-36954] {CVE-2024-35814}
++- swiotlb: remove alloc_size argument to swiotlb_tbl_map_single() (Eder Zulian) [RHEL-36954] {CVE-2024-35814}
++- swiotlb: fix swiotlb_bounce() to do partial sync's correctly (Eder Zulian) [RHEL-36954] {CVE-2024-35814}
++- swiotlb: extend buffer pre-padding to alloc_align_mask if necessary (Eder Zulian) [RHEL-36954] {CVE-2024-35814}
++- swiotlb: Reinstate page-alignment for mappings >= PAGE_SIZE (Eder Zulian) [RHEL-36954] {CVE-2024-35814}
++- swiotlb: Fix alignment checks when both allocation and DMA masks are present (Eder Zulian) [RHEL-36954] {CVE-2024-35814}
++- swiotlb: Fix double-allocation of slots due to broken alignment handling (Eder Zulian) [RHEL-36954] {CVE-2024-35814}
++- genirq/cpuhotplug, x86/vector: Prevent vector leak during CPU offline (cki-backport-bot) [RHEL-44441] {CVE-2024-31076}
++
++* Thu Jul 25 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.14.1.el8_10]
++- s390/qeth: Fix kernel panic after setting hsuid (Mete Durlu) [RHEL-49754]
++- perf/core: Protect event sibling list locking against interrupt inversion (Daniel Vacek) [RHEL-31798]
++- vt: fix unicode buffer corruption when deleting characters (Steve Best) [RHEL-36936] {CVE-2024-35823}
++- cifs: translate network errors on send to -ECONNABORTED (Paulo Alcantara) [RHEL-36754]
++- xfs: don't block in busy flushing when freeing extents (Brian Foster) [RHEL-7984]
++- xfs: allow extent free intents to be retried (Brian Foster) [RHEL-7984]
++- xfs: pass alloc flags through to xfs_extent_busy_flush() (Brian Foster) [RHEL-7984]
++- xfs: use deferred frees for btree block freeing (Brian Foster) [RHEL-7984]
++- xfs: fix bounds check in xfs_defer_agfl_block() (Brian Foster) [RHEL-7984]
++- xfs: validate block number being freed before adding to xefi (Brian Foster) [RHEL-7984]
++- xfs: rename xfs_bmap_add_free to xfs_free_extent_later (Brian Foster) [RHEL-7984]
++- usb: typec: altmodes/displayport: create sysfs nodes as driver's default device attribute group (Desnes Nunes) [RHEL-36803] {CVE-2024-35790}
++- stm class: Fix a double free in stm_register_device() (Steve Best) [RHEL-44514] {CVE-2024-38627}
++- s390/qeth: Fix potential loss of L3-IP@ in case of network issues (Mete Durlu) [RHEL-49755]
++- tls: fix missing memory barrier in tls_init (cki-backport-bot) [RHEL-44471] {CVE-2024-36489}
++- xfs: fix log recovery buffer allocation for the legacy h_size fixup (Bill O'Donnell) [RHEL-46473] {CVE-2024-39472}
++- fs/proc: do_task_stat: use sig->stats_lock to gather the threads/children stats (Brian Foster) [RHEL-31562] {CVE-2024-26686}
++- fs/proc: do_task_stat: move thread_group_cputime_adjusted() outside of lock_task_sighand() (Brian Foster) [RHEL-31562] {CVE-2024-26686}
++- fs/proc: do_task_stat: use __for_each_thread() (Brian Foster) [RHEL-31562] {CVE-2024-26686}
++- exit: Use the correct exit_code in /proc/<pid>/stat (Brian Foster) [RHEL-31562] {CVE-2024-26686}
++- scsi: ibmvfc: Remove BUG_ON in the case of an empty event pool (Ewan D. Milne) [RHEL-38283] {CVE-2023-52811}
++- scsi: qla2xxx: Fix double free of fcport (Ewan D. Milne) [RHEL-39549] {CVE-2024-26929}
++- scsi: qla2xxx: Fix double free of the ha->vp_map pointer (Ewan D. Milne) [RHEL-39549] {CVE-2024-26930}
++- scsi: qla2xxx: Fix command flush on cable pull (Ewan D. Milne) [RHEL-39549] {CVE-2024-26931}
++
++* Fri Jul 19 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.13.1.el8_10]
++- redhat: remove handling of deleted rhdocs/ directory from genspec.sh (Denys Vlasenko)
++- x86/bugs: Fix BHI retpoline check (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Replace CONFIG_SPECTRE_BHI_{ON,OFF} with CONFIG_MITIGATION_SPECTRE_BHI (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Remove CONFIG_BHI_MITIGATION_AUTO and spectre_bhi=auto (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Clarify that syscall hardening isn't a BHI mitigation (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Fix BHI handling of RRSBA (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Rename various 'ia32_cap' variables to 'x86_arch_cap_msr' (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Cache the value of MSR_IA32_ARCH_CAPABILITIES (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Fix BHI documentation (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Fix return type of spectre_bhi_state() (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Make CONFIG_SPECTRE_BHI_ON the default (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bhi: Mitigate KVM by default (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bhi: Add BHI mitigation knob (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bhi: Enumerate Branch History Injection (BHI) bug (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bhi: Define SPEC_CTRL_BHI_DIS_S (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bhi: Add support for clearing branch history at syscall entry (Waiman Long) [RHEL-28202] {CVE-2024-2201}
++- x86/bugs: Change commas to semicolons in 'spectre_v2' sysfs file (Waiman Long) [RHEL-28202]
++- perf/x86/amd/lbr: Use freeze based on availability (Waiman Long) [RHEL-28202]
++- Documentation/kernel-parameters: Add spec_rstack_overflow to mitigations=off (Waiman Long) [RHEL-28202]
++- KVM: x86: Advertise CPUID.(EAX=7,ECX=2):EDX[5:0] to userspace (Waiman Long) [RHEL-28202]
++- x86/bugs: Reset speculation control settings on init (Waiman Long) [RHEL-28202]
++- KVM: x86: Update KVM-only leaf handling to allow for 100%% KVM-only leafs (Waiman Long) [RHEL-28202]
++- KVM: x86: Hide IA32_PLATFORM_DCA_CAP[31:0] from the guest (Waiman Long) [RHEL-28202]
++- mptcp: ensure snd_nxt is properly initialized on connect (Davide Caratti) [RHEL-39865] {CVE-2024-36889}
++- powerpc/pseries: Enforce hcall result buffer validity and size (Mamatha Inamdar) [RHEL-48291] {CVE-2024-40974}
++- wifi: mac80211: fix potential key use-after-free (Jose Ignacio Tornos Martinez) [RHEL-28007] {CVE-2023-52530}
++- cppc_cpufreq: Fix possible null pointer dereference (Mark Langsdorf) [RHEL-44137] {CVE-2024-38573}
++- net/sched: act_mirred: use the backlog for mirred ingress (Davide Caratti) [RHEL-31718] {CVE-2024-26740}
++- vfio/pci: Lock external INTx masking ops (Alex Williamson) [RHEL-31922] {CVE-2024-26810}
++- net: sched: sch_multiq: fix possible OOB write in multiq_tune() (Davide Caratti) [RHEL-43464] {CVE-2024-36978}
++- tcp: fix tcp_init_transfer() to not reset icsk_ca_initialized (Guillaume Nault) [RHEL-37850] {CVE-2021-47304}
++- pstore/ram: Fix crash when setting number of cpus to an odd number (Lenny Szubowicz) [RHEL-29471] {CVE-2023-52619}
++- drm/vmwgfx: fix a memleak in vmw_gmrid_man_get_node (Jocelyn Falempe) [RHEL-37101] {CVE-2023-52662}
++- drm/vmwgfx: Fix the lifetime of the bo cursor memory (Jocelyn Falempe) [RHEL-36962] {CVE-2024-35810}
++- drm/vmwgfx: Create debugfs ttm_resource_manager entry only if needed (Jocelyn Falempe) [RHEL-34987] {CVE-2024-26940}
++- drm/vmwgfx: Unmap the surface before resetting it on a plane state (Jocelyn Falempe) [RHEL-35217] {CVE-2023-52648}
++- drm/vmwgfx: Fix invalid reads in fence signaled events (Jocelyn Falempe) [RHEL-40010] {CVE-2024-36960}
++- block: Fix wrong offset in bio_truncate() (Ming Lei) [RHEL-43782] {CVE-2022-48747}
++- bonding: Fix out-of-bounds read in bond_option_arp_ip_targets_set() (CKI Backport Bot) [RHEL-46913] {CVE-2024-39487}
++- net: fix __dst_negative_advice() race (Xin Long) [RHEL-41183] {CVE-2024-36971}
++- igc: avoid returning frame twice in XDP_REDIRECT (Corinna Vinschen) [RHEL-33264] {CVE-2024-26853}
++- mac802154: fix llsec key resources release in mac802154_llsec_key_del (Steve Best) [RHEL-34967] {CVE-2024-26961}
++- cpufreq: exit() callback is optional (Mark Langsdorf) [RHEL-43840] {CVE-2024-38615}
++- cifs: prevent infinite recursion in CIFSGetDFSRefer() (Paulo Alcantara) [RHEL-34672]
++- cifs: lock chan_lock outside match_session (Paulo Alcantara) [RHEL-34672]
++- smb3: workaround negprot bug in some Samba servers (Paulo Alcantara) [RHEL-34672]
++- smb3: use netname when available on secondary channels (Paulo Alcantara) [RHEL-34672]
++- smb3: fix empty netname context on secondary channels (Paulo Alcantara) [RHEL-34672]
++- cifs: populate empty hostnames for extra channels (Paulo Alcantara) [RHEL-34672]
++- cifs: always iterate smb sessions using primary channel (Paulo Alcantara) [RHEL-34672]
++- cifs: Fix connections leak when tlink setup failed (Paulo Alcantara) [RHEL-34672]
++- cifs: Fix memory leak when build ntlmssp negotiate blob failed (Paulo Alcantara) [RHEL-34672]
++- cifs: always initialize struct msghdr smb_msg completely (Paulo Alcantara) [RHEL-34672]
++- cifs: don't send down the destination address to sendmsg for a SOCK_STREAM (Paulo Alcantara) [RHEL-34672]
++- cifs: revalidate mapping when doing direct writes (Paulo Alcantara) [RHEL-34672]
++- cifs: skip extra NULL byte in filenames (Paulo Alcantara) [RHEL-34672]
++- cifs: list_for_each() -> list_for_each_entry() (Paulo Alcantara) [RHEL-34672]
++- smb2: small refactor in smb2_check_message() (Paulo Alcantara) [RHEL-34672]
++- cifs: Fix crash on unload of cifs_arc4.ko (Paulo Alcantara) [RHEL-34672]
++- cifs: remove check of list iterator against head past the loop body (Paulo Alcantara) [RHEL-34672]
++- cifs: fix reconnect on smb3 mount types (Paulo Alcantara) [RHEL-34672]
++- cifs: fix uninitialized pointer in error case in dfs_cache_get_tgt_share (Paulo Alcantara) [RHEL-34672]
++- cifs: skip trailing separators of prefix paths (Paulo Alcantara) [RHEL-34672]
++- cifs: fix ntlmssp on old servers (Paulo Alcantara) [RHEL-34672]
++- cifs: fix NULL ptr dereference in refresh_mounts() (Paulo Alcantara) [RHEL-34672]
++- cifs: do not skip link targets when an I/O fails (Paulo Alcantara) [RHEL-34672]
++- cifs: fix confusing unneeded warning message on smb2.1 and earlier (Paulo Alcantara) [RHEL-34672]
++- smb3: fix snapshot mount option (Paulo Alcantara) [RHEL-34672]
++- cifs: fix workstation_name for multiuser mounts (Paulo Alcantara) [RHEL-34672]
++- cifs: alloc_path_with_tree_prefix: do not append sep. if the path is empty (Paulo Alcantara) [RHEL-34672]
++- cifs: free ntlmsspblob allocated in negotiate (Paulo Alcantara) [RHEL-34672]
++- cifs: avoid use of dstaddr as key for fscache client cookie (Paulo Alcantara) [RHEL-34672]
++- cifs: add server conn_id to fscache client cookie (Paulo Alcantara) [RHEL-34672]
++- cifs: fix missed refcounting of ipc tcon (Paulo Alcantara) [RHEL-34672]
++- smb2: clarify rc initialization in smb2_reconnect (Paulo Alcantara) [RHEL-34672]
++- cifs: populate server_hostname for extra channels (Paulo Alcantara) [RHEL-34672]
++- cifs: nosharesock should be set on new server (Paulo Alcantara) [RHEL-34672]
++- cifs: introduce cifs_ses_mark_for_reconnect() helper (Paulo Alcantara) [RHEL-34672]
++- cifs: protect srv_count with cifs_tcp_ses_lock (Paulo Alcantara) [RHEL-34672]
++- cifs: move debug print out of spinlock (Paulo Alcantara) [RHEL-34672]
++- cifs: do not duplicate fscache cookie for secondary channels (Paulo Alcantara) [RHEL-34672]
++- cifs: connect individual channel servers to primary channel server (Paulo Alcantara) [RHEL-34672]
++- cifs: protect session channel fields with chan_lock (Paulo Alcantara) [RHEL-34672]
++- cifs: do not negotiate session if session already exists (Paulo Alcantara) [RHEL-34672]
++- smb3: do not setup the fscache_super_cookie until fsinfo initialized (Paulo Alcantara) [RHEL-34672]
++- cifs: fix potential use-after-free bugs (Paulo Alcantara) [RHEL-34672]
++- cifs: release lock earlier in dequeue_mid error case (Paulo Alcantara) [RHEL-34672]
++- smb3: remove trivial dfs compile warning (Paulo Alcantara) [RHEL-34672]
++- cifs: support nested dfs links over reconnect (Paulo Alcantara) [RHEL-34672]
++- cifs: for compound requests, use open handle if possible (Paulo Alcantara) [RHEL-34672]
++- cifs: split out dfs code from cifs_reconnect() (Paulo Alcantara) [RHEL-34672]
++- cifs: convert list_for_each to entry variant (Paulo Alcantara) [RHEL-34672]
++- cifs: introduce new helper for cifs_reconnect() (Paulo Alcantara) [RHEL-34672]
++- cifs: fix print of hdr_flags in dfscache_proc_show() (Paulo Alcantara) [RHEL-34672]
++- cifs: send workstation name during ntlmssp session setup (Paulo Alcantara) [RHEL-34672]
++- cifs: nosharesock should not share socket with future sessions (Paulo Alcantara) [RHEL-34672]
++- smb3: add dynamic trace points for socket connection (Paulo Alcantara) [RHEL-34672]
++- cifs: Move SMB2_Create definitions to the shared area (Paulo Alcantara) [RHEL-34672]
++- cifs: Move more definitions into the shared area (Paulo Alcantara) [RHEL-34672]
++- cifs: move NEGOTIATE_PROTOCOL definitions out into the common area (Paulo Alcantara) [RHEL-34672]
++- cifs: Create a new shared file holding smb2 pdu definitions (Paulo Alcantara) [RHEL-34672]
++- cifs: fix incorrect check for null pointer in header_assemble (Paulo Alcantara) [RHEL-34672]
++- smb3: correct server pointer dereferencing check to be more consistent (Paulo Alcantara) [RHEL-34672]
++- cifs: Deal with some warnings from W=1 (Paulo Alcantara) [RHEL-34672]
++- cifs: fix a sign extension bug (Paulo Alcantara) [RHEL-34672]
++- cifs: fix incorrect kernel doc comments (Paulo Alcantara) [RHEL-34672]
++- cifs: remove pathname for file from SPDX header (Paulo Alcantara) [RHEL-34672]
++- cifs: move SMB FSCTL definitions to common code (Paulo Alcantara) [RHEL-34672]
++- cifs: rename cifs_common to smbfs_common (Paulo Alcantara) [RHEL-34672]
++- cifs: update FSCTL definitions (Paulo Alcantara) [RHEL-34672]
++- cifs: cifs_md4 convert to SPDX identifier (Paulo Alcantara) [RHEL-34672]
++- cifs: create a MD4 module and switch cifs.ko to use it (Paulo Alcantara) [RHEL-34672]
++- cifs: fork arc4 and create a separate module for it for cifs and other users (Paulo Alcantara) [RHEL-34672]
++- smb3: fix posix extensions mount option (Paulo Alcantara) [RHEL-34672]
++- cifs: fix wrong release in sess_alloc_buffer() failed path (Paulo Alcantara) [RHEL-34672]
++- CIFS: Fix a potencially linear read overflow (Paulo Alcantara) [RHEL-34672]
++- cifs: use the correct max-length for dentry_path_raw() (Paulo Alcantara) [RHEL-34672]
++- cifs: create sd context must be a multiple of 8 (Paulo Alcantara) [RHEL-34672]
++- cifs: do not share tcp sessions of dfs connections (Paulo Alcantara) [RHEL-34672]
++- cifs: added WARN_ON for all the count decrements (Paulo Alcantara) [RHEL-34672]
++- cifs: fix missing null session check in mount (Paulo Alcantara) [RHEL-34672]
++- cifs: handle reconnect of tcon when there is no cached dfs referral (Paulo Alcantara) [RHEL-34672]
++- cifs: fix the out of range assignment to bit fields in parse_server_interfaces (Paulo Alcantara) [RHEL-34672]
++- smb3: fix typo in header file (Paulo Alcantara) [RHEL-34672]
++- SMB3.1.1: Add support for negotiating signing algorithm (Paulo Alcantara) [RHEL-34672]
++- cifs: prevent NULL deref in cifs_compose_mount_options() (Paulo Alcantara) [RHEL-34672]
++- cifs: fix NULL dereference in smb2_check_message() (Paulo Alcantara) [RHEL-34672]
++- smbdirect: missing rc checks while waiting for rdma events (Paulo Alcantara) [RHEL-34672]
++- cifs: Avoid field over-reading memcpy() (Paulo Alcantara) [RHEL-34672]
++- smb311: remove dead code for non compounded posix query info (Paulo Alcantara) [RHEL-34672]
++- cifs: fix SMB1 error path in cifs_get_file_info_unix (Paulo Alcantara) [RHEL-34672]
++- smb3: fix uninitialized value for port in witness protocol move (Paulo Alcantara) [RHEL-34672]
++- cifs: fix unneeded null check (Paulo Alcantara) [RHEL-34672]
++- cifs: use SPDX-Licence-Identifier (Paulo Alcantara) [RHEL-34672]
++- cifs: convert list_for_each to entry variant in cifs_debug.c (Paulo Alcantara) [RHEL-34672]
++- cifs: convert list_for_each to entry variant in smb2misc.c (Paulo Alcantara) [RHEL-34672]
++- cifs: missed ref-counting smb session in find (Paulo Alcantara) [RHEL-34672]
++- cifs: do not share tcp servers with dfs mounts (Paulo Alcantara) [RHEL-34672]
++- cifs: set a minimum of 2 minutes for refreshing dfs cache (Paulo Alcantara) [RHEL-34672]
++- cifs: Remove unused inline function is_sysvol_or_netlogon() (Paulo Alcantara) [RHEL-34672]
++- cifs: remove duplicated prototype (Paulo Alcantara) [RHEL-34672]
++- cifs: fix ipv6 formating in cifs_ses_add_channel (Paulo Alcantara) [RHEL-34672]
++- cifs: fix string declarations and assignments in tracepoints (Paulo Alcantara) [RHEL-34672]
++- cifs: fix memory leak in smb2_copychunk_range (Paulo Alcantara) [RHEL-34672]
++- SMB3: incorrect file id in requests compounded with open (Paulo Alcantara) [RHEL-34672]
++- smb3: if max_channels set to more than one channel request multichannel (Paulo Alcantara) [RHEL-34672]
++- smb3: do not attempt multichannel to server which does not support it (Paulo Alcantara) [RHEL-34672]
++- smb3: when mounting with multichannel include it in requested capabilities (Paulo Alcantara) [RHEL-34672]
++- cifs: simplify SWN code with dummy funcs instead of ifdefs (Paulo Alcantara) [RHEL-34672]
++- cifs: log mount errors using cifs_errorf() (Paulo Alcantara) [RHEL-34672]
++- cifs: switch build_path_from_dentry() to using dentry_path_raw() (Paulo Alcantara) [RHEL-34672]
++- cifs: fix out-of-bound memory access when calling smb3_notify() at mount point (Paulo Alcantara) [RHEL-34672]
++- cifs: allocate buffer in the caller of build_path_from_dentry() (Paulo Alcantara) [RHEL-34672]
++- cifs: make build_path_from_dentry() return const char * (Paulo Alcantara) [RHEL-34672]
++- cifs: remove old dead code (Paulo Alcantara) [RHEL-34672]
++- fs: cifs: Remove repeated struct declaration (Paulo Alcantara) [RHEL-34672]
++- cifs: have cifs_fattr_to_inode() refuse to change type on live inode (Paulo Alcantara) [RHEL-34672]
++- cifs: have ->mkdir() handle race with another client sanely (Paulo Alcantara) [RHEL-34672]
++- do_cifs_create(): don't set ->i_mode of something we had not created (Paulo Alcantara) [RHEL-34672]
++- cifs: Silently ignore unknown oplock break handle (Paulo Alcantara) [RHEL-34672]
++- cifs: change noisy error message to FYI (Paulo Alcantara) [RHEL-34672]
++- cifs: print MIDs in decimal notation (Paulo Alcantara) [RHEL-34672]
++- cifs: minor simplification to smb2_is_network_name_deleted (Paulo Alcantara) [RHEL-34672]
++- TCON Reconnect during STATUS_NETWORK_NAME_DELETED (Paulo Alcantara) [RHEL-34672]
++- cifs: clarify hostname vs ip address in /proc/fs/cifs/DebugData (Paulo Alcantara) [RHEL-34672]
++- cifs: change confusing field serverName (to ip_addr) (Paulo Alcantara) [RHEL-34672]
++- cifs: Reformat DebugData and index connections by conn_id. (Paulo Alcantara) [RHEL-34672]
++- cifs: Identify a connection by a conn_id. (Paulo Alcantara) [RHEL-34672]
++- smb3: negotiate current dialect (SMB3.1.1) when version 3 or greater requested (Paulo Alcantara) [RHEL-34672]
++- smb3: Fix out-of-bounds bug in SMB2_negotiate() (Paulo Alcantara) [RHEL-34672]
++- fs/cifs: Simplify bool comparison. (Paulo Alcantara) [RHEL-34672]
++- fs/cifs: Assign boolean values to a bool variable (Paulo Alcantara) [RHEL-34672]
++- cifs: Avoid error pointer dereference (Paulo Alcantara) [RHEL-34672]
++- cifs: Re-indent cifs_swn_reconnect() (Paulo Alcantara) [RHEL-34672]
++- cifs: Unlock on errors in cifs_swn_reconnect() (Paulo Alcantara) [RHEL-34672]
++- cifs: Delete a stray unlock in cifs_swn_reconnect() (Paulo Alcantara) [RHEL-34672]
++- cifs: Tracepoints and logs for tracing credit changes. (Paulo Alcantara) [RHEL-34672]
++- cifs: Fix some error pointers handling detected by static checker (Paulo Alcantara) [RHEL-34672]
++- smb3: remind users that witness protocol is experimental (Paulo Alcantara) [RHEL-34672]
++- SMB3.1.1: do not log warning message if server doesn't populate salt (Paulo Alcantara) [RHEL-34672]
++- SMB3.1.1: update comments clarifying SPNEGO info in negprot response (Paulo Alcantara) [RHEL-34672]
++- SMB3.1.1: remove confusing mount warning when no SPNEGO info on negprot rsp (Paulo Alcantara) [RHEL-34672]
++- SMB3: avoid confusing warning message on mount to Azure (Paulo Alcantara) [RHEL-34672]
++- md/raid5: fix deadlock that raid5d() wait for itself to clear MD_SB_CHANGE_PENDING (Nigel Croxon) [RHEL-46662] {CVE-2024-39476}
++- net: fix information leakage in /proc/net/ptype (Hangbin Liu) [RHEL-44000] {CVE-2022-48757}
++- usb: typec: ucsi: Limit read size on v1.2 (Desnes Nunes) [RHEL-37286] {CVE-2024-35924}
++- minmax: relax check to allow comparison between unsigned arguments and signed constants (Desnes Nunes) [RHEL-37286]
++- minmax: allow comparisons of 'int' against 'unsigned char/short' (Desnes Nunes) [RHEL-37286]
++- minmax: allow min()/max()/clamp() if the arguments have the same signedness. (Desnes Nunes) [RHEL-37286]
++- minmax: add umin(a, b) and umax(a, b) (Desnes Nunes) [RHEL-37286]
++- minmax: fix header inclusions (Desnes Nunes) [RHEL-37286]
++- minmax: clamp more efficiently by avoiding extra comparison (Desnes Nunes) [RHEL-37286]
++- minmax: sanity check constant bounds when clamping (Desnes Nunes) [RHEL-37286]
++- tracing: Define the is_signed_type() macro once (Desnes Nunes) [RHEL-37286]
++- linux/bits.h: fix compilation error with GENMASK (Desnes Nunes) [RHEL-37286]
++- x86/apic: Mask IOAPIC entries when disabling the local APIC (Lenny Szubowicz) [RHEL-18077]
++- userfaultfd: fix a race between writeprotect and exit_mmap() (Rafael Aquini) [RHEL-38410] {CVE-2021-47461}
++- mm: khugepaged: skip huge page collapse for special files (Waiman Long) [RHEL-38446] {CVE-2021-47491}
++- cachefiles: fix memory leak in cachefiles_add_cache() (Andrey Albershteyn) [RHEL-33109] {CVE-2024-26840}
++- drm/amd/display: Implement bounds check for stream encoder creation in DCN301 (Michel Dänzer) [RHEL-31429] {CVE-2024-26660}
++- net/mlx5: Discard command completions in internal error (Kamal Heib) [RHEL-44231] {CVE-2024-38555}
++- drm: Don't unref the same fb many times by mistake due to deadlock handling (CKI Backport Bot) [RHEL-29011] {CVE-2023-52486}
++- md: fix resync softlockup when bitmap size is less than array size (Nigel Croxon) [RHEL-43942] {CVE-2024-38598}
++- rtnetlink: Correct nested IFLA_VF_VLAN_LIST attribute validation (Davide Caratti) [RHEL-39712] {CVE-2024-36017}
++- netfilter: nf_tables: discard table flag update with pending basechain deletion (Phil Sutter) [RHEL-37205] {CVE-2024-35897}
++- netfilter: nf_tables: reject table flag and netdev basechain updates (Phil Sutter) [RHEL-37205]
++- scsi: lpfc: Release hbalock before calling lpfc_worker_wake_up() (Ewan D. Milne) [RHEL-40172] {CVE-2024-36924}
++- scsi: lpfc: Move NPIV's transport unregistration to after resource clean up (Ewan D. Milne) [RHEL-40172] {CVE-2024-36952}
++- netfilter: nf_tables: fix memleak in map from abort path (Phil Sutter) [RHEL-35052] {CVE-2024-27011}
++- netfilter: nf_tables: reject new basechain after table flag update (Phil Sutter) [RHEL-37193] {CVE-2024-35900}
++- netfilter: nf_tables: flush pending destroy work before exit_net release (Phil Sutter) [RHEL-37197] {CVE-2024-35899}
++- netfilter: complete validation of user input (Phil Sutter) [RHEL-37210]
++- netfilter: validate user input for expected length (Phil Sutter) [RHEL-37210] {CVE-2024-35896}
++- netfilter: tproxy: bail out if IP has been disabled on the device (Phil Sutter) [RHEL-44363] {CVE-2024-36270}
++- netfilter: nfnetlink_queue: acquire rcu_read_lock() in instance_destroy_rcu() (Phil Sutter) [RHEL-44532] {CVE-2024-36286}
++- netfilter: nf_tables: do not compare internal table flags on updates (Phil Sutter) [RHEL-35114] {CVE-2024-27065}
++- netfilter: nf_tables: Fix potential data-race in __nft_obj_type_get() (Phil Sutter) [RHEL-35028] {CVE-2024-27019}
++- netfilter: nf_tables: Fix potential data-race in __nft_expr_type_get() (Phil Sutter) [RHEL-35024] {CVE-2024-27020}
++- netfilter: nf_tables: __nft_expr_type_get() selects specific family type (Phil Sutter) [RHEL-35024]
++- netfilter: conntrack: serialize hash resizes and cleanups (Phil Sutter) [RHEL-37703] {CVE-2021-47408}
++- netfilter: nf_tables: release mutex after nft_gc_seq_end from abort path (Phil Sutter) [RHEL-34217] {CVE-2024-26925}
++- netfilter: nf_tables: release batch on table validation from abort path (Phil Sutter) [RHEL-34217]
++- ipvlan: add ipvlan_route_v6_outbound() helper (Davide Caratti) [RHEL-38319] {CVE-2023-52796}
++
++* Wed Jul 10 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.12.1.el8_10]
++- net: bridge: xmit: make sure we have at least eth header len bytes (cki-backport-bot) [RHEL-44291] {CVE-2024-38538}
++- drivers/amd/pm: fix a use-after-free in kv_parse_power_table (Michel Dänzer) [RHEL-26893] {CVE-2023-52469}
++- SUNRPC: Fix a suspicious RCU usage warning (Scott Mayhew) [RHEL-30503] {CVE-2023-52623}
++- ice: Fix some null pointer dereference issues in ice_ptp.c (Petr Oros) [RHEL-26901] {CVE-2023-52471}
++- xfs: fix internal error from AGFL exhaustion (Pavel Reichl) [RHEL-45581]
++- sched/psi: Fix use-after-free in ep_remove_wait_queue() (Phil Auld) [RHEL-38117] {CVE-2023-52707}
++- wait: add wake_up_pollfree() (Phil Auld) [RHEL-38117]
++- net/ipv6: avoid possible UAF in ip6_route_mpath_notify() (Hangbin Liu) [RHEL-33269] {CVE-2024-26852}
++- net: bridge: switchdev: Skip MDB replays of deferred events on offload (Ivan Vecera) [RHEL-33117] {CVE-2024-26837}
++- ext4: avoid allocating blocks from corrupted group in ext4_mb_find_by_goal() (Pavel Reichl) [RHEL-31700] {CVE-2024-26772}
++- ext4: avoid allocating blocks from corrupted group in ext4_mb_try_best_found() (Pavel Reichl) [RHEL-31688] {CVE-2024-26773}
++- ext4: fix double-free of blocks due to wrong extents moved_len (Pavel Reichl) [RHEL-31612] {CVE-2024-26704}
++- vxlan: Pull inner IP header in vxlan_xmit_one(). (Guillaume Nault) [RHEL-31389]
++- geneve: Fix incorrect inner network header offset when innerprotoinherit is set (Guillaume Nault) [RHEL-31389]
++- vxlan: Pull inner IP header in vxlan_rcv(). (Guillaume Nault) [RHEL-31389]
++- geneve: fix header validation in geneve[6]_xmit_skb (Guillaume Nault) [RHEL-31389]
++- geneve: make sure to pull inner header in geneve_rx() (Guillaume Nault) [RHEL-31389]
++- net: geneve: modify IP header check in geneve6_xmit_skb and geneve_xmit_skb (Guillaume Nault) [RHEL-31389]
++- net: geneve: check skb is large enough for IPv4/IPv6 header (Guillaume Nault) [RHEL-31389]
++- net/smc: fix neighbour and rtable leak in smc_ib_find_route() (Tobias Huschle) [RHEL-39744] {CVE-2024-36945}
++- igb: Fix string truncation warnings in igb_set_fw_version (Corinna Vinschen) [RHEL-38452] {CVE-2024-36010}
++- bonding: stop the device in bond_setup_by_slave() (Hangbin Liu) [RHEL-38327] {CVE-2023-52784}
++- i40e: fix vf may be used uninitialized in this function warning (Kamal Heib) [RHEL-39702] {CVE-2024-36020}
++- powerpc/64: Fix the definition of the fixmap area (Mamatha Inamdar) [RHEL-27191] {CVE-2021-47018}
++- powerpc/mm/hash64: Add a variable to track the end of IO mapping (Mamatha Inamdar) [RHEL-27191] {CVE-2021-47018}
++- nsh: Restore skb->{protocol,data,mac_header} for outer header in nsh_gso_segment(). (Xin Long) [RHEL-39770] {CVE-2024-36933}
++- net: nsh: Use correct mac_offset to unwind gso skb in nsh_gso_segment() (Xin Long) [RHEL-39770]
++- net: core: reject skb_copy(_expand) for fraglist GSO skbs (Xin Long) [RHEL-39779] {CVE-2024-36929}
++- tcp: properly terminate timers for kernel sockets (Guillaume Nault) [RHEL-37171] {CVE-2024-35910}
++- net: relax socket state check at accept time. (Florian Westphal) [RHEL-39831]
++- tcp: defer shutdown(SEND_SHUTDOWN) for TCP_SYN_RECV sockets (Florian Westphal) [RHEL-39831] {CVE-2024-36905}
++- tcp: remove redundant check on tskb (Florian Westphal) [RHEL-39831]
++- drm/ast: Fix soft lockup (cki-backport-bot) [RHEL-37438] {CVE-2024-35952}
++- null_blk: Fix return value of nullb_device_power_store() (Ming Lei) [RHEL-39341]
++- null_blk: fix null-ptr-dereference while configuring 'power' and 'submit_queues' (Ming Lei) [RHEL-39341]
++- null_blk: fix return value from null_add_dev() (Ming Lei) [RHEL-39341]
++
++* Wed Jul 03 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.11.1.el8_10]
++- x86/bugs: Reverse instruction order of CLEAR_CPU_BUFFERS (Waiman Long) [RHEL-42121]
++- Revert "x86/bugs: Use fixed addressing for VERW operand" (Waiman Long) [RHEL-42121]
++- KVM/x86: Export RFDS_NO and RFDS_CLEAR to guests (Waiman Long) [RHEL-42121]
++- x86/rfds: Mitigate Register File Data Sampling (RFDS) (Waiman Long) [RHEL-42121]
++- Documentation/hw-vuln: Add documentation for RFDS (Waiman Long) [RHEL-42121]
++- x86/mmio: Disable KVM mitigation when X86_FEATURE_CLEAR_CPU_BUF is set (Waiman Long) [RHEL-42121]
++- x86/bugs: Use fixed addressing for VERW operand (Waiman Long) [RHEL-42121]
++- KVM/VMX: Use BT+JNC, i.e. EFLAGS.CF to select VMRESUME vs. VMLAUNCH (Waiman Long) [RHEL-42121]
++- x86/bugs: Use ALTERNATIVE() instead of mds_user_clear static key (Waiman Long) [RHEL-42121]
++- x86/entry_32: Add VERW just before userspace transition (Waiman Long) [RHEL-42121]
++- x86/entry_64: Add VERW just before userspace transition (Waiman Long) [RHEL-42121]
++- x86/bugs: Add asm helpers for executing VERW (Waiman Long) [RHEL-42121]
++- x86/cpu: Fix Gracemont uarch (Waiman Long) [RHEL-42121]
++- Documentation/hw-vuln: Unify filename specification in index (Waiman Long) [RHEL-42121]
++- KVM: VMX: Access @flags as a 32-bit value in __vmx_vcpu_run() (Waiman Long) [RHEL-42121]
++- x86/asm: Add _ASM_RIP() macro for x86-64 (%%rip) suffix (Waiman Long) [RHEL-42121]
++- x86/asm: Have the __ASM_FORM macros handle commas in arguments (Waiman Long) [RHEL-42121]
++- x86/asm: Allow to pass macros to __ASM_FORM() (Waiman Long) [RHEL-42121]
++- wifi: iwlwifi: mvm: guard against invalid STA ID on removal (Jose Ignacio Tornos Martinez) [RHEL-39801] {CVE-2024-36921}
++- ipv6: Fix potential uninit-value access in __ip6_make_skb() (Antoine Tenart) [RHEL-39784]
++- ipv4: Fix uninit-value access in __ip_make_skb() (Antoine Tenart) [RHEL-39784] {CVE-2024-36927}
++- perf mmap: Lazily initialize zstd streams to save memory when not using it (Michael Petlan) [RHEL-34876]
++- perf tools: Fix spelling mistake "commpressor" -> "compressor" (Michael Petlan) [RHEL-34876]
++- perf record: Introduce data transferred and compressed stats (Michael Petlan) [RHEL-34876]
++- perf record: Introduce compressor at mmap buffer object (Michael Petlan) [RHEL-34876]
++- perf record: Introduce bytes written stats (Michael Petlan) [RHEL-34876]
++- perf record: Introduce data file at mmap buffer object (Michael Petlan) [RHEL-34876]
++- perf record: Start threads in the beginning of trace streaming (Alexey Bayduraev) [RHEL-34876]
++- perf record: Stop threads in the end of trace streaming (Michael Petlan) [RHEL-34876]
++- perf record: Introduce thread local variable (Michael Petlan) [RHEL-34876]
++- perf record: Introduce function to propagate control commands (Michael Petlan) [RHEL-34876]
++- perf record: Introduce thread specific data array (Michael Petlan) [RHEL-34876]
++- tools lib: Introduce fdarray duplicate function (Michael Petlan) [RHEL-34876]
++- perf record: Introduce thread affinity and mmap masks (Michael Petlan) [RHEL-34876]
++- gfs2: Be more careful with the quota sync generation (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Get rid of some unnecessary quota locking (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Add some missing quota locking (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Fold qd_fish into gfs2_quota_sync (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: quota need_sync cleanup (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Fix and clean up function do_qc (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Revert "Add quota_change type" (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Revert "ignore negated quota changes" (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: qd_check_sync cleanups (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Check quota consistency on mount (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Minor gfs2_quota_init error path cleanup (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: fix kernel BUG in gfs2_quota_cleanup (Edward Adam Davis) [RHEL-40901]
++- gfs2: Clean up quota.c:print_message (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Clean up gfs2_alloc_parms initializers (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Two quota=account mode fixes (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Remove useless assignment (Bob Peterson) [RHEL-40901]
++- gfs2: simplify slot_get (Bob Peterson) [RHEL-40901]
++- gfs2: Simplify qd2offset (Bob Peterson) [RHEL-40901]
++- gfs2: Remove quota allocation info from quota file (Bob Peterson) [RHEL-40901]
++- gfs2: use constant for array size (Bob Peterson) [RHEL-40901]
++- gfs2: Set qd_sync_gen in do_sync (Bob Peterson) [RHEL-40901]
++- gfs2: Remove useless err set (Bob Peterson) [RHEL-40901]
++- gfs2: Small gfs2_quota_lock cleanup (Bob Peterson) [RHEL-40901]
++- gfs2: move qdsb_put and reduce redundancy (Bob Peterson) [RHEL-40901]
++- gfs2: Don't try to sync non-changes (Bob Peterson) [RHEL-40901]
++- gfs2: Simplify function need_sync (Bob Peterson) [RHEL-40901]
++- gfs2: remove unneeded pg_oflow variable (Bob Peterson) [RHEL-40901]
++- gfs2: remove unneeded variable done (Bob Peterson) [RHEL-40901]
++- gfs2: pass sdp to gfs2_write_buf_to_page (Bob Peterson) [RHEL-40901]
++- gfs2: pass sdp in to gfs2_write_disk_quota (Bob Peterson) [RHEL-40901]
++- gfs2: Pass sdp to gfs2_adjust_quota (Bob Peterson) [RHEL-40901]
++- gfs2: remove dead code for quota writes (Bob Peterson) [RHEL-40901]
++- gfs2: Use qd_sbd more consequently (Bob Peterson) [RHEL-40901]
++- gfs2: replace 'found' with dedicated list iterator variable (Jakob Koschel) [RHEL-40901]
++- gfs2: Some whitespace cleanups (Andreas Gruenbacher) [RHEL-40901]
++- gfs2: Fix gfs2_qa_get imbalance in gfs2_quota_hold (Bob Peterson) [RHEL-40901]
++- af_unix: Fix data races in unix_release_sock/unix_stream_sendmsg (Guillaume Nault) [RHEL-43961] {CVE-2024-38596}
++- af_unix: Fix data-races around sk->sk_shutdown. (Guillaume Nault) [RHEL-43961] {CVE-2024-38596}
++- af_unix: Fix data races around sk->sk_shutdown. (Guillaume Nault) [RHEL-43961] {CVE-2024-38596}
++- perf/core: Fix event sibling list locking (Daniel Vacek) [RHEL-31798]
++- media: bttv: fix use after free error due to btv->timeout timer (Kate Hsuan) [RHEL-38256] {CVE-2023-52847}
++- arp: Prevent overflow in arp_req_get(). (Antoine Tenart) [RHEL-31706] {CVE-2024-26733}
++- Bluetooth: btusb: Add a new PID/VID 0489/e0c8 for MT7921 (David Marlin) [RHEL-10263]
++- mm: swap: fix race between free_swap_and_cache() and swapoff() (Waiman Long) [RHEL-34971] {CVE-2024-26960}
++- swap: comments get_swap_device() with usage rule (Waiman Long) [RHEL-34971] {CVE-2024-26960}
++- mm/swapfile.c: __swap_entry_free() always free 1 entry (Waiman Long) [RHEL-34971] {CVE-2024-26960}
++- mm/swapfile.c: call free_swap_slot() in __swap_entry_free() (Waiman Long) [RHEL-34971] {CVE-2024-26960}
++- mm/swapfile.c: use __try_to_reclaim_swap() in free_swap_and_cache() (Waiman Long) [RHEL-34971] {CVE-2024-26960}
++- net: amd-xgbe: Fix skb data length underflow (Ken Cox) [RHEL-43788] {CVE-2022-48743}
++- ovl: fix warning in ovl_create_real() (cki-backport-bot) [RHEL-43652] {CVE-2021-47579}
++- net/sched: initialize noop_qdisc owner (Davide Caratti) [RHEL-35056]
++- net/sched: Fix mirred deadlock on device recursion (Davide Caratti) [RHEL-35056] {CVE-2024-27010}
++- ext4: fix mb_cache_entry's e_refcnt leak in ext4_xattr_block_cache_find() (Pavel Reichl) [RHEL-45029] {CVE-2024-39276}
++- ethernet: hisilicon: hns: hns_dsaf_misc: fix a possible array overflow in hns_dsaf_ge_srst_by_port() (Ken Cox) [RHEL-38713] {CVE-2021-47548}
++- ipvlan: Dont Use skb->sk in ipvlan_process_v{4,6}_outbound (Hangbin Liu) [RHEL-44396] {CVE-2024-33621}
++- mlxsw: spectrum_acl_tcam: Fix stack corruption (Ivan Vecera) [RHEL-26462] {CVE-2024-26586}
++- inet: inet_defrag: prevent sk release while still in use (Antoine Tenart) [RHEL-33398] {CVE-2024-26921}
++- skb_expand_head() adjust skb->truesize incorrectly (Antoine Tenart) [RHEL-33398]
++- nvmet: fix ns enable/disable possible hang (Ming Lei) [RHEL-43547]
++
++* Fri Jun 28 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.10.1.el8_10]
++- SUNRPC: Fix RPC client cleaned up the freed pipefs dentries (Scott Mayhew) [RHEL-38264] {CVE-2023-52803}
++- scsi: qla2xxx: Fix off by one in qla_edif_app_getstats() (Ewan D. Milne) [RHEL-39717] {CVE-2024-36025}
++- tcp: add sanity checks to rx zerocopy (Guillaume Nault) [RHEL-29494] {CVE-2024-26640}
++- SUNRPC: fix some memleaks in gssx_dec_option_array (Scott Mayhew) [RHEL-35209] {CVE-2024-27388}
++- wifi: nl80211: don't free NULL coalescing rule (Jose Ignacio Tornos Martinez) [RHEL-39752] {CVE-2024-36941}
++- nfs: fix UAF in direct writes (Scott Mayhew) [RHEL-34975] {CVE-2024-26958}
++- NFSv4.2: fix nfs4_listxattr kernel BUG at mm/usercopy.c:102 (Scott Mayhew) [RHEL-33228] {CVE-2024-26870}
++- drm/amd/pm: Fix error of MACO flag setting code (Michel Dänzer) [RHEL-15928]
++- scsi: aacraid: fix io hangs and improve performance (John Meneghini) [RHEL-23913]
++- block: prevent division by zero in blk_rq_stat_sum() (Ming Lei) [RHEL-37279] {CVE-2024-35925}
++- block: fix overflow in blk_ioctl_discard() (Ming Lei) [RHEL-39811] {CVE-2024-36917}
++- virtio-blk: fix implicit overflow on virtio_max_dma_size (Ming Lei) [RHEL-38131] {CVE-2023-52762}
++- nbd: null check for nla_nest_start (Ming Lei) [RHEL-35176] {CVE-2024-27025}
++- isdn: mISDN: netjet: Fix crash in nj_probe: (Ken Cox) [RHEL-38444] {CVE-2021-47284}
++- isdn: mISDN: Fix sleeping function called from invalid context (Ken Cox) [RHEL-38400] {CVE-2021-47468}
++- net/smc: avoid data corruption caused by decline (Tobias Huschle) [RHEL-38234] {CVE-2023-52775}
++- ubi: Check for too small LEB size in VTBL code (David Arcari) [RHEL-25092] {CVE-2024-25739}
++- i2c: core: Fix atomic xfer check for non-preempt config (Steve Best) [RHEL-38313] {CVE-2023-52791}
++- i2c: core: Run atomic i2c xfer when !preemptible (Steve Best) [RHEL-38313] {CVE-2023-52791}
++- firewire: ohci: mask bus reset interrupts between ISR and bottom half (Steve Best) [RHEL-39902] {CVE-2024-36950}
++- ipv6: init the accept_queue's spinlocks in inet6_create (Guillaume Nault) [RHEL-28899] {CVE-2024-26614}
++- tcp: make sure init the accept_queue's spinlocks once (Guillaume Nault) [RHEL-28899] {CVE-2024-26614}
++- tty: n_gsm: fix possible out-of-bounds in gsm0_receive() (Steve Best) [RHEL-39352] {CVE-2024-36016}
++- mlxsw: spectrum_acl_tcam: Fix incorrect list API usage (Ivan Vecera) [RHEL-37484] {CVE-2024-36006}
++- pwm: Fix double shift bug (Steve Best) [RHEL-38278] {CVE-2023-52756}
++- mmc: sdio: fix possible resource leaks in some error paths (Steve Best) [RHEL-38149] {CVE-2023-52730}
++- of: unittest: Fix compile in the non-dynamic case (Steve Best) [RHEL-37070] {CVE-2023-52679}
++- of: unittest: Fix of_count_phandle_with_args() expected value message (Steve Best) [RHEL-37070] {CVE-2023-52679}
++- of: Fix double free in of_parse_phandle_with_args_map (Steve Best) [RHEL-37070] {CVE-2023-52679}
++- pinctrl: core: delete incorrect free in pinctrl_enable() (Steve Best) [RHEL-39756] {CVE-2024-36940}
++- pinctrl: core: fix possible memory leak in pinctrl_enable() (Steve Best) [RHEL-39756] {CVE-2024-36940}
++- media: gspca: cpia1: shift-out-of-bounds in set_flicker (Desnes Nunes) [RHEL-38331] {CVE-2023-52764}
++- tipc: fix a possible memleak in tipc_buf_append (Xin Long) [RHEL-39881] {CVE-2024-36954}
++- cifs: fix mid leak during reconnection after timeout threshold (Paulo Alcantara) [RHEL-36222]
++- cifs: Fix use-after-free in rdata->read_into_pages() (Paulo Alcantara) [RHEL-36222]
++- cifs: Fix pages leak when writedata alloc failed in cifs_write_from_iter() (Paulo Alcantara) [RHEL-36222]
++- cifs: Fix pages array leak when writedata alloc failed in cifs_writedata_alloc() (Paulo Alcantara) [RHEL-36222]
++- cifs: destage dirty pages before re-reading them for cache=none (Paulo Alcantara) [RHEL-36222]
++- cifs: destage any unwritten data to the server before calling copychunk_write (Paulo Alcantara) [RHEL-36222]
++- Adjust cifssb maximum read size (Paulo Alcantara) [RHEL-36222]
++- cifs: make locking consistent around the server session status (Paulo Alcantara) [RHEL-36222]
++- cifs: fix credit accounting for extra channel (Paulo Alcantara) [RHEL-36222]
++- smb3: prevent races updating CurrentMid (Paulo Alcantara) [RHEL-36222]
++- cifs: fix missing spinlock around update to ses->status (Paulo Alcantara) [RHEL-36222]
++- cifs: use echo_interval even when connection not ready. (Paulo Alcantara) [RHEL-36222]
++- cifs: detect dead connections only when echoes are enabled. (Paulo Alcantara) [RHEL-36222]
++- cifs: Fix preauth hash corruption (Paulo Alcantara) [RHEL-36222]
++- cifs: do not send close in compound create+close requests (Paulo Alcantara) [RHEL-36222]
++- cifs: ask for more credit on async read/write code paths (Paulo Alcantara) [RHEL-36222]
++- cifs: use discard iterator to discard unneeded network data more efficiently (Paulo Alcantara) [RHEL-36222]
++- cifs: Fix in error types returned for out-of-credit situations. (Paulo Alcantara) [RHEL-36222]
++- smb3: fix crediting for compounding when only one request in flight (Paulo Alcantara) [RHEL-36222]
++- cifs: New optype for session operations. (Paulo Alcantara) [RHEL-36222]
++- mm/gup: do not return 0 from pin_user_pages_fast() for bad args (Paulo Alcantara) [RHEL-36222]
++- wifi: brcmfmac: pcie: handle randbuf allocation failure (Jose Ignacio Tornos Martinez) [RHEL-44124] {CVE-2024-38575}
++- tcp: Use refcount_inc_not_zero() in tcp_twsk_unique(). (Guillaume Nault) [RHEL-39835] {CVE-2024-36904}
++- wifi: mac80211: don't return unset power in ieee80211_get_tx_power() (Jose Ignacio Tornos Martinez) [RHEL-38159] {CVE-2023-52832}
++- wifi: ath11k: fix gtk offload status event locking (Jose Ignacio Tornos Martinez) [RHEL-38155] {CVE-2023-52777}
++- net: ieee802154: fix null deref in parse dev addr (Steve Best) [RHEL-38012] {CVE-2021-47257}
++- mm/hugetlb: fix missing hugetlb_lock for resv uncharge (Rafael Aquini) [RHEL-37465] {CVE-2024-36000}
++- x86/xen: Add some null pointer checking to smp.c (Vitaly Kuznetsov) [RHEL-33258] {CVE-2024-26908}
++- x86/xen: Fix memory leak in xen_smp_intr_init{_pv}() (Vitaly Kuznetsov) [RHEL-33258] {CVE-2024-26908}
++- wifi: cfg80211: check A-MSDU format more carefully (Jose Ignacio Tornos Martinez) [RHEL-37343] {CVE-2024-35937}
++- wifi: rtw89: fix null pointer access when abort scan (Jose Ignacio Tornos Martinez) [RHEL-37355] {CVE-2024-35946}
++- atl1c: Work around the DMA RX overflow issue (Ken Cox) [RHEL-38287] {CVE-2023-52834}
++- wifi: ath11k: decrease MHI channel buffer length to 8KB (Jose Ignacio Tornos Martinez) [RHEL-37339] {CVE-2024-35938}
++- wifi: iwlwifi: mvm: rfi: fix potential response leaks (Jose Ignacio Tornos Martinez) [RHEL-37163] {CVE-2024-35912}
++- USB: core: Fix access violation during port device removal (Desnes Nunes) [RHEL-39853] {CVE-2024-36896}
++- scsi: lpfc: Fix possible memory leak in lpfc_rcv_padisc() (Ewan D. Milne) [RHEL-37123] {CVE-2024-35930}
++- netfilter: nf_tables: honor table dormant flag from netdev release event path (Phil Sutter) [RHEL-37450] {CVE-2024-36005}
++- wifi: iwlwifi: mvm: don't set the MFP flag for the GTK (Jose Ignacio Tornos Martinez) [RHEL-36898] {CVE-2024-27434}
++- wifi: iwlwifi: mvm: Fix key flags for IGTK on AP interface (Jose Ignacio Tornos Martinez) [RHEL-36898] {CVE-2024-27434}
++- misc: lis3lv02d_i2c: Fix regulators getting en-/dis-abled twice on suspend/resume (Steve Best) [RHEL-36932] {CVE-2024-35824}
++
++* Fri Jun 21 2024 Denys Vlasenko <dvlasenk@redhat.com> [4.18.0-553.9.1.el8_10]
++- x86/mce: Make sure to grab mce_sysfs_mutex in set_bank() (Steve Best) [RHEL-37262] {CVE-2024-35876}
++- net/sched: flower: Fix chain template offload (Xin Long) [RHEL-31313] {CVE-2024-26669}
++- SUNRPC: fix a memleak in gss_import_v2_context (Scott Mayhew) [RHEL-35195] {CVE-2023-52653}
++- efivarfs: force RO when remounting if SetVariable is not supported (Pavel Reichl) [RHEL-26564] {CVE-2023-52463}
++- dmaengine: idxd: add a write() method for applications to submit work (Jerry Snitselaar) [RHEL-35826] {CVE-2024-21823}
++- dmaengine: idxd: add a new security check to deal with a hardware erratum (Jerry Snitselaar) [RHEL-35826] {CVE-2024-21823}
++- VFIO: Add the SPR_DSA and SPR_IAX devices to the denylist (Jerry Snitselaar) [RHEL-35826] {CVE-2024-21823}
++- quota: Fix potential NULL pointer dereference (Pavel Reichl) [RHEL-33219] {CVE-2024-26878}
++- locking/lockdep: Fix overflow in presentation of average lock-time (Čestmír Kalina) [RHEL-17678]
++- blk-cgroup: Properly propagate the iostat update up the hierarchy (Ming Lei) [RHEL-40939]
++- proc: Use new_inode not new_inode_pseudo (Ian Kent) [RHEL-40167]
++- stmmac: Clear variable when destroying workqueue (Izabela Bakollari) [RHEL-31822] {CVE-2024-26802}
++- powerpc/pseries/memhp: Fix access beyond end of drmem array (Mamatha Inamdar) [RHEL-26495] {CVE-2023-52451}
++- platform/x86: wmi: Fix opening of char device (David Arcari) [RHEL-38258] {CVE-2023-52864}
++- Revert "net/mlx5: Block entering switchdev mode with ns inconsistency" (Kamal Heib) [RHEL-36908] {CVE-2023-52658}
++- hv_netvsc: Register VF in netvsc_probe if NET_DEVICE_REGISTER missed (Cathy Avery) [RHEL-39074]
++- hv_netvsc: Fix race condition between netvsc_probe and netvsc_remove (Cathy Avery) [RHEL-39074]
++- hv_netvsc: Calculate correct ring size when PAGE_SIZE is not 4 Kbytes (Cathy Avery) [RHEL-39074]
++- hv_netvsc: remove duplicated including of slab.h (Cathy Avery) [RHEL-39074]
++- hv_netvsc: rndis_filter needs to select NLS (Cathy Avery) [RHEL-39074]
++- hv_netvsc: Mark VF as slave before exposing it to user-mode (Cathy Avery) [RHEL-39074]
++- hv_netvsc: Fix race of register_netdevice_notifier and VF register (Cathy Avery) [RHEL-39074]
++- hv_netvsc: fix race of netvsc and VF register_netdevice (Cathy Avery) [RHEL-39074]
++- hv_netvsc: fix netvsc_send_completion to avoid multiple message length checks (Cathy Avery) [RHEL-39074]
++- hv_netvsc: Allocate rx indirection table size dynamically (Cathy Avery) [RHEL-39074]
++- net: hv_netvsc: Fix a warning triggered by memcpy in rndis_filter (Cathy Avery) [RHEL-39074]
++- gfs2: Fix lru_count accounting (Andreas Gruenbacher) [RHEL-32941]
++- gfs2: Fix "Make glock lru list scanning safer" (Andreas Gruenbacher) [RHEL-32941]
++- gfs2: Fix "ignore unlock failures after withdraw" (Andreas Gruenbacher) [RHEL-32941]
++- gfs2: Don't set GLF_LOCK in gfs2_dispose_glock_lru (Andreas Gruenbacher) [RHEL-32941]
++- gfs2: Don't forget to complete delayed withdraw (Andreas Gruenbacher) [RHEL-32941]
++- gfs2: Delay withdraw from atomic context (Andreas Gruenbacher) [RHEL-32941]
++- gfs2: trivial clean up of gfs2_ail_error (Andreas Gruenbacher) [RHEL-32941]
++- ext4: fix corruption during on-line resize (Carlos Maiolino) [RHEL-36974] {CVE-2024-35807}
++- ext4: correct offset of gdb backup in non meta_bg group to update_backups (Carlos Maiolino) [RHEL-36974]
++- ext4: avoid online resizing failures due to oversized flex bg (Carlos Maiolino) [RHEL-30507] {CVE-2023-52622}
++- ext4: use time_is_before_jiffies() instead of open coding it (Carlos Maiolino) [RHEL-30507]
++- ext4: unify the type of flexbg_size to unsigned int (Carlos Maiolino) [RHEL-30507]
++- ext4: remove unnecessary check from alloc_flex_gd() (Carlos Maiolino) [RHEL-30507]
++- tracing: Do no increment trace_clock_global() by one (Jerome Marchand) [RHEL-27107] {CVE-2021-46939}
++- tracing: Restructure trace_clock_global() to never block (Jerome Marchand) [RHEL-27107] {CVE-2021-46939}
++- net/sched: act_skbmod: prevent kernel-infoleak (Xin Long) [RHEL-37220] {CVE-2024-35893}
++- tipc: Change nla_policy for bearer-related names to NLA_NUL_STRING (Xin Long) [RHEL-38307] {CVE-2023-52845}
++- redhat: remove the merge subtrees script (Derek Barbosa)
++- redhat: rhdocs: delete .get_maintainer.conf (Derek Barbosa)
++- redhat: rhdocs: Remove the rhdocs directory (Derek Barbosa)
++- dyndbg: fix old BUG_ON in >control parser (Waiman Long) [RHEL-37111] {CVE-2024-35947}
++- dyndbg: let query-modname override actual module name (Waiman Long) [RHEL-37111]
++- dyndbg: make dyndbg a known cli param (Waiman Long) [RHEL-37111]
++- lan78xx: Fix exception on link speed change (Jamie Bainbridge) [RHEL-33437]
++- net: usb: lan78xx: don't modify phy_device state concurrently (Jamie Bainbridge) [RHEL-33437]
++- efi: runtime: Fix potential overflow of soft-reserved region size (Lenny Szubowicz) [RHEL-33096] {CVE-2024-26843}
++- perf/arm-cmn: Fail DTC counter allocation correctly (Michael Petlan) [RHEL-23841]
++- perf/arm-cmn: Rework DTC counters (again) (Michael Petlan) [RHEL-23841]
++- perf/arm-cmn: Fix DTC domain detection (Michael Petlan) [RHEL-23841]
++- perf/arm-cmn: Revamp model detection (Michael Petlan) [RHEL-23841]
++- perf/arm-cmn: Fix port detection for CMN-700 (Michael Petlan) [RHEL-23841]
++- perf/arm-cmn: Move overlapping wp_combine field (Michael Petlan) [RHEL-23841]
++- Partially revert "perf/arm-cmn: Optimise DTC counter accesses" (Michael Petlan) [RHEL-23841]
++- drivers/perf: Compile with gnu99 standard (Michael Petlan) [RHEL-23841]
++- x86/fpu: Keep xfd_state in sync with MSR_IA32_XFD (Steve Best) [RHEL-36994] {CVE-2024-35801}
++- watchdog: softdog: Add options 'soft_reboot_cmd' and 'soft_active_on_boot' (Waiman Long) [RHEL-19723]
++- tipc: fix UAF in error path (Xin Long) [RHEL-34278] {CVE-2024-36886}
++
