@@ -10,11 +10,12 @@ import requests
 from colorama import Fore
 
 
-def check_stable_fix(cgx_vers, kern_vers, url):
+def check_stable_fix(cgx_vers, kern_vers, url, recheck_flag):
 
     response = requests.get(url)
 
     if response.status_code == 200:
+
         soup = BeautifulSoup(response.content, 'html.parser')
 
         count_insertions = len( soup.find_all('span', {'class': 'insertions'} ) )	# insertions in commit
@@ -62,28 +63,22 @@ def check_stable_fix(cgx_vers, kern_vers, url):
                   fp=open("dumped_data.txt", "a+")
                   fp.write(" -")
                   fp.close()
-#                  sys.exit(1)
         else:
             print(Fore.RED + f"\t No fix found." + Fore.RESET)
             fp=open("dumped_data.txt", "a+")
             fp.write(" -")
             fp.close()
-#            sys.exit(1)
 
     else:
-        print(f"\t Failed to retrieve webpage. Status code: {response.status_code}")
-        fp=open("dumped_data.txt", "a+")
-        fp.write(" -")
-        fp.close()
-#        sys.exit(1)
+        if recheck_flag == 1:
+            print(Fore.RED + f"\t Failed to retrieve webpage. Status code: {response.status_code}." +Fore.YELLOW+ " RETRYING..." + Fore.RESET)
+            check_stable_fix(cgx_vers, kern_vers, url, 0)
 
-
-
-def check_fix_mvista_gitcgx(cgx_vers_num, msd_branch, mast_cmit):
-
-    url="https://gitcgx.mvista.com/cgit/CGX"+cgx_vers_num+"/kernel/linux-mvista-"+cgx_vers_num+".git/log/?h="+msd_branch+"&qt=grep&q="+mast_cmit
-    response = requests.get(url)
-    print(response.status_code)
+        else:
+            print(f"\t Failed to retrieve webpage. Status code: {response.status_code}")
+            fp=open("dumped_data.txt", "a+")
+            fp.write(" -")
+            fp.close()
 
 
 
@@ -118,19 +113,19 @@ url6_9  = f"https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/log
 
 
 if   product == 'CGX2.4':
-    check_stable_fix('CGX2.4', 'v4.14', url4_14)
+    check_stable_fix('CGX2.4', 'v4.14', url4_14, 1)
 
 elif product == 'CGX2.6':
-    check_stable_fix('CGX2.6', 'v4.19', url4_19)
+    check_stable_fix('CGX2.6', 'v4.19', url4_19, 1)
 
 elif product == 'CGX3.1':
-    check_stable_fix('CGX3.1', 'v5.4 ', url5_4)
+    check_stable_fix('CGX3.1', 'v5.4 ', url5_4, 1)
 
 elif product == 'CGX4.0':
-    check_stable_fix('CGX4.0', 'v5.10', url5_10)
+    check_stable_fix('CGX4.0', 'v5.10', url5_10, 1)
 
 elif product == 'CGX5.0':
-    check_stable_fix('CGX5.0', 'v6.6 ', url6_6)
+    check_stable_fix('CGX5.0', 'v6.6 ', url6_6, 1)
 
 elif product == 'CentOS' or product == 'Rocky':
 
@@ -142,11 +137,9 @@ elif product == 'CentOS' or product == 'Rocky':
 else:								# Manual Product Checking
     print("Checking manualy, but Bugz Product '" +product+ "'")
 
-#    check_stable_fix('CGX2.4', 'v4.14', url4_14)		# CGX2.4
-#    check_stable_fix('CGX2.6', 'v4.19', url4_19)		# CGX2.6
-#    check_stable_fix('CGX3.1', 'v5.4 ', url5_4)		# CGX3.1
-    check_stable_fix('CGX4.0', 'v5.10', url5_10)		# CGX4.0
-#    check_stable_fix('CGX5.0', 'v6.6 ', url6_6)		# CGX5.0
-
-time.sleep(1)
+#    check_stable_fix('CGX2.4', 'v4.14', url4_14, 1)		# CGX2.4
+#    check_stable_fix('CGX2.6', 'v4.19', url4_19, 1)		# CGX2.6
+#    check_stable_fix('CGX3.1', 'v5.4 ', url5_4,  1)		# CGX3.1
+    check_stable_fix('CGX4.0', 'v5.10', url5_10, 1)		# CGX4.0
+#    check_stable_fix('CGX5.0', 'v6.6 ', url6_6,  1)		# CGX5.0
 
