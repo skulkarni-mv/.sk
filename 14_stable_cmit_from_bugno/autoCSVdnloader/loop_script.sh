@@ -16,7 +16,7 @@ current_time=$(date '+%H:%M')
 echo ""
 echo "Start Time: "$current_time"  for User/Domain: "$DOMAIN
 
-execute_at_time="08:30"
+execute_at_time="05:30"
 
 # Main loop
 while true; do
