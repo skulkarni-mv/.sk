@@ -66,14 +66,6 @@ while true; do
             sleep 2
         fi
 
-###     Temporary Integration
-        echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"; echo ""
-        pushd /home/shubham/.sk/19_stable_kernel_rel_checker
-        ./script_check_new_rel.sh
-        popd
-        echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"; echo ""
-        sleep 10
-###
 
         # Call the Python script with yesterday's date as an argument
         echo ""
@@ -101,6 +93,17 @@ while true; do
 
         # Sleep for 60 seconds to avoid multiple executions within the same minute
         sleep 25	# 30+3 seconds sleep already done in 'weblinks.py' code / 2 secs in this file
+
+
+###     Temporary Integration - Run after execution of "14/autoCSV/weblinks.py" as it will delete existing "bugs-*.csv" file
+        echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"; echo ""
+        pushd /home/shubham/.sk/19_stable_kernel_rel_checker
+        ./script_check_new_rel.sh
+        ./update_release_files.sh
+        popd
+        echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"; echo ""
+        sleep 10
+###
 
 
     else		# take the sleep for minute function inside if-else. Otherwise, when if matches, total waittime becomes 2 mins not 1 min
