@@ -1,0 +1,44 @@
+This script can be used to close the bugs in "Resolved" status for which product release is announced, i.e
+ bugs which are already documented by the Documentation team
+
+Script file: check_and_close_bugz_status.py
+
+Usage: python3 check_and_close_bugz_status.py <bugz_id_to_close>    OR
+       ./check_and_close_bugz_status.py <bugz_id_to_close>
+
+Requirement:
+- As per the process, the bugs can be closed for which documentation is already done i.e. 'SecDocDone' whiteboard
+- These documented bugs only will be part of product release announcement and will be visible to customers
+- Once this processes are done, bugz can be closed
+- Thus, to sum up the requirement: The current status of the bug should be 'Resolved' and it should have been documented.
+
+Notes:
+- This script uses your mvista bugz id & password to work and will update the bugz site with your id only.
+- Once you provide proper input to the script, execution starts and it will ask for bugz id & password.
+- If you want to update multiple bugs, you can hardcode your 'bugz-id' & 'password' in the script. Check script code to identify the location.
+
+Type of inputs:
+- You can run the script for single a bug at a time.
+- To update multiple bugs at a time (you would want to hardcode your id & pass in this case), check following options
+
+1) Update single bug:
+
+	$ ./check_and_close_bugz_status.py <bugz_id>
+
+2) Update more than one bug:
+- This is open ended choice but following steps can be used:
+
+	$ list="bugid1 bugid2 bugid3"
+	$ echo $list							## confirm the input i.e. bug ids are correct
+	$ for i in $list; do ./check_and_close_bugz_status.py $i; done
+
+3) If you have csv list of bugs from bugzilla site:
+- This is open ended choice but following steps can be used:
+
+	Edit the csv file with GUI editor tool like 'LibreOffice Calc', remove columns other than bugz id and save the file.
+	Edit the same file with terminal editor tool like 'vim', remove any unnecessary data like blank spaces/extra lines and save the file.
+
+	$ list=`cat <csv_file_name>`
+	$ echo $list							## confirm the input i.e. bug ids are correct
+	$ for i in $list; do ./check_and_close_bugz_status.py $i; done
+
